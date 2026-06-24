@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Nawaku — Menjelajahi Sejarah Setiap Sudut Kota Cirebon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <style>
+    /* ==============================================================
+       NAWAKU — HALAMAN UTAMA SEJARAH CIREBON
+       Cara custom:
+       1. HERO         → objek HERO
+       2. KAWASAN      → array KAWASAN (kartu wilayah)
+       3. ARTICLES     → array ARTICLES (grid artikel utama)
+       4. LIST_ARTICLES→ array LIST_ARTICLES (list bawah grid)
+       5. TICKER_ITEMS → array TICKER_ITEMS
+       6. FILTERS      → array FILTERS
+       7. TOPICS       → array TOPICS
+    ============================================================== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#f0f9ff;
+      --surface:#fff;
+      --text:#0c2340;
+      --text2:#1e4d7a;
+      --muted:#5a82a8;
+      --faint:#a8c8e0;
+      --border:#d4e9f7;
+      --sky1:#e0f2fe;
+      --sky2:#bae6fd;
+      --sky3:#7dd3fc;
+      --sky4:#38bdf8;
+      --blue1:#dbeafe;
+      --blue2:#bfdbfe;
+      --blue3:#93c5fd;
+      --blue4:#3b82f6;
+      --card-sh:0 2px 18px rgba(14,165,233,.08);
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+    /* ── NAVBAR ── */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;
+      background:rgba(255,255,255,.94);backdrop-filter:blur(14px);
+      border-bottom:1.5px solid var(--border);
+      display:flex;align-items:center;padding:0 32px;gap:18px;}
+    .n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+    .n-logo-ico{width:40px;height:40px;border-radius:13px;
+      background:linear-gradient(135deg,#38bdf8,#3b82f6);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 14px rgba(59,130,246,.32);}
+    .n-logo-txt{font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;
+      background:linear-gradient(135deg,#0ea5e9,#3b82f6);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .n-flex{flex:1;}
+    .n-links{display:flex;gap:2px;}
+    .n-link{padding:8px 16px;border-radius:11px;font-size:14.5px;font-weight:500;
+      color:var(--text2);text-decoration:none;transition:all .18s;}
+    .n-link:hover,.n-link.active{background:var(--blue1);color:var(--blue4);}
+    .n-btn{padding:10px 22px;border-radius:12px;border:none;
+      background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
+      font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;
+      box-shadow:0 4px 14px rgba(59,130,246,.28);transition:all .2s;white-space:nowrap;}
+    .n-btn:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(59,130,246,.4);}
+
+    /* ── TICKER ── */
+    .ticker{margin-top:66px;background:linear-gradient(90deg,#0ea5e9,#2563eb);
+      height:40px;display:flex;align-items:center;overflow:hidden;}
+    .t-label{background:#fff;color:#0ea5e9;font-size:12px;font-weight:900;
+      padding:4px 16px;border-radius:0 8px 8px 0;white-space:nowrap;
+      font-family:'Poppins',sans-serif;letter-spacing:.6px;flex-shrink:0;}
+    .t-track{display:flex;gap:44px;animation:tickerRun 40s linear infinite;padding-left:36px;white-space:nowrap;}
+    @keyframes tickerRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .t-item{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.9);
+      display:flex;align-items:center;gap:8px;}
+    .t-item svg{opacity:.7;flex-shrink:0;}
+
+    /* ── PAGE ── */
+    .page{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+    /* ── HERO ── */
+    .hero{position:relative;height:520px;border-radius:28px;overflow:hidden;
+      margin:22px 0 0;box-shadow:0 8px 48px rgba(14,165,233,.18);}
+    .hero-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s ease;}
+    .hero:hover .hero-img{transform:scale(1.025);}
+    .hero-overlay{position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(4,18,46,.93) 0%,rgba(4,18,46,.4) 52%,rgba(4,18,46,.05) 100%);}
+    .hero-cnt{position:absolute;bottom:0;left:0;right:0;padding:48px 56px;}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
+      background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
+      font-size:11px;font-weight:800;padding:5px 16px;border-radius:99px;
+      letter-spacing:.6px;font-family:'Poppins',sans-serif;margin-bottom:16px;text-transform:uppercase;}
+    .hero-eyebrow svg{opacity:.9;width:12px;height:12px;}
+    .hero-title{font-family:'Poppins',sans-serif;font-size:clamp(28px,5vw,54px);
+      font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;
+      text-shadow:0 2px 28px rgba(0,0,0,.3);}
+    .hero-sub{font-size:16px;color:rgba(255,255,255,.74);line-height:1.68;
+      max-width:560px;margin-bottom:30px;}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+    .hero-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;
+      border-radius:13px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;
+      font-family:'DM Sans',sans-serif;text-decoration:none;}
+    .hero-btn.primary{background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;border:none;
+      box-shadow:0 4px 14px rgba(59,130,246,.35);}
+    .hero-btn.primary:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(59,130,246,.48);}
+    .hero-btn.secondary{background:rgba(255,255,255,.12);color:#fff;
+      border:1.5px solid rgba(255,255,255,.28);}
+    .hero-btn.secondary:hover{background:rgba(255,255,255,.22);}
+    .hero-btn svg{width:15px;height:15px;}
+    .hero-stats{position:absolute;bottom:48px;right:52px;
+      display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+    .hs{display:flex;align-items:center;gap:10px;}
+    .hs-ico{width:34px;height:34px;border-radius:9px;flex-shrink:0;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+      display:flex;align-items:center;justify-content:center;}
+    .hs-ico svg{width:15px;height:15px;opacity:.9;}
+    .hs-val{font-family:'Poppins',sans-serif;font-size:14px;font-weight:800;color:#fff;line-height:1.1;}
+    .hs-lbl{font-size:11px;color:rgba(255,255,255,.55);}
+
+    /* ── SECTION HEADER ── */
+    .sec-hd{display:flex;align-items:center;justify-content:space-between;
+      padding:40px 0 20px;gap:16px;flex-wrap:wrap;}
+    .sec-ttl{font-family:'Poppins',sans-serif;font-size:21px;font-weight:900;
+      color:var(--text);display:flex;align-items:center;gap:11px;}
+    .sec-ttl::before{content:'';width:5px;height:24px;border-radius:3px;flex-shrink:0;
+      background:linear-gradient(180deg,#38bdf8,#3b82f6);}
+    .sec-sub{font-size:14px;color:var(--muted);margin-top:3px;}
+    .sec-meta{display:flex;align-items:center;gap:16px;}
+    .sec-count{font-size:13px;font-weight:700;color:var(--muted);}
+    .sec-more{font-size:13.5px;font-weight:700;color:var(--blue4);text-decoration:none;
+      display:flex;align-items:center;gap:5px;transition:.15s;}
+    .sec-more:hover{color:var(--sky4);}
+    .sec-more svg{width:14px;height:14px;}
+
+    /* ── KAWASAN GRID ── */
+    /* Kartu wilayah/kawasan kota Cirebon — scroll horizontal di mobile */
+    .kawasan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .kawasan-card{position:relative;height:200px;border-radius:20px;overflow:hidden;
+      cursor:pointer;box-shadow:var(--card-sh);text-decoration:none;display:block;
+      transition:all .2s;}
+    .kawasan-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(14,165,233,.18);}
+    .kawasan-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s;}
+    .kawasan-card:hover .kawasan-img{transform:scale(1.07);}
+    .kawasan-overlay{position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(4,18,46,.88) 0%,rgba(4,18,46,.1) 60%,transparent 100%);}
+    .kawasan-body{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;}
+    .kawasan-tag{font-size:9.5px;font-weight:800;color:rgba(255,255,255,.7);
+      letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;
+      display:flex;align-items:center;gap:5px;}
+    .kawasan-tag svg{width:10px;height:10px;opacity:.7;}
+    .kawasan-name{font-family:'Poppins',sans-serif;font-size:16px;font-weight:900;
+      color:#fff;line-height:1.2;margin-bottom:4px;}
+    .kawasan-count{font-size:11.5px;color:rgba(255,255,255,.6);
+      display:flex;align-items:center;gap:5px;}
+    .kawasan-count svg{width:11px;height:11px;opacity:.65;}
+
+    /* ── FEATURED ── */
+    .featured{display:grid;grid-template-columns:1fr 340px;gap:22px;}
+    .feat-main{position:relative;border-radius:22px;overflow:hidden;height:420px;
+      cursor:pointer;box-shadow:var(--card-sh);text-decoration:none;display:block;}
+    .feat-main-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s;}
+    .feat-main:hover .feat-main-img{transform:scale(1.04);}
+    .feat-overlay{position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(4,18,46,.92) 0%,rgba(4,18,46,.08) 58%,transparent 100%);}
+    .feat-cnt{position:absolute;bottom:0;left:0;right:0;padding:28px 30px;}
+    .feat-tag{display:inline-block;background:linear-gradient(135deg,#38bdf8,#3b82f6);
+      color:#fff;font-size:10px;font-weight:800;padding:4px 12px;border-radius:99px;
+      letter-spacing:.4px;font-family:'Poppins',sans-serif;margin-bottom:10px;}
+    .feat-ttl{font-family:'Poppins',sans-serif;font-size:19px;font-weight:900;
+      color:#fff;line-height:1.3;margin-bottom:10px;}
+    .feat-meta-row{font-size:12px;color:rgba(255,255,255,.62);display:flex;gap:10px;align-items:center;}
+    .feat-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.4);flex-shrink:0;}
+    /* side stack */
+    .feat-stack{display:flex;flex-direction:column;gap:12px;}
+    .feat-sm{display:flex;background:#fff;border-radius:16px;border:1.5px solid var(--border);
+      overflow:hidden;cursor:pointer;transition:all .18s;text-decoration:none;
+      box-shadow:var(--card-sh);}
+    .feat-sm:hover{box-shadow:0 6px 24px rgba(14,165,233,.14);transform:translateY(-2px);}
+    .feat-sm-img{width:96px;height:96px;object-fit:cover;flex-shrink:0;display:block;}
+    .feat-sm-body{padding:12px 14px;display:flex;flex-direction:column;justify-content:center;flex:1;}
+    .feat-sm-tag{font-size:10px;font-weight:800;color:var(--blue4);background:var(--blue1);
+      padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:6px;align-self:flex-start;}
+    .feat-sm-ttl{font-family:'Poppins',sans-serif;font-size:13px;font-weight:800;
+      color:var(--text);line-height:1.38;margin-bottom:4px;}
+    .feat-sm-date{font-size:11px;color:var(--muted);}
+
+    /* ── FILTER TABS ── */
+    .filter-row{display:flex;align-items:center;gap:10px;padding:0 0 4px;flex-wrap:wrap;}
+    .filter-lbl{font-family:'Poppins',sans-serif;font-size:12px;font-weight:800;
+      color:var(--muted);letter-spacing:.5px;text-transform:uppercase;
+      flex-shrink:0;margin-right:4px;display:flex;align-items:center;gap:6px;}
+    .filter-lbl svg{color:var(--sky4);width:13px;height:13px;}
+    .ftab{padding:7px 17px;border-radius:99px;border:1.5px solid var(--border);
+      background:#fff;font-size:13px;font-weight:700;color:var(--text2);
+      cursor:pointer;transition:all .18s;user-select:none;}
+    .ftab:hover{background:var(--sky1);border-color:var(--sky3);color:var(--sky4);}
+    .ftab.on{background:linear-gradient(135deg,#38bdf8,#3b82f6);border-color:transparent;
+      color:#fff;box-shadow:0 4px 14px rgba(59,130,246,.28);}
+
+    /* ── ARTICLE GRID ── */
+    .art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:20px;}
+    /* overflow:visible agar badge tidak terpotong */
+    .art-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);
+      overflow:visible;cursor:pointer;transition:all .2s;
+      text-decoration:none;display:block;box-shadow:var(--card-sh);}
+    .art-card:hover{box-shadow:0 8px 32px rgba(14,165,233,.16);transform:translateY(-3px);}
+    /* gambar punya overflow:hidden sendiri */
+    .art-card-img{position:relative;height:190px;overflow:hidden;border-radius:18px 18px 0 0;}
+    .art-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+    .art-card:hover .art-card-img img{transform:scale(1.06);}
+    /* badge z-index tinggi, tidak ikut clip */
+    .art-card-tag{position:absolute;top:12px;left:12px;z-index:2;
+      background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
+      font-size:10px;font-weight:800;padding:3px 10px;border-radius:99px;
+      letter-spacing:.3px;font-family:'Poppins',sans-serif;
+      box-shadow:0 2px 8px rgba(59,130,246,.28);}
+    .art-card-body{padding:18px 20px 20px;}
+    .art-card-region{display:flex;align-items:center;gap:5px;
+      font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:7px;}
+    .art-card-region svg{width:11px;height:11px;flex-shrink:0;}
+    .art-card-ttl{font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:800;
+      color:var(--text);line-height:1.38;margin-bottom:8px;}
+    .art-card-exc{font-size:13px;color:var(--muted);line-height:1.62;margin-bottom:14px;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .art-card-ft{display:flex;align-items:center;justify-content:space-between;
+      border-top:1px solid var(--border);padding-top:12px;}
+    .art-card-date{font-size:11.5px;color:var(--faint);font-weight:600;}
+    .art-card-read{font-size:11.5px;color:var(--blue4);font-weight:700;
+      display:flex;align-items:center;gap:4px;}
+    .art-card-read svg{width:12px;height:12px;}
+
+    /* ── LIST CARDS ── */
+    .art-list{display:flex;flex-direction:column;gap:14px;margin-top:20px;}
+    .list-card{display:flex;background:#fff;border-radius:18px;border:1.5px solid var(--border);
+      overflow:hidden;cursor:pointer;transition:all .18s;text-decoration:none;
+      box-shadow:var(--card-sh);}
+    .list-card:hover{box-shadow:0 6px 28px rgba(14,165,233,.14);transform:translateX(4px);}
+    /* wrapper gambar punya overflow sendiri — badge tidak terpotong */
+    .list-img-wrap{width:148px;flex-shrink:0;overflow:hidden;}
+    .list-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+    .list-body{padding:16px 18px;display:flex;flex-direction:column;justify-content:center;flex:1;}
+    .list-tag{font-size:10px;font-weight:800;color:var(--blue4);background:var(--blue1);
+      padding:2px 8px;border-radius:99px;display:inline-block;
+      margin-bottom:6px;align-self:flex-start;}
+    .list-ttl{font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:800;
+      color:var(--text);line-height:1.35;margin-bottom:5px;}
+    .list-exc{font-size:13px;color:var(--muted);line-height:1.55;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+      overflow:hidden;margin-bottom:8px;}
+    .list-meta{font-size:11.5px;color:var(--faint);font-weight:600;
+      display:flex;gap:10px;align-items:center;}
+    .list-meta-sep{width:3px;height:3px;border-radius:50%;background:var(--faint);}
+
+    /* ── LOAD MORE ── */
+    .load-more{text-align:center;padding:14px 0 64px;}
+    .lm-btn{display:inline-flex;align-items:center;gap:9px;padding:13px 32px;
+      border-radius:14px;border:1.5px solid var(--blue3);background:#fff;
+      font-size:14px;font-weight:700;color:var(--blue4);cursor:pointer;transition:all .2s;}
+    .lm-btn:hover{background:var(--blue1);border-color:var(--blue4);
+      box-shadow:0 4px 16px rgba(59,130,246,.18);}
+    .lm-btn svg{width:16px;height:16px;}
+
+    /* ── SITE FOOTER ── */
+    .site-footer{background:#0c1e35;color:#fff;}
+    .footer-top{max-width:1180px;margin:0 auto;padding:56px 32px 40px;
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;}
+    .ft-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;}
+    .ft-logo-ico{width:40px;height:40px;border-radius:13px;
+      background:linear-gradient(135deg,#38bdf8,#3b82f6);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 14px rgba(59,130,246,.32);}
+    .ft-logo-txt{font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;color:#fff;}
+    .ft-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.78;margin-bottom:22px;}
+    .ft-socials{display:flex;gap:10px;}
+    .ft-soc{width:38px;height:38px;border-radius:10px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:all .18s;text-decoration:none;}
+    .ft-soc svg{width:16px;height:16px;}
+    .ft-soc:hover{background:var(--sky4);border-color:var(--sky4);}
+    .ft-col-ttl{font-family:'Poppins',sans-serif;font-size:13.5px;font-weight:900;
+      color:#fff;margin-bottom:16px;letter-spacing:.3px;}
+    .ft-links{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;}
+    .ft-links li a{font-size:13.5px;color:rgba(255,255,255,.52);text-decoration:none;transition:.15s;}
+    .ft-links li a:hover{color:var(--sky3);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.08);
+      max-width:1180px;margin:0 auto;padding:20px 32px;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .fb-copy{font-size:13px;color:rgba(255,255,255,.38);}
+    .fb-links{display:flex;gap:20px;}
+    .fb-links a{font-size:13px;color:rgba(255,255,255,.38);text-decoration:none;transition:.15s;}
+    .fb-links a:hover{color:var(--sky3);}
+
+    /* Fade up */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .fu{animation:fadeUp .52s ease both;}
+    .d1{animation-delay:.07s}.d2{animation-delay:.14s}.d3{animation-delay:.21s}
+
+    /* hidden untuk filter */
+    .art-card.hidden,.list-card.hidden{display:none;}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1100px){
+      .art-grid{grid-template-columns:1fr 1fr;}
+      .featured{grid-template-columns:1fr;}
+      .feat-main{height:340px;}
+      .kawasan-grid{grid-template-columns:1fr 1fr;}
+      .footer-top{grid-template-columns:1fr 1fr;}
+      .hero-stats{display:none;}
+      .hero-cnt{padding:28px 32px;}
+    }
+    @media(max-width:720px){
+      .navbar{padding:0 16px;} .n-links{display:none;}
+      .page{padding:0 16px;}
+      .hero{height:360px;border-radius:18px;}
+      .hero-cnt{padding:22px 20px;}
+      .hero-title{font-size:26px;}
+      .art-grid{grid-template-columns:1fr;}
+      .kawasan-grid{grid-template-columns:1fr 1fr;}
+      .list-img-wrap{width:96px;}
+      .footer-top{grid-template-columns:1fr;gap:32px;padding:40px 20px 28px;}
+      .footer-bottom{padding:18px 20px;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar">
+  <a class="n-logo" href="index.html">
+    <div class="n-logo-ico">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <span class="n-logo-txt">Nawaku</span>
+  </a>
+  <div class="n-flex">
+    <nav class="n-links">
+      <a class="n-link active" href="index.html">Beranda</a>
+      <a class="n-link" href="#">Kawasan</a>
+      <a class="n-link" href="#">Tokoh</a>
+      <a class="n-link" href="#">Peninggalan</a>
+      <a class="n-link" href="#">Tentang</a>
+    </nav>
+  </div>
+  <button class="n-btn">Newsletter</button>
+</nav>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker">
+  <span class="t-label">CIREBON</span>
+  <div style="overflow:hidden;flex:1;">
+    <div class="t-track" id="tickerTrack"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE ══ -->
+<div class="page">
+
+  <!-- ══ HERO ══ -->
+  <div class="hero fu">
+    <img class="hero-img" id="heroImg" src="" alt="Sejarah Cirebon"/>
+    <div class="hero-overlay"></div>
+    <div class="hero-cnt">
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Sejarah Kota Cirebon
+      </div>
+      <div class="hero-title" id="heroTitle"></div>
+      <div class="hero-sub" id="heroSub"></div>
+      <div class="hero-cta">
+        <a class="hero-btn primary" id="heroCtaMain" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Baca Artikel Utama
+        </a>
+        <a class="hero-btn secondary" href="#kawasan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Jelajahi Kawasan
+        </a>
+      </div>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+
+  <!-- ══ KAWASAN ══ -->
+  <div class="sec-hd fu d1" id="kawasan">
+    <div>
+      <div class="sec-ttl">Kawasan Bersejarah Cirebon</div>
+      <div class="sec-sub">Pilih kawasan untuk menjelajahi sejarahnya</div>
+    </div>
+    <a class="sec-more" href="#">
+      Semua kawasan
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+  <div class="kawasan-grid fu d1" id="kawasanGrid"></div>
+
+  <!-- ══ FEATURED ══ -->
+  <div class="sec-hd fu d2" style="padding-top:44px;">
+    <span class="sec-ttl">Artikel Pilihan</span>
+    <span class="sec-count" id="featCount"></span>
+  </div>
+  <div class="featured fu d2" id="featuredSection"></div>
+
+  <!-- ══ SEMUA ARTIKEL ══ -->
+  <div class="sec-hd fu d3" style="padding-top:44px;">
+    <div>
+      <div class="sec-ttl">Semua Artikel Sejarah</div>
+      <div class="sec-sub">Sejarah setiap sudut dan kawasan Kota Cirebon</div>
+    </div>
+    <div class="sec-meta">
+      <span class="sec-count" id="artCount"></span>
+      <a class="sec-more" href="#">
+        Lihat semua
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+  <!-- Filter -->
+  <div class="filter-row fu d3" id="filterRow">
+    <span class="filter-lbl">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      Kawasan
+    </span>
+  </div>
+  <div class="art-grid fu d3" id="artGrid"></div>
+
+  <!-- ══ LEBIH BANYAK ══ -->
+  <div class="sec-hd fu" style="padding-top:40px;">
+    <span class="sec-ttl">Artikel Lainnya</span>
+    <span class="sec-count" id="listCount"></span>
+  </div>
+  <div class="art-list fu" id="artList"></div>
+
+  <div class="load-more fu">
+    <button class="lm-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      Muat Lebih Banyak Artikel
+    </button>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <a class="ft-logo" href="index.html">
+        <div class="ft-logo-ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="ft-logo-txt">Nawaku</span>
+      </a>
+      <p class="ft-desc">Nawaku adalah ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon — dari kawasan pesisir hingga pedalaman, dari era kesultanan hingga zaman kemerdekaan.</p>
+      <div class="ft-socials">
+        <a class="ft-soc" href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="ft-soc" href="#" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a class="ft-soc" href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="ft-soc" href="#" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-ttl">Kawasan</div>
+      <ul class="ft-links">
+        <li><a href="#">Trusmi & Plered</a></li>
+        <li><a href="#">Jamblang</a></li>
+        <li><a href="#">Gunung Jati</a></li>
+        <li><a href="#">Kasepuhan</a></li>
+        <li><a href="#">Kanoman</a></li>
+        <li><a href="#">Lemahwungkuk</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-ttl">Nawaku</div>
+      <ul class="ft-links">
+        <li><a href="#">Tentang Kami</a></li>
+        <li><a href="#">Tim Redaksi</a></li>
+        <li><a href="#">Pedoman Penulisan</a></li>
+        <li><a href="#">Karir</a></li>
+        <li><a href="#">Kemitraan</a></li>
+        <li><a href="#">Hubungi Kami</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-ttl">Dukungan</div>
+      <ul class="ft-links">
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Pusat Bantuan</a></li>
+        <li><a href="#">Kebijakan Privasi</a></li>
+        <li><a href="#">Syarat & Ketentuan</a></li>
+        <li><a href="#">Peta Situs</a></li>
+        <li><a href="#">Donasi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-copy">© 2025 Nawaku.com — Mengabadikan Sejarah Setiap Sudut Cirebon.</span>
+    <div class="fb-links">
+      <a href="#">Privasi</a>
+      <a href="#">Ketentuan</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+   ██████████████████████████████████████████████████████████████
+   DATA — EDIT BAGIAN INI UNTUK MENGUBAH KONTEN HALAMAN
+   ██████████████████████████████████████████████████████████████
+   ================================================================ */
+
+/* ---------- TICKER ---------- */
+const TICKER_ITEMS = [
+  'Trusmi — kampung batik berusia lebih dari enam abad di barat Cirebon',
+  'Jamblang — daerah yang namanya tersimpan dalam kuliner ikonik nasi jamblang',
+  'Gunung Jati — tanah peristirahatan Sunan Gunung Jati, wali sekaligus sultan pertama Cirebon',
+  'Keraton Kasepuhan berdiri sejak 1527 M, menjadi pusat peradaban kesultanan',
+  'Lemahwungkuk — permukiman pesisir tertua yang menjadi cikal bakal Kota Cirebon',
+  'Plered — kecamatan yang menyimpan ribuan pengrajin batik tulis dan cap Cirebon',
+];
+
+/* ---------- HERO ----------
+   Ganti src gambar, judul, dan subjudul hero utama */
+const HERO = {
+  img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=1400&q=88',
+  title: 'Menjelajahi Sejarah di Setiap Sudut Kota Cirebon',
+  sub: 'Dari kampung nelayan di muara sungai hingga kesultanan yang berjaya — Nawaku mengabadikan sejarah setiap kawasan, daerah, dan desa di Cirebon.',
+  ctaHref: 'sejarah-trusmi-cirebon.html',
+  /* Statistik di pojok kanan hero */
+  stats: [
+    { icon: `<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>`, val: '42 Artikel', lbl: 'Tersedia' },
+    { icon: `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>`, val: '18 Kawasan', lbl: 'Terdokumentasi' },
+    { icon: `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`, val: '600+ Tahun', lbl: 'Rentang Sejarah' },
+  ],
+};
+
+/* ---------- KAWASAN ----------
+   field: img, name, tag, count, cat, href
+   cat = string yang cocok dengan FILTERS.cat di bawah */
+const KAWASAN = [
+  {
+    img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80',
+    name: 'Trusmi & Plered',
+    tag: 'Kecamatan Plered',
+    count: '8 artikel',
+    cat: 'trusmi',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&q=80',
+    name: 'Gunung Jati',
+    tag: 'Kecamatan Gunung Jati',
+    count: '6 artikel',
+    cat: 'gunungjati',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=80',
+    name: 'Kasepuhan & Kanoman',
+    tag: 'Kota Cirebon',
+    count: '9 artikel',
+    cat: 'keraton',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1596392927852-2a18c336fb52?w=600&q=80',
+    name: 'Jamblang',
+    tag: 'Kecamatan Jamblang',
+    count: '5 artikel',
+    cat: 'jamblang',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80',
+    name: 'Lemahwungkuk',
+    tag: 'Pusat Kota Lama',
+    count: '4 artikel',
+    cat: 'lemahwungkuk',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=80',
+    name: 'Palimanan',
+    tag: 'Kecamatan Palimanan',
+    count: '4 artikel',
+    cat: 'palimanan',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80',
+    name: 'Sumber',
+    tag: 'Ibukota Kab. Cirebon',
+    count: '3 artikel',
+    cat: 'sumber',
+    href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=80',
+    name: 'Pesisir Utara',
+    tag: 'Kawasan Pelabuhan',
+    count: '5 artikel',
+    cat: 'pesisir',
+    href: '#',
+  },
+];
+
+/* ---------- FEATURED (artikel besar + side stack) ---------- */
+const FEATURED = {
+  img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=900&q=85',
+  tag: 'TRUSMI — SEJARAH BATIK',
+  title: 'Bukan Cuma Pusat Oleh-oleh: Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu',
+  author: 'Nawaku Editorial',
+  date: '4 Jun 2025',
+  read: '12 menit',
+  href: 'sejarah-trusmi-cirebon.html',
+};
+const FEATURED_SIDE = [
+  {
+    img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=400&q=80',
+    tag: 'KASEPUHAN',
+    title: 'Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527',
+    date: '2 Jun 2025', read: '8 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=400&q=80',
+    tag: 'GUNUNG JATI',
+    title: 'Kompleks Makam Sunan Gunung Jati: Ziarah dan Sejarah yang Menyatu',
+    date: '30 Mei 2025', read: '9 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1596392927852-2a18c336fb52?w=400&q=80',
+    tag: 'JAMBLANG',
+    title: 'Asal-Usul Jamblang: Daerah Tua di Barat Cirebon yang Memberi Nama Sebuah Nasi',
+    date: '28 Mei 2025', read: '7 menit', href: '#',
+  },
+];
+
+/* ---------- FILTERS ----------
+   cat harus cocok dengan cat di ARTICLES dan LIST_ARTICLES */
+const FILTERS = [
+  { label: 'Semua Kawasan', cat: 'semua' },
+  { label: 'Trusmi & Plered', cat: 'trusmi' },
+  { label: 'Gunung Jati', cat: 'gunungjati' },
+  { label: 'Keraton', cat: 'keraton' },
+  { label: 'Jamblang', cat: 'jamblang' },
+  { label: 'Lemahwungkuk', cat: 'lemahwungkuk' },
+  { label: 'Palimanan', cat: 'palimanan' },
+  { label: 'Pesisir Utara', cat: 'pesisir' },
+];
+
+/* ---------- ARTICLES GRID (tampil 6 di grid 3 kolom) ----------
+   field: img, tag, cat, region, title, excerpt, date, read, href */
+const ARTICLES = [
+  {
+    img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80',
+    tag: 'TRUSMI', cat: 'trusmi',
+    region: 'Kecamatan Plered',
+    title: 'Sejarah Kampung Batik Trusmi: Dakwah, Kain, dan Enam Abad Tradisi',
+    excerpt: 'Di balik ribuan toko batik, Trusmi menyimpan kisah spiritual dan sejarah panjang sejak Ki Gede Trusmi menjadikan membatik sebagai ibadah di abad ke-15.',
+    date: '4 Jun 2025', read: '12 menit', href: 'sejarah-trusmi-cirebon.html',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1596392927852-2a18c336fb52?w=600&q=80',
+    tag: 'JAMBLANG', cat: 'jamblang',
+    region: 'Kecamatan Jamblang',
+    title: 'Asal-Usul Daerah Jamblang: Dari Permukiman Tua hingga Nama yang Abadi di Piring Makan',
+    excerpt: 'Jauh sebelum dikenal lewat nasi jamblang, kawasan ini sudah menjadi daerah permukiman dan perdagangan tua yang menyimpan lapisan sejarah tersendiri.',
+    date: '28 Mei 2025', read: '8 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&q=80',
+    tag: 'GUNUNG JATI', cat: 'gunungjati',
+    region: 'Kecamatan Gunung Jati',
+    title: 'Gunung Jati: Tanah Wali, Tanah Sultan, dan Tanah Ziarah Sejuta Umat',
+    excerpt: 'Kawasan Gunung Jati bukan sekadar lokasi makam — ia adalah titik awal dari seluruh sejarah Cirebon, tempat Sunan Gunung Jati membangun kekuatan spiritual dan politiknya.',
+    date: '25 Mei 2025', read: '10 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=80',
+    tag: 'KASEPUHAN', cat: 'keraton',
+    region: 'Kota Cirebon',
+    title: 'Kawasan Kasepuhan: Jantung Kota Lama yang Menyimpan Empat Abad Sejarah',
+    excerpt: 'Lebih dari sekadar keraton, kawasan Kasepuhan menyimpan jejak arsitektur, ritual adat, dan lapisan sejarah yang membentuk identitas Cirebon sebagai kota peradaban.',
+    date: '22 Mei 2025', read: '9 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80',
+    tag: 'PESISIR UTARA', cat: 'pesisir',
+    region: 'Pelabuhan Cirebon',
+    title: 'Sejarah Pelabuhan Cirebon: Ketika Kapal dari Tiongkok, Gujarat, dan Arab Berlabuh di Sini',
+    excerpt: 'Pada abad ke-15 hingga ke-17, pelabuhan Cirebon adalah salah satu yang tersibuk di Jawa — magnet pedagang dunia yang membawa pengaruh budaya ke seluruh pelosok kota.',
+    date: '20 Mei 2025', read: '11 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=80',
+    tag: 'LEMAHWUNGKUK', cat: 'lemahwungkuk',
+    region: 'Kota Lama Cirebon',
+    title: 'Lemahwungkuk: Permukiman Tertua Cirebon yang Jadi Cikal Bakal Kota',
+    excerpt: 'Sebelum ada keraton dan kesultanan, ada Lemahwungkuk — kawasan muara sungai berlumpur tempat para nelayan dan pedagang pertama Cirebon mendirikan kehidupan mereka.',
+    date: '17 Mei 2025', read: '9 menit', href: '#',
+  },
+];
+
+/* ---------- LIST ARTICLES (list di bawah grid) ---------- */
+const LIST_ARTICLES = [
+  {
+    img: 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=300&q=80',
+    tag: 'PALIMANAN', cat: 'palimanan',
+    title: 'Palimanan: Kota Batu Kapur dan Jejak Sejarah di Tepi Jalan Pantura',
+    excerpt: 'Palimanan dikenal sebagai penghasil batu kapur — tapi jauh sebelum itu, kawasan ini adalah simpul penting jalur perdagangan darat antara Cirebon dan pedalaman Jawa Barat.',
+    date: '14 Mei 2025', read: '7 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&q=80',
+    tag: 'TRUSMI', cat: 'trusmi',
+    title: 'Ganti Sirap: Ritual Gotong-Royong 8 Tahunan Penjaga Makam Ki Gede Trusmi',
+    excerpt: 'Setiap delapan tahun sekali, warga Trusmi berkumpul mengganti atap sirap kayu makam leluhur mereka — sebuah tradisi yang mempertegas hubungan antara sejarah dan identitas komunitas.',
+    date: '11 Mei 2025', read: '7 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=300&q=80',
+    tag: 'KANOMAN', cat: 'keraton',
+    title: 'Keraton Kanoman: Lahir dari Perpecahan, Bertahan dalam Tradisi',
+    excerpt: 'Berdiri 1678 M, setahun setelah Kasepuhan, Keraton Kanoman menyimpan tradisi dan benda pusaka yang tidak ditemukan di tempat lain — termasuk kereta kencana Paksi Naga Liman.',
+    date: '8 Mei 2025', read: '8 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=300&q=80',
+    tag: 'SUMBER', cat: 'sumber',
+    title: 'Sumber: Dari Pusat Administrasi Kolonial Menuju Ibukota Kabupaten Cirebon',
+    excerpt: 'Jauh sebelum menjadi ibukota kabupaten, kawasan Sumber sudah memiliki peran penting dalam struktur pemerintahan kolonial Belanda yang mengatur Cirebon dari abad ke-17.',
+    date: '5 Mei 2025', read: '6 menit', href: '#',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80',
+    tag: 'PESISIR UTARA', cat: 'pesisir',
+    title: 'Muara Jati: Pelabuhan Kecil yang Menjadi Titik Awal Peradaban Cirebon',
+    excerpt: 'Sebelum ada Pelabuhan Cirebon modern, ada Muara Jati — dermaga kecil di abad ke-14 yang pertama kali disinggahi para pedagang asing dan meletakkan fondasi kota pelabuhan Cirebon.',
+    date: '2 Mei 2025', read: '9 menit', href: '#',
+  },
+];
+
+/* ================================================================
+   RENDER — struktur HTML dibuat oleh JS dari data di atas
+   ================================================================ */
+
+/* SVG helpers */
+const svg = (paths, w=24, h=24) =>
+  `<svg width="${w}" height="${h}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+const PIN_ICON = `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>`;
+const DOC_ICON = `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>`;
+const ARR_ICON = `<polyline points="9 18 15 12 9 6"/>`;
+
+/* Ticker */
+const tTrack = document.getElementById('tickerTrack');
+tTrack.innerHTML = [...TICKER_ITEMS, ...TICKER_ITEMS].map(t =>
+  `<span class="t-item">
+    ${svg(`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`, 13, 13)}
+    ${t}
+  </span>`
+).join('');
+
+/* Hero */
+document.getElementById('heroImg').src = HERO.img;
+document.getElementById('heroTitle').textContent = HERO.title;
+document.getElementById('heroSub').textContent = HERO.sub;
+document.getElementById('heroCtaMain').href = HERO.ctaHref;
+document.getElementById('heroStats').innerHTML = HERO.stats.map(s =>
+  `<div class="hs">
+    <div class="hs-ico">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
+    </div>
+    <div>
+      <div class="hs-val">${s.val}</div>
+      <div class="hs-lbl">${s.lbl}</div>
+    </div>
+  </div>`
+).join('');
+
+/* Kawasan Grid */
+document.getElementById('kawasanGrid').innerHTML = KAWASAN.map(k =>
+  `<a class="kawasan-card" href="${k.href}" data-cat="${k.cat}">
+    <img class="kawasan-img" src="${k.img}" alt="${k.name}" loading="lazy"/>
+    <div class="kawasan-overlay"></div>
+    <div class="kawasan-body">
+      <div class="kawasan-tag">
+        ${svg(PIN_ICON, 10, 10)}
+        ${k.tag}
+      </div>
+      <div class="kawasan-name">${k.name}</div>
+      <div class="kawasan-count">
+        ${svg(DOC_ICON, 11, 11)}
+        ${k.count}
+      </div>
+    </div>
+  </a>`
+).join('');
+
+/* Kawasan click → filter */
+document.querySelectorAll('.kawasan-card').forEach(card => {
+  card.addEventListener('click', e => {
+    e.preventDefault();
+    const cat = card.dataset.cat;
+    document.querySelectorAll('.ftab').forEach(b =>
+      b.classList.toggle('on', b.dataset.cat === cat)
+    );
+    filterArticles(cat);
+    document.getElementById('filterRow').scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+
+/* Featured */
+document.getElementById('featCount').textContent = `${1 + FEATURED_SIDE.length} artikel unggulan`;
+document.getElementById('featuredSection').innerHTML = `
+  <a class="feat-main" href="${FEATURED.href}">
+    <img class="feat-main-img" src="${FEATURED.img}" alt="${FEATURED.title}"/>
+    <div class="feat-overlay"></div>
+    <div class="feat-cnt">
+      <span class="feat-tag">${FEATURED.tag}</span>
+      <div class="feat-ttl">${FEATURED.title}</div>
+      <div class="feat-meta-row">
+        <span>${FEATURED.author}</span>
+        <span class="feat-dot"></span>
+        <span>${FEATURED.date}</span>
+        <span class="feat-dot"></span>
+        <span>${FEATURED.read}</span>
+      </div>
+    </div>
+  </a>
+  <div class="feat-stack">
+    ${FEATURED_SIDE.map(s =>
+      `<a class="feat-sm" href="${s.href}">
+        <img class="feat-sm-img" src="${s.img}" alt="${s.title}"/>
+        <div class="feat-sm-body">
+          <span class="feat-sm-tag">${s.tag}</span>
+          <div class="feat-sm-ttl">${s.title}</div>
+          <div class="feat-sm-date">${s.date} · ${s.read}</div>
+        </div>
+      </a>`
+    ).join('')}
+  </div>`;
+
+/* Filters */
+const filterRow = document.getElementById('filterRow');
+FILTERS.forEach((f, i) => {
+  const btn = document.createElement('div');
+  btn.className = 'ftab' + (i === 0 ? ' on' : '');
+  btn.textContent = f.label;
+  btn.dataset.cat = f.cat;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    filterArticles(f.cat);
+  });
+  filterRow.appendChild(btn);
+});
+
+/* Article Grid */
+document.getElementById('artCount').textContent = `${ARTICLES.length} artikel`;
+document.getElementById('artGrid').innerHTML = ARTICLES.map(a =>
+  `<a class="art-card" href="${a.href}" data-cat="${a.cat}">
+    <div class="art-card-img">
+      <img src="${a.img}" alt="${a.title}" loading="lazy"/>
+      <span class="art-card-tag">${a.tag}</span>
+    </div>
+    <div class="art-card-body">
+      <div class="art-card-region">${svg(PIN_ICON, 11, 11)} ${a.region}</div>
+      <div class="art-card-ttl">${a.title}</div>
+      <div class="art-card-exc">${a.excerpt}</div>
+      <div class="art-card-ft">
+        <span class="art-card-date">${a.date}</span>
+        <span class="art-card-read">${a.read} ${svg(ARR_ICON, 12, 12)}</span>
+      </div>
+    </div>
+  </a>`
+).join('');
+
+/* Article List */
+document.getElementById('listCount').textContent = `${LIST_ARTICLES.length} artikel`;
+document.getElementById('artList').innerHTML = LIST_ARTICLES.map(a =>
+  `<a class="list-card" href="${a.href}" data-cat="${a.cat}">
+    <div class="list-img-wrap">
+      <img src="${a.img}" alt="${a.title}" loading="lazy"/>
+    </div>
+    <div class="list-body">
+      <span class="list-tag">${a.tag}</span>
+      <div class="list-ttl">${a.title}</div>
+      <div class="list-exc">${a.excerpt}</div>
+      <div class="list-meta">
+        <span>${a.date}</span>
+        <span class="list-meta-sep"></span>
+        <span>${a.read} baca</span>
+      </div>
+    </div>
+  </a>`
+).join('');
+
+/* Filter function */
+function filterArticles(cat) {
+  document.querySelectorAll('.art-card').forEach(el =>
+    el.classList.toggle('hidden', cat !== 'semua' && el.dataset.cat !== cat)
+  );
+  document.querySelectorAll('.list-card').forEach(el =>
+    el.classList.toggle('hidden', cat !== 'semua' && el.dataset.cat !== cat)
+  );
+  const vg = ARTICLES.filter(a => cat === 'semua' || a.cat === cat).length;
+  const vl = LIST_ARTICLES.filter(a => cat === 'semua' || a.cat === cat).length;
+  document.getElementById('artCount').textContent = `${vg} artikel`;
+  document.getElementById('listCount').textContent = `${vl} artikel`;
+}
+
+/* Fade-up observer */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.fu').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(18px)';
+  el.style.transition = 'opacity .52s ease, transform .52s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
