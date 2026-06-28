@@ -3,804 +3,712 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Bukan Cuma Pusat Oleh-oleh: Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu – Nawaku</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <title>Sejarah Gedung BAT Cirebon — Nawaku</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
-      --bg:#f0f9ff;--surface:#fff;
-      --text:#0c2340;--text2:#1e4d7a;--muted:#5a82a8;--faint:#a8c8e0;
-      --border:#d4e9f7;
-      --sky1:#e0f2fe;--sky2:#bae6fd;--sky3:#7dd3fc;--sky4:#38bdf8;
-      --blue1:#dbeafe;--blue2:#bfdbfe;--blue3:#93c5fd;--blue4:#3b82f6;
-      --amber1:#fffbeb;--amber2:#fde68a;--amber3:#f59e0b;
-      --green1:#f0fdf4;--green2:#bbf7d0;--green3:#16a34a;
-      --card-sh:0 2px 18px rgba(14,165,233,.08);
+      --bg:#f7f8fa;
+      --surface:#fff;
+      --text:#1a1a1a;
+      --text2:#444;
+      --muted:#888;
+      --border:#e8e8e8;
+      --accent:#2563eb;
+      --accent-light:#eff4ff;
+      --accent-mid:#bfdbfe;
     }
     html{scroll-behavior:smooth;}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-
-    /* ── NAVBAR ── */
-    .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;
-      background:rgba(255,255,255,.94);backdrop-filter:blur(14px);
-      border-bottom:1.5px solid var(--border);
-      display:flex;align-items:center;padding:0 32px;gap:18px;}
-    .n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
-    .n-logo-ico{width:40px;height:40px;border-radius:13px;
-      background:linear-gradient(135deg,#38bdf8,#3b82f6);
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 4px 14px rgba(59,130,246,.32);}
-    .n-logo-txt{font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;
-      background:linear-gradient(135deg,#0ea5e9,#3b82f6);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-    .n-back{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;
-      color:var(--muted);text-decoration:none;border:1.5px solid var(--border);
-      padding:8px 16px;border-radius:11px;transition:all .18s;background:#fff;}
-    .n-back:hover{color:var(--blue4);border-color:var(--blue3);background:var(--blue1);}
-    .n-flex{flex:1;}
-    .n-links{display:flex;gap:2px;}
-    .n-link{padding:8px 16px;border-radius:11px;font-size:14.5px;font-weight:500;
-      color:var(--text2);text-decoration:none;transition:all .18s;}
-    .n-link:hover,.n-link.active{background:var(--blue1);color:var(--blue4);}
-    .n-btn{padding:10px 22px;border-radius:12px;border:none;
-      background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
-      font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;
-      box-shadow:0 4px 14px rgba(59,130,246,.28);transition:all .2s;white-space:nowrap;}
-    .n-btn:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(59,130,246,.4);}
-
-    /* ── TICKER ── */
-    .ticker{margin-top:66px;background:linear-gradient(90deg,#0ea5e9,#2563eb);
-      height:40px;display:flex;align-items:center;overflow:hidden;}
-    .t-label{background:#fff;color:#0ea5e9;font-size:12px;font-weight:900;
-      padding:4px 16px;border-radius:0 8px 8px 0;white-space:nowrap;
-      font-family:'Poppins',sans-serif;letter-spacing:.6px;flex-shrink:0;}
-    .t-track{display:flex;gap:44px;animation:tickerRun 32s linear infinite;
-      padding-left:36px;white-space:nowrap;}
-    @keyframes tickerRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .t-item{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.9);
-      display:flex;align-items:center;gap:9px;}
-
-    /* ── PAGE LAYOUT ── */
-    .page{max-width:1180px;margin:0 auto;padding:0 32px;}
-    .art-layout{display:grid;grid-template-columns:1fr 340px;gap:36px;padding:40px 0 64px;align-items:start;}
+    body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;}
 
     /* ── READ PROGRESS ── */
-    .rp{position:fixed;top:66px;left:0;right:0;height:3px;z-index:299;background:var(--sky1);}
-    .rp-bar{height:100%;background:linear-gradient(90deg,#38bdf8,#3b82f6);width:0%;transition:width .1s;}
+    .rp{position:fixed;top:60px;left:0;right:0;height:2px;z-index:299;}
+    .rp-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#1d4ed8);width:0%;transition:width .1s;}
+
+    /* ── NAVBAR ── */
+    .navbar{
+      position:fixed;top:0;left:0;right:0;z-index:300;height:60px;
+      background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 28px;gap:0;
+    }
+    .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;margin-right:32px;}
+    .n-logo-ico{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .n-logo-ico svg{width:16px;height:16px;}
+    .n-logo-txt{font-family:'Rubik',sans-serif;font-weight:800;font-size:18px;color:#1a1a1a;letter-spacing:-.3px;}
+    .n-links{display:flex;gap:2px;flex:1;align-items:center;}
+    .n-link{
+      padding:7px 14px;border-radius:8px;font-size:14px;font-weight:500;
+      color:var(--text2);text-decoration:none;transition:all .15s;font-family:'Rubik',sans-serif;
+      display:flex;align-items:center;gap:6px;
+    }
+    .n-link:hover{background:var(--accent-light);color:var(--accent);}
+    .n-link.active{background:var(--accent-light);color:var(--accent);font-weight:600;}
+    .n-link svg{width:15px;height:15px;flex-shrink:0;}
+    /* More menu */
+    .n-more{position:relative;}
+    .n-more-btn{
+      padding:7px 12px;border-radius:8px;font-size:14px;font-weight:500;
+      color:var(--text2);background:none;border:none;cursor:pointer;
+      display:flex;align-items:center;gap:4px;font-family:'Rubik',sans-serif;
+      transition:all .15s;
+    }
+    .n-more-btn:hover{background:var(--accent-light);color:var(--accent);}
+    .n-more-btn svg{width:16px;height:16px;}
+    .n-dropdown{
+      position:absolute;top:calc(100% + 8px);right:0;
+      background:#fff;border:1px solid var(--border);border-radius:12px;
+      min-width:160px;box-shadow:0 8px 28px rgba(0,0,0,.1);
+      padding:6px;display:none;z-index:400;
+    }
+    .n-more.open .n-dropdown{display:block;}
+    .n-dd-item{
+      display:flex;align-items:center;gap:8px;padding:9px 12px;
+      border-radius:8px;font-size:13.5px;font-weight:500;
+      color:var(--text2);text-decoration:none;transition:all .15s;
+      font-family:'Rubik',sans-serif;
+    }
+    .n-dd-item:hover{background:var(--accent-light);color:var(--accent);}
+    .n-dd-item svg{width:14px;height:14px;flex-shrink:0;}
+
+    /* ── PAGE ── */
+    .page{max-width:740px;margin:0 auto;padding:0 20px;}
 
     /* ── BREADCRUMB ── */
-    .breadcrumb{display:flex;align-items:center;gap:8px;padding:18px 0 0;flex-wrap:wrap;}
-    .bc{font-size:13px;color:var(--muted);text-decoration:none;transition:.15s;}
-    .bc:hover{color:var(--blue4);}
-    .bc-sep{font-size:12px;color:var(--faint);}
-    .bc.active{color:var(--text2);font-weight:600;}
+    .breadcrumb{
+      display:flex;align-items:center;gap:6px;
+      padding:84px 0 20px;flex-wrap:wrap;
+    }
+    .bc{font-size:13px;color:var(--muted);text-decoration:none;font-family:'Rubik',sans-serif;}
+    .bc:hover{color:var(--accent);}
+    .bc-sep{font-size:12px;color:#ccc;}
+    .bc.active{color:var(--text2);font-weight:500;}
 
-    /* ── ARTICLE ── */
-    .art-wrap{background:#fff;border-radius:24px;border:1.5px solid var(--border);
-      overflow:hidden;box-shadow:0 4px 28px rgba(14,165,233,.09);}
+    /* ── HERO ── */
+    .hero{
+      position:relative;border-radius:16px 16px 0 0;overflow:hidden;
+      height:420px;margin-bottom:0;
+    }
+    .hero img{width:100%;height:100%;object-fit:cover;display:block;}
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.08) 55%,transparent 100%);
+    }
+    .hero-cnt{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:28px 30px;
+    }
+    .hero-tag{
+      display:inline-block;background:var(--accent);
+      color:#fff;font-size:11px;font-weight:700;padding:4px 12px;
+      border-radius:99px;letter-spacing:.5px;font-family:'Rubik',sans-serif;
+      margin-bottom:12px;text-transform:uppercase;
+    }
+    .hero-title{
+      font-family:'Rubik',sans-serif;
+      font-size:clamp(19px,3vw,27px);
+      font-weight:800;color:#fff;line-height:1.28;
+      margin-bottom:16px;letter-spacing:-.3px;
+    }
+    .hero-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+    .hm-item{
+      display:flex;align-items:center;gap:6px;
+      font-size:13px;color:rgba(255,255,255,.8);font-family:'Rubik',sans-serif;
+    }
+    .hm-item svg{width:13px;height:13px;opacity:.7;flex-shrink:0;}
+    .hm-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;}
 
-    /* Hero */
-    .art-hero{position:relative;height:460px;overflow:hidden;}
-    .art-hero-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s;}
-    .art-wrap:hover .art-hero-img{transform:scale(1.02);}
-    .art-hero-overlay{position:absolute;inset:0;
-      background:linear-gradient(to top,rgba(4,18,46,.9) 0%,rgba(4,18,46,.1) 52%,transparent 100%);}
-    .art-hero-cnt{position:absolute;bottom:0;left:0;right:0;padding:36px 42px;}
-    .a-tags{display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap;}
-    .a-tag{background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
-      font-size:11.5px;font-weight:800;padding:5px 14px;border-radius:99px;
-      letter-spacing:.4px;font-family:'Poppins',sans-serif;}
-    .a-tag-o{background:rgba(255,255,255,.16);color:#fff;font-size:11.5px;font-weight:600;
-      padding:5px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.3);}
-    .a-title{font-family:'Poppins',sans-serif;font-size:clamp(22px,3.5vw,32px);
-      font-weight:900;color:#fff;line-height:1.28;margin-bottom:16px;}
-    .a-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-    .a-ava{width:42px;height:42px;border-radius:50%;object-fit:cover;
-      border:2.5px solid rgba(255,255,255,.4);flex-shrink:0;}
-    .a-aname{font-size:14px;font-weight:700;color:#fff;}
-    .a-arole{font-size:12px;color:rgba(255,255,255,.6);}
-    .a-date{font-size:13px;color:rgba(255,255,255,.7);}
-    .a-sep{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.35);}
-    .a-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);
-      color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:99px;}
+    /* ── ARTICLE BODY — no card, no border, flows from hero ── */
+    .art-body{
+      background:var(--surface);
+      padding:36px 38px 40px;
+    }
 
-    /* Body */
-    .art-body{padding:40px 44px;}
-    .a-lead{font-size:18.5px;font-weight:400;color:var(--text2);line-height:1.8;
-      border-left:4px solid var(--sky4);padding-left:22px;margin-bottom:32px;font-style:italic;}
-    .art-body h2{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;
-      color:var(--text);margin:38px 0 16px;display:flex;align-items:center;gap:11px;}
-    .art-body h2::before{content:'';width:5px;height:24px;border-radius:3px;flex-shrink:0;
-      background:linear-gradient(180deg,#38bdf8,#3b82f6);}
-    .art-body h3{font-family:'Poppins',sans-serif;font-size:17.5px;font-weight:800;
-      color:var(--text);margin:26px 0 10px;}
-    .art-body p{font-size:16px;color:var(--text);line-height:1.85;margin-bottom:18px;}
-    .art-body strong{color:var(--sky4);font-weight:800;}
+    /* Lead — removed blue left border */
+    .a-lead{
+      font-size:17px;color:var(--text2);line-height:1.88;
+      margin-bottom:32px;font-style:italic;font-weight:400;
+    }
 
-    /* Images */
-    .img-full{margin:28px 0;border-radius:18px;overflow:hidden;
-      border:1.5px solid var(--border);box-shadow:var(--card-sh);}
-    .img-full img{width:100%;display:block;max-height:400px;object-fit:cover;}
-    .img-cap{font-size:13px;color:var(--muted);padding:12px 16px;
-      background:var(--sky1);font-style:italic;line-height:1.5;}
+    /* Headings */
+    .art-body h2{
+      font-family:'Rubik',sans-serif;
+      font-size:20px;font-weight:700;
+      color:var(--text);margin:36px 0 12px;
+      letter-spacing:-.2px;line-height:1.3;
+    }
+    .art-body p{
+      font-size:15.5px;color:var(--text2);line-height:1.9;
+      margin-bottom:18px;font-weight:400;
+    }
+    .art-body strong{color:var(--text);font-weight:700;}
 
-    .img-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
-    .ip{border-radius:16px;overflow:hidden;border:1.5px solid var(--border);}
-    .ip img{width:100%;height:230px;object-fit:cover;display:block;}
-    .ip .img-cap{padding:10px 14px;}
+    /* Lists */
+    .art-body ul{
+      list-style:none;padding:0;margin:0 0 18px;
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .art-body ul li{
+      font-size:15.5px;color:var(--text2);line-height:1.75;
+      display:flex;align-items:flex-start;gap:10px;
+    }
+    .art-body ul li::before{
+      content:'';width:5px;height:5px;border-radius:50%;
+      background:var(--accent);flex-shrink:0;margin-top:10px;
+    }
 
-    .img-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:28px 0;}
-    .it{border-radius:14px;overflow:hidden;border:1.5px solid var(--border);}
-    .it img{width:100%;height:180px;object-fit:cover;display:block;}
-    .it .img-cap{padding:9px 12px;font-size:12px;}
-
-    /* Stats */
-    .stat-block{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-      background:linear-gradient(135deg,#e0f2fe,#dbeafe);
-      border-radius:18px;padding:24px;margin:30px 0;border:1.5px solid var(--blue2);}
-    .stat{text-align:center;}
-    .stat-v{font-family:'Poppins',sans-serif;font-size:26px;font-weight:900;
-      background:linear-gradient(135deg,#0ea5e9,#3b82f6);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;}
-    .stat-l{font-size:12px;color:var(--text2);margin-top:5px;font-weight:600;}
-
-    /* Quote */
-    .a-quote{background:var(--blue1);border-left:5px solid var(--sky4);
-      border-radius:0 16px 16px 0;padding:22px 28px;margin:28px 0;}
-    .a-quote p{font-size:17.5px;font-style:italic;color:var(--text);
-      font-weight:500;line-height:1.72;margin-bottom:10px;}
-    .a-quote cite{font-size:13px;color:var(--muted);font-style:normal;font-weight:700;}
-
-    /* Highlight box */
-    .h-box{background:linear-gradient(135deg,#e0f2fe,#dbeafe);
-      border:1.5px solid var(--blue2);border-radius:18px;padding:24px 28px;margin:28px 0;}
-    .h-box-ttl{font-family:'Poppins',sans-serif;font-size:15px;font-weight:900;
-      color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:9px;}
-    .h-box ul{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:9px;}
-    .h-box li{font-size:15.5px;color:var(--text2);line-height:1.62;
-      display:flex;align-items:flex-start;gap:11px;}
-    .h-box li::before{content:'✦';color:var(--sky4);font-size:12px;margin-top:5px;flex-shrink:0;}
-
-    /* Amber box */
-    .a-box{background:var(--amber1);border:1.5px solid var(--amber2);
-      border-radius:18px;padding:22px 26px;margin:28px 0;}
-    .a-box-ttl{font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:900;
-      color:#92400e;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
-    .a-box p{font-size:15px;color:#78350f;line-height:1.72;margin-bottom:0;}
-
-    /* Green box */
-    .g-box{background:var(--green1);border:1.5px solid var(--green2);
-      border-radius:18px;padding:22px 26px;margin:28px 0;}
-    .g-box-ttl{font-family:'Poppins',sans-serif;font-size:14.5px;font-weight:900;
-      color:#14532d;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
-    .g-box ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;}
-    .g-box li{font-size:15px;color:#166534;line-height:1.62;display:flex;gap:10px;align-items:flex-start;}
-    .g-box li::before{content:'●';color:var(--green3);font-size:10px;margin-top:6px;flex-shrink:0;}
+    /* Image */
+    .img-wrap{margin:24px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+    .img-wrap img{width:100%;display:block;max-height:380px;object-fit:cover;}
+    .img-cap{
+      font-size:12.5px;color:var(--muted);padding:9px 14px;
+      background:var(--bg);font-style:italic;line-height:1.5;
+      font-family:'Rubik',sans-serif;
+    }
+    .img-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0;}
+    .img-pair .img-wrap{margin:0;}
+    .img-pair .img-wrap img{max-height:200px;}
 
     /* Timeline */
-    .timeline{margin:28px 0;}
-    .tl{display:flex;gap:22px;padding-bottom:26px;position:relative;}
-    .tl::before{content:'';position:absolute;left:20px;top:42px;bottom:0;width:2px;
-      background:linear-gradient(180deg,var(--sky4),transparent);}
-    .tl:last-child::before{display:none;}
-    .tl-dot{width:40px;height:40px;border-radius:50%;flex-shrink:0;
-      background:linear-gradient(135deg,#38bdf8,#3b82f6);
-      display:flex;align-items:center;justify-content:center;
-      font-size:13px;font-weight:900;color:#fff;font-family:'Poppins',sans-serif;
-      box-shadow:0 4px 14px rgba(59,130,246,.3);}
-    .tl-dot.amber{background:linear-gradient(135deg,#f59e0b,#d97706);}
-    .tl-dot.green{background:linear-gradient(135deg,#22c55e,#16a34a);}
-    .tl-dot.red{background:linear-gradient(135deg,#f87171,#dc2626);}
-    .tl-dot.purple{background:linear-gradient(135deg,#a78bfa,#7c3aed);}
-    .tl-cnt{flex:1;padding-top:6px;}
-    .tl-yr{font-family:'Poppins',sans-serif;font-size:12px;font-weight:800;
-      color:var(--sky4);margin-bottom:4px;letter-spacing:.5px;}
-    .tl-ttl{font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;
-      color:var(--text);margin-bottom:6px;}
-    .tl-txt{font-size:14.5px;color:var(--muted);line-height:1.65;}
-
-    /* Table */
-    .a-tbl{width:100%;border-collapse:collapse;margin:24px 0;font-size:14.5px;}
-    .a-tbl th{background:linear-gradient(135deg,#e0f2fe,#dbeafe);
-      color:var(--text);font-weight:800;padding:13px 16px;text-align:left;
-      font-family:'Poppins',sans-serif;font-size:13px;}
-    .a-tbl td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text);line-height:1.45;}
-    .a-tbl tr:last-child td{border-bottom:none;}
-    .a-tbl tr:nth-child(even) td{background:#fafcff;}
-
-    /* Article footer */
-    .art-foot{border-top:1.5px solid var(--border);padding:24px 44px;
-      background:var(--bg);display:flex;align-items:center;
-      justify-content:space-between;flex-wrap:wrap;gap:16px;}
-    .foot-tags{display:flex;gap:9px;flex-wrap:wrap;}
-    .f-tag{padding:6px 16px;border-radius:99px;background:#fff;
-      border:1.5px solid var(--border);font-size:13px;font-weight:700;
-      color:var(--text2);cursor:pointer;transition:all .15s;}
-    .f-tag:hover{background:var(--blue1);border-color:var(--blue2);color:var(--blue4);}
-    .share-row{display:flex;align-items:center;gap:10px;}
-    .sh-lbl{font-size:13.5px;font-weight:700;color:var(--muted);}
-    .sh-btn{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--border);
-      background:#fff;display:flex;align-items:center;justify-content:center;
-      cursor:pointer;transition:all .18s;text-decoration:none;position:relative;}
-    .sh-btn svg{width:17px;height:17px;}
-    .sh-btn:hover{background:var(--sky1);border-color:var(--sky2);transform:translateY(-2px);box-shadow:0 4px 12px rgba(14,165,233,.18);}
-    .sh-btn.copied::after{content:'Disalin!';position:absolute;bottom:-28px;left:50%;
-      transform:translateX(-50%);background:var(--blue4);color:#fff;font-size:10px;
-      padding:3px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;font-family:'Poppins',sans-serif;}
-
-    /* ── SIDEBAR ── */
-    .sidebar{position:sticky;top:86px;display:flex;flex-direction:column;gap:18px;}
-    .sb-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px;}
-    .sb-ttl{font-family:'Poppins',sans-serif;font-size:15px;font-weight:900;
-      color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:9px;}
-    .promo{background:linear-gradient(135deg,#e0f2fe,#dbeafe);
-      border:1.5px solid var(--blue2);border-radius:20px;padding:22px;}
-    .promo-ico{font-size:28px;margin-bottom:10px;}
-    .promo-ttl{font-family:'Poppins',sans-serif;font-size:16px;font-weight:900;
-      color:var(--text);margin-bottom:7px;}
-    .promo-sub{font-size:13.5px;color:var(--text2);line-height:1.6;margin-bottom:16px;}
-    .promo-btn{display:inline-block;padding:10px 22px;border-radius:12px;
-      background:linear-gradient(135deg,#38bdf8,#3b82f6);color:#fff;
-      font-size:13.5px;font-weight:800;font-family:'DM Sans',sans-serif;
-      text-decoration:none;transition:all .2s;border:none;cursor:pointer;}
-    .promo-btn:hover{box-shadow:0 5px 18px rgba(59,130,246,.38);transform:translateY(-2px);}
-    .rel-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);
-      cursor:pointer;transition:.15s;text-decoration:none;}
-    .rel-item:last-child{border-bottom:none;padding-bottom:0;}
-    .rel-item:hover .rel-ttl{color:var(--blue4);}
-    .rel-img{width:72px;height:72px;border-radius:11px;object-fit:cover;flex-shrink:0;}
-    .rel-tag{font-size:10.5px;font-weight:800;color:var(--blue4);background:var(--blue1);
-      padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:5px;}
-    .rel-ttl{font-size:13px;font-weight:700;color:var(--text);line-height:1.4;}
-    .rel-meta{font-size:11px;color:var(--muted);margin-top:4px;}
-    .tr-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;
-      border-bottom:1px solid var(--border);cursor:pointer;transition:.15s;}
-    .tr-item:last-child{border-bottom:none;padding-bottom:0;}
-    .tr-item:hover .tr-ttl{color:var(--blue4);}
-    .tr-n{font-family:'Poppins',sans-serif;font-size:24px;font-weight:900;
-      color:var(--blue2);line-height:1;flex-shrink:0;min-width:30px;}
-    .tr-ttl{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.4;}
-    .tr-cat{font-size:11.5px;color:var(--muted);margin-top:3px;}
-
-    /* TOC */
-    .toc{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:20px;}
-    .toc-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;
-      border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;transition:.15s;}
-    .toc-item:last-child{border-bottom:none;padding-bottom:0;}
-    .toc-item:hover .toc-ttl{color:var(--blue4);}
-    .toc-n{font-family:'Poppins',sans-serif;font-size:13px;font-weight:800;
-      color:var(--blue3);flex-shrink:0;min-width:22px;}
-    .toc-ttl{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;}
-
-    /* ── SITE FOOTER ── */
-    .site-footer{background:#0c1e35;color:#fff;}
-    .footer-top{max-width:1180px;margin:0 auto;padding:56px 32px 40px;
-      display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;}
-    .ft-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px;}
-    .ft-logo-ico{width:40px;height:40px;border-radius:13px;
-      background:linear-gradient(135deg,#38bdf8,#3b82f6);
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 4px 14px rgba(59,130,246,.32);}
-    .ft-logo-txt{font-family:'Poppins',sans-serif;font-weight:900;font-size:20px;color:#fff;}
-    .ft-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.78;margin-bottom:22px;}
-    .ft-socials{display:flex;gap:10px;}
-    .ft-soc{width:38px;height:38px;border-radius:10px;
-      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;transition:all .18s;text-decoration:none;}
-    .ft-soc svg{width:16px;height:16px;}
-    .ft-soc:hover{background:var(--sky4);border-color:var(--sky4);}
-    .ft-col-ttl{font-family:'Poppins',sans-serif;font-size:13.5px;font-weight:900;
-      color:#fff;margin-bottom:16px;letter-spacing:.3px;}
-    .ft-links{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;}
-    .ft-links li a{font-size:13.5px;color:rgba(255,255,255,.52);text-decoration:none;transition:.15s;}
-    .ft-links li a:hover{color:var(--sky3);}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,.08);
-      max-width:1180px;margin:0 auto;padding:20px 32px;
-      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-    .fb-copy{font-size:13px;color:rgba(255,255,255,.38);}
-    .fb-links{display:flex;gap:20px;}
-    .fb-links a{font-size:13px;color:rgba(255,255,255,.38);text-decoration:none;transition:.15s;}
-    .fb-links a:hover{color:var(--sky3);}
-
-    /* Fade up */
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .fu{animation:fadeUp .55s ease both;}
-    .d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
-
-    @media(max-width:1100px){
-      .art-layout{grid-template-columns:1fr;} .sidebar{position:relative;top:0;}
-      .footer-top{grid-template-columns:1fr 1fr;}
+    .timeline{margin:24px 0;display:flex;flex-direction:column;}
+    .tl{display:flex;gap:16px;padding-bottom:22px;position:relative;}
+    .tl::before{
+      content:'';position:absolute;left:13px;top:32px;bottom:0;width:2px;
+      background:linear-gradient(180deg,var(--accent-mid),transparent);
     }
-    @media(max-width:720px){
-      .navbar{padding:0 16px;} .n-links{display:none;}
-      .art-layout{padding:16px 0 40px;} .page{padding:0 16px;}
-      .a-title{font-size:20px;} .art-hero{height:260px;} .art-hero-cnt{padding:20px;}
-      .art-body{padding:22px 18px;} .stat-block{grid-template-columns:1fr 1fr;}
-      .img-pair,.img-trio{grid-template-columns:1fr;} .art-foot{padding:18px;}
-      .footer-top{grid-template-columns:1fr;gap:32px;padding:40px 20px 28px;}
-      .footer-bottom{padding:18px 20px;flex-direction:column;text-align:center;}
+    .tl:last-child::before{display:none;}
+    .tl-dot{
+      width:28px;height:28px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(37,99,235,.28);
+    }
+    .tl-dot svg{width:12px;height:12px;color:#fff;}
+    .tl-body{flex:1;padding-top:3px;}
+    .tl-yr{font-family:'Rubik',sans-serif;font-size:11px;font-weight:700;color:var(--accent);margin-bottom:2px;letter-spacing:.6px;text-transform:uppercase;}
+    .tl-ttl{font-family:'Rubik',sans-serif;font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:3px;}
+    .tl-txt{font-size:13.5px;color:var(--muted);line-height:1.65;font-family:'Rubik',sans-serif;}
+
+    /* Quote */
+    .a-quote{
+      border-left:3px solid var(--accent);padding:16px 20px;margin:26px 0;
+      background:var(--accent-light);border-radius:0 10px 10px 0;
+    }
+    .a-quote p{font-family:'Rubik',sans-serif;font-size:16px;font-style:italic;color:var(--text2);line-height:1.72;margin-bottom:8px;}
+    .a-quote cite{font-size:12px;color:var(--muted);font-style:normal;font-weight:600;}
+
+    /* Info box */
+    .info-box{background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:12px;padding:18px 20px;margin:24px 0;}
+    .info-box-ttl{font-family:'Rubik',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;}
+    .info-box ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0;}
+    .info-box li{font-size:14.5px;color:var(--text2);line-height:1.65;display:flex;align-items:flex-start;gap:8px;font-family:'Rubik',sans-serif;}
+    .info-box li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:8px;}
+
+    /* Location card */
+    .loc-card{
+      margin:32px 0 8px;border:1px solid var(--border);border-radius:14px;
+      overflow:hidden;background:#fff;
+    }
+    .loc-header{
+      background:#1e3a5f;padding:14px 20px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .loc-header svg{width:16px;height:16px;color:#93c5fd;flex-shrink:0;}
+    .loc-header-txt{font-family:'Rubik',sans-serif;font-size:14px;font-weight:700;color:#fff;}
+    .loc-body{padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
+    .loc-row{display:flex;align-items:flex-start;gap:10px;}
+    .loc-row svg{width:14px;height:14px;color:var(--muted);flex-shrink:0;margin-top:2px;}
+    .loc-row-txt{font-size:14px;color:var(--text2);line-height:1.55;font-family:'Rubik',sans-serif;}
+    .loc-row-txt strong{color:var(--text);font-weight:600;}
+    .loc-map-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 20px;border-radius:9px;margin-top:6px;
+      background:#1e3a5f;color:#fff;
+      font-size:13.5px;font-weight:600;font-family:'Rubik',sans-serif;
+      text-decoration:none;transition:all .2s;align-self:flex-start;
+      border:none;cursor:pointer;
+    }
+    .loc-map-btn:hover{background:#162d4a;box-shadow:0 4px 16px rgba(30,58,95,.35);transform:translateY(-1px);}
+    .loc-map-btn svg{width:14px;height:14px;color:#93c5fd;}
+
+    /* ── ARTICLE FOOTER (tags + share) ── */
+    .art-foot{
+      background:var(--surface);
+      border-top:1px solid var(--border);
+      padding:20px 38px 28px;
+      display:flex;align-items:center;
+      justify-content:space-between;flex-wrap:wrap;gap:14px;
+    }
+    .foot-tags{display:flex;gap:7px;flex-wrap:wrap;}
+    .f-tag{
+      padding:5px 12px;border-radius:99px;background:var(--bg);
+      border:1px solid var(--border);font-size:12px;font-weight:600;
+      color:var(--text2);cursor:pointer;transition:all .15s;font-family:'Rubik',sans-serif;
+    }
+    .f-tag:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+
+    /* Share */
+    .share-row{display:flex;align-items:center;gap:8px;}
+    .share-lbl{font-size:13px;font-weight:600;color:var(--muted);font-family:'Rubik',sans-serif;}
+    .sh-btn{
+      width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+      background:#fff;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:all .15s;text-decoration:none;position:relative;
+    }
+    .sh-btn svg{width:15px;height:15px;}
+    .sh-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);transform:translateY(-1px);}
+    /* Toast */
+    .toast{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+      background:#1a1a1a;color:#fff;font-family:'Rubik',sans-serif;font-size:13px;
+      font-weight:500;padding:10px 20px;border-radius:99px;
+      opacity:0;pointer-events:none;transition:all .25s;z-index:999;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    /* Divider after article */
+    .art-end{height:1px;background:var(--border);margin:0;}
+
+    /* ── RELATED ── */
+    .related-section{padding:36px 0 20px;}
+    .rel-heading{font-family:'Rubik',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-.2px;}
+    .rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .rel-item{
+      background:#fff;border:1px solid var(--border);border-radius:12px;
+      overflow:hidden;text-decoration:none;transition:all .18s;display:block;
+    }
+    .rel-item:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);}
+    .rel-img{width:100%;height:120px;object-fit:cover;display:block;}
+    .rel-body{padding:12px 14px;}
+    .rel-tag{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:6px;font-family:'Rubik',sans-serif;}
+    .rel-ttl{font-size:13px;font-weight:600;color:var(--text);line-height:1.38;font-family:'Rubik',sans-serif;}
+    .rel-date{font-size:11px;color:var(--muted);margin-top:5px;font-family:'Rubik',sans-serif;}
+
+    /* ── FOOTER ── */
+    .site-footer{
+      background:#fff;
+      border-top:1px solid var(--border);
+      margin-top:48px;
+    }
+    .footer-inner{
+      max-width:740px;margin:0 auto;padding:28px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:20px;
+    }
+    .ft-brand{display:flex;align-items:center;gap:9px;}
+    .ft-ico{
+      width:30px;height:30px;border-radius:8px;
+      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .ft-ico svg{width:14px;height:14px;}
+    .ft-name{font-family:'Rubik',sans-serif;font-weight:800;font-size:16px;color:var(--text);}
+    .ft-links-row{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+    .ft-link{font-size:13.5px;color:var(--muted);text-decoration:none;font-family:'Rubik',sans-serif;transition:.15s;padding:6px 10px;border-radius:7px;}
+    .ft-link:hover{color:var(--accent);background:var(--accent-light);}
+    .footer-bottom{
+      border-top:1px solid var(--border);
+      max-width:740px;margin:0 auto;
+      padding:14px 20px;
+    }
+    .fb-copy{font-size:12.5px;color:var(--muted);font-family:'Rubik',sans-serif;}
+
+    @media(max-width:680px){
+      .navbar{padding:0 16px;}
+      .hero{height:260px;border-radius:12px 12px 0 0;}
+      .hero-cnt{padding:16px 18px;}
+      .art-body{padding:22px 18px 24px;}
+      .art-foot{padding:16px 18px 22px;}
+      .img-pair{grid-template-columns:1fr;}
+      .rel-grid{grid-template-columns:1fr;}
+      .footer-inner{flex-direction:column;align-items:flex-start;gap:14px;}
     }
   </style>
 </head>
 <body>
 
-<!-- PROGRESS -->
 <div class="rp"><div class="rp-bar" id="rbar"></div></div>
+<div class="toast" id="toast">Tautan berhasil disalin!</div>
 
 <!-- NAVBAR -->
 <nav class="navbar">
   <a class="n-logo" href="index.html">
     <div class="n-logo-ico">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     </div>
-    <span class="n-logo-txt">Nawaku</span>
+    <span class="n-logo-txt">crbon.id</span>
   </a>
-  <a class="n-back" href="index.html">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    Kembali
-  </a>
-  <div class="n-flex">
-    <nav class="n-links">
-      <a class="n-link" href="index.html">Beranda</a>
-      <a class="n-link active" href="#">Sejarah</a>
-      <a class="n-link" href="#">Budaya</a>
-      <a class="n-link" href="#">Nusantara</a>
-      <a class="n-link" href="#">Analisis</a>
-    </nav>
-  </div>
-  <button class="n-btn">📨 Newsletter</button>
+  <nav class="n-links">
+    <a class="n-link" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Beranda
+    </a>
+    <a class="n-link active" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Sejarah
+    </a>
+    <a class="n-link" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Kawasan
+    </a>
+    <a class="n-link" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Tokoh
+    </a>
+    <!-- More dropdown -->
+    <div class="n-more" id="nMore">
+      <button class="n-more-btn" onclick="toggleMore()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+      <div class="n-dropdown">
+        <a class="n-dd-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Tentang
+        </a>
+        <a class="n-dd-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Newsletter
+        </a>
+        <a class="n-dd-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Cari
+        </a>
+      </div>
+    </div>
+  </nav>
 </nav>
-
-<!-- TICKER -->
-<div class="ticker">
-  <span class="t-label">TRUSMI</span>
-  <div style="overflow:hidden;flex:1;">
-    <div class="t-track">
-      <span class="t-item">🎨 Trusmi — Kampung Batik tertua di Cirebon sejak abad ke-15</span>
-      <span class="t-item">🕌 Ki Gede Trusmi, penyebar Islam sekaligus pendiri komunitas pembatik pertama</span>
-      <span class="t-item">🌟 Batik Mega Mendung dari Trusmi diakui UNESCO sebagai Warisan Budaya Dunia (2009)</span>
-      <span class="t-item">🏘️ Lebih dari 3.000 pengrajin batik aktif berpusat di Trusmi hingga kini</span>
-      <span class="t-item">🎨 Trusmi — Kampung Batik tertua di Cirebon sejak abad ke-15</span>
-      <span class="t-item">🕌 Ki Gede Trusmi — wali & tokoh spiritual paling berpengaruh di Trusmi</span>
-    </div>
-  </div>
-</div>
 
 <!-- PAGE -->
 <div class="page">
-  <div class="breadcrumb fu">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
     <a class="bc" href="index.html">Beranda</a>
     <span class="bc-sep">›</span>
-    <a class="bc" href="#">Sejarah</a>
+    <a class="bc" href="#">Lemahwungkuk</a>
     <span class="bc-sep">›</span>
-    <a class="bc" href="#">Cirebon</a>
-    <span class="bc-sep">›</span>
-    <span class="bc active">Sejarah Trusmi</span>
+    <span class="bc active">Gedung BAT Cirebon</span>
   </div>
 
-  <div class="art-layout">
-
-    <!-- ══ ARTICLE ══ -->
-    <article class="art-wrap fu">
-      <div class="art-hero">
-        <img class="art-hero-img"
-          src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=1200&q=88"
-          alt="Batik Trusmi Cirebon"/>
-        <div class="art-hero-overlay"></div>
-        <div class="art-hero-cnt">
-          <div class="a-tags">
-            <span class="a-tag">BUDAYA & SEJARAH</span>
-            <span class="a-tag-o">Cirebon</span>
-            <span class="a-tag-o">Batik</span>
-            <span class="a-tag-o">Warisan Budaya</span>
-          </div>
-          <div class="a-title">Bukan Cuma Pusat Oleh-oleh: Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu</div>
-          <div class="a-meta">
-            <img class="a-ava" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Nawaku Editorial"/>
-            <div>
-              <div class="a-aname">Nawaku Editorial</div>
-              <div class="a-arole">Tim Sejarah & Budaya · Nawaku.com</div>
-            </div>
-            <span class="a-sep"></span>
-            <span class="a-date">📅 Rabu, 4 Juni 2025 · 09:00 WIB</span>
-            <span class="a-sep"></span>
-            <span class="a-badge">⏱ 12 menit baca</span>
-          </div>
-        </div>
+  <!-- HERO — borderless top, merges into article body -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=88" alt="Gedung BAT Cirebon"/>
+    <div class="hero-overlay"></div>
+    <div class="hero-cnt">
+      <span class="hero-tag">Lemahwungkuk · Cagar Budaya</span>
+      <div class="hero-title">Sejarah Gedung BAT Cirebon: Saksi Bisu Kejayaan Industri Rokok di Kota Udang</div>
+      <div class="hero-meta">
+        <span class="hm-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Editor crbon.id
+        </span>
+        <span class="hm-sep"></span>
+        <span class="hm-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          17 Mei 2025
+        </span>
+        <span class="hm-sep"></span>
+        <span class="hm-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          8 menit baca
+        </span>
       </div>
-
-      <div class="art-body">
-
-        <p class="a-lead">
-          Kalau dengar kata "Trusmi", mungkin yang langsung terbayang adalah deretan toko yang jualan baju dan kain batik buat oleh-oleh habis liburan dari Cirebon. Nggak salah memang. Tapi, di balik hiruk-pikuk orang menawar daster atau kemeja batik, Trusmi sebenarnya menyimpan cerita sejarah dan spiritual yang usianya sudah lebih dari enam abad.
-        </p>
-
-        <div class="stat-block">
-          <div class="stat">
-            <div class="stat-v">± abad 15</div>
-            <div class="stat-l">Awal Mula Trusmi</div>
-          </div>
-          <div class="stat">
-            <div class="stat-v">3.000+</div>
-            <div class="stat-l">Pengrajin Batik Aktif</div>
-          </div>
-          <div class="stat">
-            <div class="stat-v">2009</div>
-            <div class="stat-l">Pengakuan UNESCO</div>
-          </div>
-          <div class="stat">
-            <div class="stat-v">600+</div>
-            <div class="stat-l">Tahun Tradisi Membatik</div>
-          </div>
-        </div>
-
-        <h2 id="s1">Nama yang Ternyata Jadi Doa</h2>
-        <p>Nama <strong>"Trusmi"</strong> sendiri diyakini diambil dari bahasa Jawa Kuno, yaitu <em>terus</em> dan <em>semi</em>, yang artinya <strong>selalu tumbuh atau bertunas</strong>. Nama yang ternyata jadi doa, karena kampung ini memang nggak pernah mati tergerus zaman.</p>
-
-        <div class="img-full">
-          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1000&q=85" alt="Suasana Kampung Trusmi Cirebon"/>
-          <div class="img-cap">📸 Kampung Trusmi yang terus "bersemi" — dari era dakwah abad ke-15 hingga menjadi pusat batik nasional yang hidup hari ini. (Foto: Unsplash)</div>
-        </div>
-
-        <h2 id="s2">Bermula dari Dakwah dan Ibadah</h2>
-        <p>Jauh sebelum jadi pusat ekonomi, Trusmi di abad ke-15 adalah pusat dakwah. Semuanya bermula dari sosok <strong>Ki Gede Trusmi</strong>, murid sekaligus kerabat Sunan Gunung Jati. Beliau punya cara yang unik banget buat menyebarkan agama Islam — bukannya menghapus budaya lokal yang sudah ada, Ki Gede Trusmi justru <strong>menjadikan seni batik sebagai media dakwahnya</strong>.</p>
-
-        <div class="img-pair">
-          <div class="ip">
-            <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&q=85" alt="Kompleks makam Ki Gede Trusmi"/>
-            <div class="img-cap">📸 Kompleks makam Ki Gede Trusmi yang masih ramai diziarahi ribuan peziarah setiap minggunya, khususnya tiap Senin dan Kamis.</div>
-          </div>
-          <div class="ip">
-            <img src="https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=85" alt="Masjid bersejarah Trusmi"/>
-            <div class="img-cap">📸 Masjid kuno yang menjadi bagian dari kompleks Ki Gede Trusmi, saksi bisu perpaduan Islam dan tradisi lokal sejak abad ke-15.</div>
-          </div>
-        </div>
-
-        <p>Makanya, buat orang-orang tua di sana, membatik itu bukan sekadar urusan cari uang — tapi <strong>bagian dari ibadah</strong>. Dulu, para pembatik selalu mandi dan ambil air wudu sebelum mulai menggoreskan canting di atas kain. Setiap goresan malam (lilin) diiringi dengan doa dan ketenangan jiwa.</p>
-
-        <div class="a-quote">
-          <p>"Membatik adalah ibadah. Setiap goresan canting adalah doa. Itulah mengapa para pembatik tua di Trusmi selalu mandi dan berwudhu sebelum mulai bekerja — sebuah tradisi yang sebagian masih dipertahankan hingga hari ini."</p>
-          <cite>— Dr. Nana Supriatna, Ahli Sejarah & Kebudayaan Cirebon</cite>
-        </div>
-
-        <h2 id="s3">Mega Mendung dan Bukti Toleransi Budaya</h2>
-        <p>Karena posisi Cirebon dulunya adalah kota pelabuhan yang sibuk, budaya dari luar pun masuk dan membaur dengan sangat luwes di atas selembar kain batik Trusmi. Kita bisa melihat unsur <strong>Sunda</strong> lewat warna-warna alamnya, filosofi <strong>Jawa</strong> pada tekniknya, gaya geometris khas <strong>Islam/Arab</strong>, sampai pengaruh <strong>Tionghoa</strong>.</p>
-
-        <div class="img-full">
-          <img src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=1000&q=85" alt="Batik Mega Mendung Trusmi"/>
-          <div class="img-cap">📸 Motif Mega Mendung — awan berlapis dengan gradasi 7 warna — adalah bukti nyata bagaimana budaya Tionghoa dan filosofi Sufi berpadu menjadi satu karya di atas kain. (Foto: Unsplash)</div>
-        </div>
-
-        <p>Contoh paling nyatanya apalagi kalau bukan motif <strong>Mega Mendung</strong>. Motif awan berlapis ini terinspirasi dari keramik Tiongkok, tapi diolah dengan filosofi Sufi. Idealnya, Mega Mendung punya <strong>7 lapisan gradasi warna</strong> yang melambangkan 7 tingkatan langit dan proses jiwa manusia menuju Sang Pencipta.</p>
-
-        <div class="h-box">
-          <div class="h-box-ttl">🎨 Motif-Motif Ikonik Batik Trusmi</div>
-          <ul>
-            <li><strong>Mega Mendung:</strong> Motif awan berlapis terinspirasi dari keramik Tiongkok, diolah dengan filosofi Sufi. Setiap lapisan melambangkan tingkatan kesabaran dan perjalanan jiwa.</li>
-            <li><strong>Paksinaga Liman:</strong> Gabungan burung (paksi), naga, dan gajah (liman) — simbol kebijaksanaan dan kekuatan keraton zaman dulu.</li>
-            <li><strong>Singa Barong:</strong> Singa bersayap adaptasi ikonografi Hindu-Jawa yang telah diislamisasi dalam konteks budaya Cirebon.</li>
-            <li><strong>Patran Keris:</strong> Deretan lekukan seperti bilah keris, melambangkan keberanian dan keteguhan prinsip.</li>
-            <li><strong>Taman Teratai:</strong> Kolam teratai dari taman keraton Cirebon — metafora kemurnian jiwa di tengah dunia yang penuh godaan.</li>
-          </ul>
-        </div>
-
-        <div class="img-trio">
-          <div class="it">
-            <img src="https://images.unsplash.com/photo-1596392927852-2a18c336fb52?w=400&q=85" alt="Motif Mega Mendung"/>
-            <div class="img-cap">🌊 Motif Mega Mendung</div>
-          </div>
-          <div class="it">
-            <img src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?w=400&q=85" alt="Proses membatik tulis"/>
-            <div class="img-cap">✍️ Batik Tulis Tradisional</div>
-          </div>
-          <div class="it">
-            <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&q=85" alt="Keraton Cirebon"/>
-            <div class="img-cap">🏰 Batik & Keraton Cirebon</div>
-          </div>
-        </div>
-
-        <h2 id="s4">Perlawanan Sunyi di Masa Penjajahan</h2>
-        <p>Pernah kepikiran nggak, kenapa batik Trusmi bisa selamat dari kerasnya zaman penjajahan Belanda? Jawabannya ada pada <strong>para perempuan dan ibu rumah tangga</strong>.</p>
-
-        <p>Di daerah lain, batik mungkin sangat bergantung pada perlindungan keraton atau istana. Tapi di Trusmi, tradisi ini hidup subur di teras-teras rumah warga biasa. Jadi, ketika pemerintah kolonial melucuti kekuasaan politik keraton-keraton Cirebon, <strong>kampung batik ini tetap merdeka</strong>. Ibu-ibu di sana tetap membatik dan mengajarkan cara memegang canting ke anak cucunya.</p>
-
-        <div class="a-quote">
-          <p>"Ini seperti sebuah bentuk perlawanan diam-diam: ketika politik dibungkam, budaya yang bicara."</p>
-          <cite>— Prof. Dr. Tjetjep Rohendi, Budayawan dan Akademisi Sejarah Seni Nusantara</cite>
-        </div>
-
-        <h2 id="s5">Tradisi yang Masih Bernapas</h2>
-        <p>Sampai detik ini, Trusmi bukan cuma sekadar kawasan industri — tapi juga <strong>kampung adat yang masih sangat menjaga warisan spiritualnya</strong>. Kompleks makam Ki Gede Trusmi selalu ramai didatangi peziarah, terutama tiap hari Senin dan Kamis.</p>
-
-        <div class="img-full">
-          <img src="https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=1000&q=85" alt="Tradisi dan ritual adat Trusmi"/>
-          <div class="img-cap">📸 Suasana ziarah dan prosesi adat di Trusmi mencerminkan perpaduan indah antara Islam dan budaya lokal yang telah berakar ratusan tahun. (Foto: Unsplash)</div>
-        </div>
-
-        <p>Setiap bulan Maulid Nabi (Muludan), ada tradisi <strong>Pengarongan</strong> di mana warga beriringan membawa sesaji makanan tradisional ke makam. Belum lagi upacara <strong>Ganti Sirap</strong>, yaitu momen gotong-royong mengganti atap kayu makam yang dilakukan meriah setiap delapan tahun sekali.</p>
-
-        <div class="a-box">
-          <div class="a-box-ttl">📅 Tradisi Adat yang Masih Hidup di Trusmi</div>
-          <p><strong>Ganti Sirap</strong> — mengganti atap sirap kayu makam Ki Gede Trusmi secara gotong-royong, digelar setiap 8 tahun sekali di bulan Syawal. <strong>Pengarongan</strong> — prosesi membawa sesaji ke makam setiap peringatan Maulid Nabi. Ziarah rutin tiap <strong>Senin dan Kamis</strong> oleh ribuan peziarah dari berbagai daerah.</p>
-        </div>
-
-        <h2 id="s6">Trusmi Hari Ini</h2>
-        <p>Sekarang, dengan lebih dari <strong>3.000 pengrajin yang masih aktif</strong>, Trusmi menghadapi tantangan baru. Mereka harus bersaing dengan gempuran batik <em>printing</em> pabrik yang harganya jauh lebih murah, ditambah anak muda yang mungkin butuh waktu buat tertarik meneruskan tradisi rumit ini.</p>
-
-        <div class="img-pair">
-          <div class="ip">
-            <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=85" alt="Pasar Batik Trusmi"/>
-            <div class="img-cap">📸 Deretan toko batik sepanjang Jalan Trusmi — dari oleh-oleh terjangkau hingga batik tulis premium bernilai jutaan rupiah per lembar.</div>
-          </div>
-          <div class="ip">
-            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=85" alt="Pengrajin Batik Trusmi"/>
-            <div class="img-cap">📸 Pengrajin batik tulis Trusmi, kebanyakan perempuan, terus mempertahankan teknik tradisional yang diwariskan turun-temurun.</div>
-          </div>
-        </div>
-
-        <p>Tapi, seperti namanya yang "terus bersemi", selalu ada cara buat bertahan. Banyak anak muda Cirebon yang mulai bangga pakai batik, memasarkannya lewat media sosial ke pasar global, sampai bikin kolaborasi dengan desainer kekinian.</p>
-
-        <div class="g-box">
-          <div class="g-box-ttl">✅ Trusmi dalam Angka — 2024</div>
-          <ul>
-            <li>Lebih dari 3.000 pengrajin batik aktif di kawasan Trusmi dan sekitarnya.</li>
-            <li>Ratusan toko dan galeri batik di sepanjang Jalan Trusmi — salah satu pasar batik terbesar di Indonesia.</li>
-            <li>Batik Trusmi diekspor ke lebih dari 30 negara, dengan pasar utama di Eropa, Timur Tengah, dan Jepang.</li>
-            <li>Sekitar 500.000 kunjungan wisatawan per tahun ke kawasan Trusmi.</li>
-            <li>Ditetapkan pemerintah sebagai Kampung Batik Nasional dan kawasan ekonomi kreatif prioritas.</li>
-          </ul>
-        </div>
-
-        <h2 id="s7">Warisan yang Nggak Perlu Disimpan di Lemari Kaca</h2>
-        <p>Trusmi membuktikan kalau warisan budaya itu nggak harus kaku dan disimpan di dalam lemari kaca museum. Ia bisa tetap hidup, dipakai sehari-hari, dan terus membatik jalan ceritanya sendiri ke masa depan.</p>
-
-        <p>Jadi, lain kali kamu mampir ke Trusmi dan sibuk menawar kemeja batik atau daster untuk oleh-oleh, luangkan sebentar untuk melihat lebih jauh. Di balik setiap toko yang ramai, ada warisan enam abad yang masih bernapas — dalam setiap goresan canting, dalam setiap lapisan awan Mega Mendung, dan dalam doa-doa sunyi para ibu yang mengajarkan anaknya cara membatik. <strong>Itu bukan sekadar kain. Itu adalah Trusmi.</strong></p>
-
-      </div>
-
-      <!-- Article Footer -->
-      <div class="art-foot">
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:9px;">Topik Terkait:</div>
-          <div class="foot-tags">
-            <span class="f-tag">#Trusmi</span>
-            <span class="f-tag">#BatikCirebon</span>
-            <span class="f-tag">#MegaMendung</span>
-            <span class="f-tag">#Sejarah</span>
-            <span class="f-tag">#WarisanBudaya</span>
-            <span class="f-tag">#UNESCO</span>
-            <span class="f-tag">#Nusantara</span>
-          </div>
-        </div>
-        <div class="share-row">
-          <span class="sh-lbl">Bagikan:</span>
-          <!-- Twitter/X -->
-          <a class="sh-btn" href="#" title="Bagikan ke X (Twitter)" onclick="shareTwitter(event)">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#000;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <!-- WhatsApp -->
-          <a class="sh-btn" href="#" title="Bagikan ke WhatsApp" onclick="shareWhatsApp(event)">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          </a>
-          <!-- Facebook -->
-          <a class="sh-btn" href="#" title="Bagikan ke Facebook" onclick="shareFacebook(event)">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1877F2;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <!-- Copy Link -->
-          <a class="sh-btn" id="sh-copy" href="#" title="Salin tautan" onclick="copyLink(event)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--blue4);"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- ══ SIDEBAR ══ -->
-    <aside class="sidebar fu d1">
-
-      <!-- TOC -->
-      <div class="toc">
-        <div class="sb-ttl">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sky4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Daftar Isi
-        </div>
-        <a class="toc-item" href="#s1"><span class="toc-n">01</span><span class="toc-ttl">Asal-Usul Nama Trusmi</span></a>
-        <a class="toc-item" href="#s2"><span class="toc-n">02</span><span class="toc-ttl">Ki Gede Trusmi — Pendiri & Wali</span></a>
-        <a class="toc-item" href="#s3"><span class="toc-n">03</span><span class="toc-ttl">Lahirnya Tradisi Batik Trusmi</span></a>
-        <a class="toc-item" href="#s4"><span class="toc-n">04</span><span class="toc-ttl">Perkembangan dari Kampung ke Sentra</span></a>
-        <a class="toc-item" href="#s5"><span class="toc-n">05</span><span class="toc-ttl">Persilangan Budaya dalam Batik</span></a>
-        <a class="toc-item" href="#s6"><span class="toc-n">06</span><span class="toc-ttl">Tradisi Ziarah & Ritual Adat</span></a>
-        <a class="toc-item" href="#s7"><span class="toc-n">07</span><span class="toc-ttl">Masa Kolonial — Bertahan</span></a>
-        <a class="toc-item" href="#s8"><span class="toc-n">08</span><span class="toc-ttl">Batik Mega Mendung — Ikon Dunia</span></a>
-        <a class="toc-item" href="#s9"><span class="toc-n">09</span><span class="toc-ttl">Trusmi Hari Ini</span></a>
-        <a class="toc-item" href="#s10"><span class="toc-n">10</span><span class="toc-ttl">Tantangan & Harapan</span></a>
-      </div>
-
-      <!-- Promo -->
-      <div class="promo">
-        <div class="promo-ico">🎨</div>
-        <div class="promo-ttl">Nawaku Budaya</div>
-        <div class="promo-sub">Jelajahi arsip lengkap artikel sejarah dan budaya Nusantara — dari Aceh hingga Papua, dari kerajaan kuno hingga warisan masa kini.</div>
-        <button class="promo-btn">Akses Gratis 14 Hari 🚀</button>
-      </div>
-
-      <!-- Related -->
-      <div class="sb-card">
-        <div class="sb-ttl">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sky4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          Artikel Terkait
-        </div>
-        <a class="rel-item" href="#">
-          <img class="rel-img" src="https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=80" alt=""/>
-          <div><span class="rel-tag">Sejarah</span><div class="rel-ttl">Keraton Kasepuhan: Jantung Peradaban Cirebon yang Masih Berdetak</div><div class="rel-meta">2 hari lalu</div></div>
-        </a>
-        <a class="rel-item" href="#">
-          <img class="rel-img" src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=200&q=80" alt=""/>
-          <div><span class="rel-tag">Budaya</span><div class="rel-ttl">Sunan Gunung Jati: Wali yang Membangun Negeri</div><div class="rel-meta">4 hari lalu</div></div>
-        </a>
-        <a class="rel-item" href="#">
-          <img class="rel-img" src="https://images.unsplash.com/photo-1596392927852-2a18c336fb52?w=200&q=80" alt=""/>
-          <div><span class="rel-tag">Wisata</span><div class="rel-ttl">Panduan Wisata Batik Trusmi: Tips dan Rekomendasi Terbaik</div><div class="rel-meta">1 minggu lalu</div></div>
-        </a>
-        <a class="rel-item" href="#">
-          <img class="rel-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=80" alt=""/>
-          <div><span class="rel-tag">Nusantara</span><div class="rel-ttl">Wali Songo: Sembilan Penyebar Islam yang Mengubah Nusantara</div><div class="rel-meta">10 hari lalu</div></div>
-        </a>
-      </div>
-
-      <!-- Trending -->
-      <div class="sb-card">
-        <div class="sb-ttl">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sky4)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-          Trending di Nawaku
-        </div>
-        <div class="tr-item"><div class="tr-n">1</div><div><div class="tr-ttl">Majapahit: Kejayaan dan Keruntuhan Kekaisaran Nusantara</div><div class="tr-cat">Sejarah · 18K dibaca</div></div></div>
-        <div class="tr-item"><div class="tr-n">2</div><div><div class="tr-ttl">Jalur Rempah: Ketika Indonesia Menguasai Dunia</div><div class="tr-cat">Perdagangan · 12K dibaca</div></div></div>
-        <div class="tr-item"><div class="tr-n">3</div><div><div class="tr-ttl">Sejarah Batavia: Dari Sunda Kelapa ke Jakarta</div><div class="tr-cat">Kolonial · 9K dibaca</div></div></div>
-        <div class="tr-item"><div class="tr-n">4</div><div><div class="tr-ttl">Prabu Siliwangi: Raja Terbesar Pajajaran</div><div class="tr-cat">Sunda · 7K dibaca</div></div></div>
-        <div class="tr-item"><div class="tr-n">5</div><div><div class="tr-ttl">VOC: Korporasi Paling Jahat dalam Sejarah Dunia?</div><div class="tr-cat">Kolonial · 6K dibaca</div></div></div>
-      </div>
-
-    </aside>
+    </div>
   </div>
-</div>
 
-<!-- ══ SITE FOOTER ══ -->
-<footer class="site-footer">
-  <div class="footer-top">
-    <div>
-      <a class="ft-logo" href="index.html">
-        <div class="ft-logo-ico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  <!-- ARTICLE BODY — directly attached, no card/border separation -->
+  <div class="art-body">
+
+    <p class="a-lead">Gedung BAT (British American Tobacco) merupakan salah satu bangunan cagar budaya paling ikonik di Kota Cirebon. Terletak di Jalan Pasuketan, Kelurahan Lemahwungkuk, gedung ini menjadi saksi perkembangan industri rokok modern di Indonesia sejak masa kolonial Belanda. Dengan arsitektur bergaya Art Deco yang megah, Gedung BAT tidak hanya memiliki nilai sejarah industri, tetapi juga menjadi salah satu landmark bersejarah Kota Cirebon.</p>
+
+    <h2>Awal Pendirian</h2>
+    <p>Sejarah Gedung BAT bermula pada tahun <strong>1917</strong>, ketika sebuah perusahaan bernama <strong>Indo Egyptian Cigarettes Company</strong> mendirikan fasilitas produksi rokok di Cirebon. Lokasi Cirebon dipilih karena merupakan kota pelabuhan penting di pesisir utara Jawa yang memudahkan distribusi bahan baku maupun hasil produksi ke berbagai daerah dan luar negeri.</p>
+    <p>Pada tahun <strong>1923</strong>, perusahaan tersebut bergabung dengan <strong>British American Tobacco (BAT)</strong>, perusahaan rokok multinasional yang berkantor pusat di London, Inggris. Sejak saat itu, kepemilikan pabrik beralih sepenuhnya kepada BAT dan menjadi salah satu pusat produksi rokok putih terbesar di Hindia Belanda.</p>
+
+    <div class="img-wrap">
+      <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1000&q=85" alt="Kawasan Lemahwungkuk Cirebon"/>
+      <div class="img-cap">Kawasan Lemahwungkuk — jantung kota lama Cirebon tempat Gedung BAT berdiri sejak lebih dari satu abad lalu.</div>
+    </div>
+
+    <h2>Renovasi Bergaya Art Deco</h2>
+    <p>Pada tahun <strong>1924</strong>, bangunan pabrik mengalami renovasi besar oleh biro arsitek <strong>F.D. Cuypers &amp; Hulswit</strong>, yang dikenal banyak merancang bangunan kolonial di Indonesia. Renovasi tersebut mengubah wajah gedung menjadi bergaya <strong>Art Deco</strong>, dengan ciri khas bentuk geometris, garis-garis tegas, jendela besar, dan perpaduan ornamen Eropa dengan sentuhan lokal. Tahun pembangunan ini juga masih dapat dilihat pada bagian depan bangunan.</p>
+
+    <div class="info-box">
+      <div class="info-box-ttl">Keunikan Arsitektur Gedung BAT</div>
+      <ul>
+        <li>Bergaya <strong>Art Deco</strong> khas awal abad ke-20 — salah satu terbaik di pesisir utara Jawa.</li>
+        <li>Fasad <strong>simetris</strong> dengan garis-garis geometris yang tegas dan bersih.</li>
+        <li>Jendela-jendela besar untuk memaksimalkan <strong>pencahayaan dan sirkulasi udara</strong>.</li>
+        <li>Dibangun dari material berkualitas tinggi — tetap kokoh meski berusia lebih dari 100 tahun.</li>
+        <li>Dirancang oleh <strong>F.D. Cuypers &amp; Hulswit</strong>, biro arsitektur kolonial ternama di Hindia Belanda.</li>
+      </ul>
+    </div>
+
+    <h2>Masa Kejayaan Industri Rokok</h2>
+    <p>Sejak pertengahan 1920-an hingga awal 1940-an, Gedung BAT menjadi pusat produksi berbagai merek rokok putih yang dipasarkan ke seluruh Hindia Belanda. <strong>Ribuan tenaga kerja lokal</strong> bekerja di pabrik ini, sehingga BAT memberikan kontribusi besar terhadap perekonomian Kota Cirebon. Kehadiran pabrik juga mendorong pertumbuhan kawasan perdagangan dan permukiman di sekitarnya.</p>
+
+    <div class="img-pair">
+      <div class="img-wrap">
+        <img src="https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=85" alt="Kawasan Kota Lama Cirebon"/>
+        <div class="img-cap">Kawasan kota lama Cirebon yang berkembang di sekitar fasilitas industri kolonial.</div>
+      </div>
+      <div class="img-wrap">
+        <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=85" alt="Arsitektur Kolonial Cirebon"/>
+        <div class="img-cap">Jejak arsitektur kolonial Belanda yang masih tersisa di Cirebon.</div>
+      </div>
+    </div>
+
+    <h2>Linimasa Perjalanan Gedung BAT</h2>
+    <p>Lebih dari satu abad, Gedung BAT telah melewati berbagai babak sejarah — dari masa keemasan industri rokok, gejolak perang, hingga era modern.</p>
+
+    <div class="timeline">
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">1917</div>
+          <div class="tl-ttl">Indo Egyptian Cigarettes Company Berdiri</div>
+          <div class="tl-txt">Fasilitas produksi rokok pertama didirikan di Cirebon, memanfaatkan posisi strategis kota pelabuhan di pesisir utara Jawa.</div>
         </div>
-        <span class="ft-logo-txt">Nawaku</span>
+      </div>
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">1923</div>
+          <div class="tl-ttl">Bergabung dengan British American Tobacco</div>
+          <div class="tl-txt">Perusahaan diakuisisi oleh BAT, salah satu perusahaan rokok multinasional terbesar dunia berkantor pusat di London.</div>
+        </div>
+      </div>
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">1924</div>
+          <div class="tl-ttl">Renovasi Bergaya Art Deco</div>
+          <div class="tl-txt">Biro arsitek F.D. Cuypers &amp; Hulswit merenovasi total bangunan menjadi bergaya Art Deco — identitas visual yang masih dikenali hingga hari ini.</div>
+        </div>
+      </div>
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">1940-an</div>
+          <div class="tl-ttl">Pendudukan Jepang — Produksi Terhenti</div>
+          <div class="tl-txt">Saat Jepang menduduki Indonesia, aset perusahaan asing termasuk pabrik BAT diambil alih. Produksi rokok sempat dihentikan selama masa pendudukan.</div>
+        </div>
+      </div>
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">1949</div>
+          <div class="tl-ttl">Beroperasi Kembali Setelah Kemerdekaan</div>
+          <div class="tl-txt">Perusahaan kembali beroperasi dengan nama British American Tobacco Manufacture (Indonesia) Limited, lalu menjadi PT BAT Indonesia di era Orde Baru.</div>
+        </div>
+      </div>
+      <div class="tl">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="tl-body">
+          <div class="tl-yr">Mei 2010</div>
+          <div class="tl-ttl">Akhir Aktivitas Produksi</div>
+          <div class="tl-txt">Seluruh kegiatan produksi resmi dihentikan dan dipindahkan ke Malang, Jawa Timur. Gedung tetap dipelihara sebagai warisan sejarah.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Status Sebagai Cagar Budaya</h2>
+    <p>Pemerintah Kota Cirebon menetapkan Gedung BAT sebagai salah satu <strong>bangunan cagar budaya</strong>. Status tersebut diberikan karena gedung ini memiliki nilai penting dari aspek sejarah, arsitektur, serta perkembangan industri di Indonesia. Hingga kini bangunan tersebut masih menjadi objek wisata sejarah, lokasi fotografi, dan salah satu ikon kota yang banyak dikunjungi wisatawan.</p>
+
+    <div class="a-quote">
+      <p>"Gedung BAT bukan sekadar bekas pabrik rokok — ia adalah cermin perkembangan industri modern Cirebon di masa kolonial, simbol dari peran kota ini sebagai simpul perdagangan dan produksi yang strategis di Nusantara."</p>
+      <cite>— Dinas Kebudayaan &amp; Pariwisata Kota Cirebon</cite>
+    </div>
+
+    <h2>Nilai Sejarah</h2>
+    <p>Gedung BAT bukan sekadar bekas pabrik rokok, tetapi merupakan simbol perkembangan industri modern di Cirebon pada masa kolonial. Bangunan ini mencerminkan peran Kota Cirebon sebagai <strong>pusat perdagangan dan industri yang strategis</strong>, sekaligus menjadi saksi berbagai peristiwa penting, mulai dari masa kolonial Belanda, pendudukan Jepang, kemerdekaan Indonesia, hingga perkembangan industri nasional pada abad ke-20.</p>
+    <p>Meski aktivitas industrinya telah berakhir pada 2010, Gedung BAT tetap berdiri sebagai ikon sejarah dan cagar budaya — mengingatkan kita pada perjalanan panjang Cirebon sebagai kota yang tidak pernah berhenti bergerak, dari era kesultanan, kolonialisme, hingga industri modern.</p>
+
+    <!-- LOCATION -->
+    <div class="loc-card">
+      <div class="loc-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="loc-header-txt">Informasi Lokasi</span>
+      </div>
+      <div class="loc-body">
+        <div class="loc-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="loc-row-txt"><strong>Alamat:</strong> Jalan Pasuketan, Kelurahan Lemahwungkuk, Kota Cirebon, Jawa Barat</span>
+        </div>
+        <div class="loc-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="loc-row-txt"><strong>Jam Kunjungan:</strong> Senin – Minggu, dapat dikunjungi dari luar sepanjang hari</span>
+        </div>
+        <div class="loc-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+          <span class="loc-row-txt"><strong>Kawasan:</strong> Bagian dari wisata kota lama Lemahwungkuk bersama situs bersejarah lainnya</span>
+        </div>
+        <a class="loc-map-btn" href="https://maps.google.com/?q=Gedung+BAT+Cirebon+Jalan+Pasuketan" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Buka di Google Maps
+        </a>
+      </div>
+    </div>
+
+  </div><!-- end art-body -->
+
+  <!-- TAGS + SHARE -->
+  <div class="art-foot">
+    <div class="foot-tags">
+      <span class="f-tag">#GedungBAT</span>
+      <span class="f-tag">#Lemahwungkuk</span>
+      <span class="f-tag">#CagarBudaya</span>
+      <span class="f-tag">#ArtDeco</span>
+      <span class="f-tag">#SejarahCirebon</span>
+    </div>
+    <div class="share-row">
+      <span class="share-lbl">Bagikan:</span>
+      <!-- X / Twitter -->
+      <a class="sh-btn" href="#" title="Bagikan ke X" id="btn-twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#000;width:15px;height:15px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
-      <p class="ft-desc">Nawaku adalah ruang baca digital untuk sejarah, budaya, dan kearifan Nusantara. Kami percaya bahwa memahami masa lalu adalah kunci untuk membangun masa depan yang lebih bijak.</p>
-      <div class="ft-socials">
-        <a class="ft-soc" href="#" title="Instagram" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a class="ft-soc" href="#" title="X / Twitter" aria-label="X Twitter">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a class="ft-soc" href="#" title="Facebook" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a class="ft-soc" href="#" title="YouTube" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </a>
-        <a class="ft-soc" href="#" title="TikTok" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div>
-      <div class="ft-col-ttl">Jelajahi</div>
-      <ul class="ft-links">
-        <li><a href="#">Sejarah Nusantara</a></li>
-        <li><a href="#">Budaya & Tradisi</a></li>
-        <li><a href="#">Destinasi Wisata</a></li>
-        <li><a href="#">Tokoh & Legenda</a></li>
-        <li><a href="#">Kuliner Heritage</a></li>
-        <li><a href="#">Seni & Kerajinan</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="ft-col-ttl">Nawaku</div>
-      <ul class="ft-links">
-        <li><a href="#">Tentang Kami</a></li>
-        <li><a href="#">Tim Redaksi</a></li>
-        <li><a href="#">Pedoman Penulisan</a></li>
-        <li><a href="#">Karir</a></li>
-        <li><a href="#">Kemitraan & Iklan</a></li>
-        <li><a href="#">Hubungi Kami</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="ft-col-ttl">Dukungan</div>
-      <ul class="ft-links">
-        <li><a href="#">Newsletter</a></li>
-        <li><a href="#">Pusat Bantuan</a></li>
-        <li><a href="#">Kebijakan Privasi</a></li>
-        <li><a href="#">Syarat & Ketentuan</a></li>
-        <li><a href="#">Peta Situs</a></li>
-        <li><a href="#">Donasi & Dukungan</a></li>
-      </ul>
+      <!-- WhatsApp -->
+      <a class="sh-btn" href="#" title="Bagikan ke WhatsApp" id="btn-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <!-- Facebook -->
+      <a class="sh-btn" href="#" title="Bagikan ke Facebook" id="btn-fb">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1877F2;width:15px;height:15px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <!-- Copy link -->
+      <a class="sh-btn" href="#" title="Salin tautan" id="sh-copy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);width:15px;height:15px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      </a>
     </div>
   </div>
 
-  <div class="footer-bottom">
-    <span class="fb-copy">© 2025 Nawaku.com — Menjaga Ingatan Nusantara. Seluruh hak cipta dilindungi.</span>
-    <div class="fb-links">
-      <a href="#">Privasi</a>
-      <a href="#">Ketentuan</a>
-      <a href="#">Sitemap</a>
+  <!-- RELATED ARTICLES -->
+  <div class="related-section">
+    <div class="rel-heading">Artikel Terkait</div>
+    <div class="rel-grid">
+      <a class="rel-item" href="#">
+        <img class="rel-img" src="https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=400&q=80" alt=""/>
+        <div class="rel-body">
+          <span class="rel-tag">KASEPUHAN</span>
+          <div class="rel-ttl">Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527</div>
+          <div class="rel-date">2 Jun 2025</div>
+        </div>
+      </a>
+      <a class="rel-item" href="#">
+        <img class="rel-img" src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80" alt=""/>
+        <div class="rel-body">
+          <span class="rel-tag">PESISIR UTARA</span>
+          <div class="rel-ttl">Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab</div>
+          <div class="rel-date">20 Mei 2025</div>
+        </div>
+      </a>
+      <a class="rel-item" href="#">
+        <img class="rel-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=400&q=80" alt=""/>
+        <div class="rel-body">
+          <span class="rel-tag">TRUSMI</span>
+          <div class="rel-ttl">Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu</div>
+          <div class="rel-date">4 Jun 2025</div>
+        </div>
+      </a>
+      <a class="rel-item" href="#">
+        <img class="rel-img" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80" alt=""/>
+        <div class="rel-body">
+          <span class="rel-tag">LEMAHWUNGKUK</span>
+          <div class="rel-ttl">Lemahwungkuk: Permukiman Tertua Cirebon yang Jadi Cikal Bakal Kota</div>
+          <div class="rel-date">17 Mei 2025</div>
+        </div>
+      </a>
     </div>
+  </div>
+
+</div><!-- end .page -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="ft-brand">
+      <div class="ft-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <span class="ft-name">Nawaku</span>
+    </div>
+    <div class="ft-links-row">
+      <a class="ft-link" href="#">Beranda</a>
+      <a class="ft-link" href="#">Kawasan</a>
+      <a class="ft-link" href="#">Tentang</a>
+      <a class="ft-link" href="#">Privasi</a>
+      <a class="ft-link" href="#">Ketentuan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-copy">© 2026 crbon.id — Sejarah Cirebon dalam satu tempat.</span>
   </div>
 </footer>
 
 <script>
-  /* Read Progress */
+  /* Read progress */
   window.addEventListener('scroll', () => {
     const d = document.documentElement;
-    document.getElementById('rbar').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+    document.getElementById('rbar').style.width =
+      (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
   });
 
-  /* Fade-up observer */
-  const io = new IntersectionObserver(en => {
-    en.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; io.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fu').forEach(el => {
-    el.style.opacity='0'; el.style.transform='translateY(20px)';
-    el.style.transition='opacity .55s ease, transform .55s ease'; io.observe(el);
+  /* More dropdown toggle */
+  function toggleMore() {
+    document.getElementById('nMore').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const m = document.getElementById('nMore');
+    if (!m.contains(e.target)) m.classList.remove('open');
   });
 
-  /* Active TOC highlight */
-  const sections = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11'];
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY + 120;
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      const link = document.querySelector(`.toc-item[href="#${id}"]`);
-      if(!link) return;
-      if(y >= el.offsetTop){
-        document.querySelectorAll('.toc-item').forEach(l => { l.style.background=''; l.querySelector('.toc-ttl').style.color=''; });
-        link.style.background = 'var(--blue1)';
-        link.querySelector('.toc-ttl').style.color = 'var(--blue4)';
-      }
-    });
+  /* Toast helper */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  /* Share buttons */
+  document.getElementById('btn-twitter').addEventListener('click', (e) => {
+    e.preventDefault();
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent('Sejarah Gedung BAT Cirebon — via @nawakucom');
+    window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank', 'width=600,height=400');
   });
 
-  /* Share functions */
-  function shareTwitter(e){
+  document.getElementById('btn-wa').addEventListener('click', (e) => {
+    e.preventDefault();
+    const text = encodeURIComponent('Sejarah Gedung BAT Cirebon\n\n' + window.location.href);
+    window.open('https://wa.me/?text=' + text, '_blank');
+  });
+
+  document.getElementById('btn-fb').addEventListener('click', (e) => {
     e.preventDefault();
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Sejarah Trusmi Cirebon: Kampung Batik Tertua di Tanah Jawa — via @nawakucom');
-    window.open('https://twitter.com/intent/tweet?text='+text+'&url='+url,'_blank','width=600,height=400');
-  }
-  function shareWhatsApp(e){
-    e.preventDefault();
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Sejarah Trusmi Cirebon: Kampung Batik Tertua di Tanah Jawa\n\n');
-    window.open('https://wa.me/?text='+text+url,'_blank');
-  }
-  function shareFacebook(e){
-    e.preventDefault();
-    const url = encodeURIComponent(window.location.href);
-    window.open('https://www.facebook.com/sharer/sharer.php?u='+url,'_blank','width=600,height=400');
-  }
-  function copyLink(e){
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank', 'width=600,height=400');
+  });
+
+  document.getElementById('sh-copy').addEventListener('click', (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(window.location.href).then(() => {
-      const btn = document.getElementById('sh-copy');
-      btn.classList.add('copied');
-      setTimeout(() => btn.classList.remove('copied'), 2000);
+      showToast('Tautan berhasil disalin!');
+    }).catch(() => {
+      /* fallback for non-secure context */
+      const ta = document.createElement('textarea');
+      ta.value = window.location.href;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Tautan berhasil disalin!');
     });
-  }
+  });
 </script>
 </body>
-</html>
+  </html>#
