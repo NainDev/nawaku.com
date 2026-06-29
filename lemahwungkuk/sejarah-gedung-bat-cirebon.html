@@ -8,395 +8,333 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
-      --bg:#f7f8fa;
-      --surface:#fff;
-      --text:#1a1a1a;
-      --text2:#444;
-      --muted:#888;
-      --border:#e8e8e8;
-      --accent:#2563eb;
-      --accent-light:#eff4ff;
-      --accent-mid:#bfdbfe;
+      --bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;
+      --border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;
     }
     html{scroll-behavior:smooth;}
-    body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;}
+    body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-    /* ── READ PROGRESS ── */
+    /* ── PROGRESS ── */
     .rp{position:fixed;top:60px;left:0;right:0;height:2px;z-index:299;}
     .rp-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#1d4ed8);width:0%;transition:width .1s;}
 
+    /* ── REDIRECT ── */
+    .redirect-overlay{position:fixed;inset:0;background:rgba(255,255,255,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .2s;}
+    .redirect-overlay.show{opacity:1;pointer-events:all;}
+    .redirect-spinner{width:42px;height:42px;border:3px solid var(--accent-mid);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:16px;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .redirect-msg{font-family:'Rubik',sans-serif;font-size:15px;font-weight:500;color:var(--text2);}
+    .redirect-sub{font-size:13px;color:var(--muted);margin-top:6px;}
+
     /* ── NAVBAR ── */
-    .navbar{
-      position:fixed;top:0;left:0;right:0;z-index:300;height:60px;
-      background:rgba(255,255,255,.97);backdrop-filter:blur(12px);
-      border-bottom:1px solid var(--border);
-      display:flex;align-items:center;padding:0 28px;gap:0;
-    }
-    .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;margin-right:32px;}
-    .n-logo-ico{
-      width:34px;height:34px;border-radius:10px;
-      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
-      display:flex;align-items:center;justify-content:center;
-    }
-    .n-logo-ico svg{width:16px;height:16px;}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:0;}
+    .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
+    .logo-mark{width:34px;height:34px;flex-shrink:0;}
     .n-logo-txt{font-family:'Rubik',sans-serif;font-weight:800;font-size:18px;color:#1a1a1a;letter-spacing:-.3px;}
-    .n-links{display:flex;gap:2px;flex:1;align-items:center;}
-    .n-link{
-      padding:7px 14px;border-radius:8px;font-size:14px;font-weight:500;
-      color:var(--text2);text-decoration:none;transition:all .15s;font-family:'Rubik',sans-serif;
-      display:flex;align-items:center;gap:6px;
-    }
-    .n-link:hover{background:var(--accent-light);color:var(--accent);}
-    .n-link.active{background:var(--accent-light);color:var(--accent);font-weight:600;}
-    .n-link svg{width:15px;height:15px;flex-shrink:0;}
-    /* More menu */
-    .n-more{position:relative;}
-    .n-more-btn{
-      padding:7px 12px;border-radius:8px;font-size:14px;font-weight:500;
-      color:var(--text2);background:none;border:none;cursor:pointer;
-      display:flex;align-items:center;gap:4px;font-family:'Rubik',sans-serif;
-      transition:all .15s;
-    }
-    .n-more-btn:hover{background:var(--accent-light);color:var(--accent);}
-    .n-more-btn svg{width:16px;height:16px;}
-    .n-dropdown{
-      position:absolute;top:calc(100% + 8px);right:0;
-      background:#fff;border:1px solid var(--border);border-radius:12px;
-      min-width:160px;box-shadow:0 8px 28px rgba(0,0,0,.1);
-      padding:6px;display:none;z-index:400;
-    }
+    .n-links{display:flex;gap:2px;flex:1;align-items:center;margin-left:24px;}
+    .n-link{padding:7px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--text2);text-decoration:none;transition:all .15s;font-family:'Rubik',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+    .n-link:hover,.n-link.active{background:var(--accent-light);color:var(--accent);}
+    .n-link.active{font-weight:600;}
+    .n-link svg{width:14px;height:14px;flex-shrink:0;}
+    .n-more{position:relative;margin-left:auto;}
+    .n-more-btn{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .n-more-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);}
+    .n-more-btn svg{width:18px;height:18px;color:var(--text2);}
+    .n-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:13px;min-width:210px;box-shadow:0 10px 36px rgba(0,0,0,.11);padding:7px;display:none;z-index:400;}
     .n-more.open .n-dropdown{display:block;}
-    .n-dd-item{
-      display:flex;align-items:center;gap:8px;padding:9px 12px;
-      border-radius:8px;font-size:13.5px;font-weight:500;
-      color:var(--text2);text-decoration:none;transition:all .15s;
-      font-family:'Rubik',sans-serif;
-    }
+    .n-dd-sep{height:1px;background:var(--border);margin:5px 0;}
+    .n-dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--text2);text-decoration:none;transition:all .15s;font-family:'Rubik',sans-serif;cursor:pointer;background:none;border:none;width:100%;text-align:left;}
     .n-dd-item:hover{background:var(--accent-light);color:var(--accent);}
-    .n-dd-item svg{width:14px;height:14px;flex-shrink:0;}
+    .n-dd-item svg{width:15px;height:15px;flex-shrink:0;color:var(--muted);}
+    .n-dd-item:hover svg{color:var(--accent);}
+    .n-dd-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;padding:8px 12px 4px;font-family:'Rubik',sans-serif;}
+    .n-dd-badge{margin-left:auto;font-size:10px;background:#f1f5f9;color:#94a3b8;padding:2px 7px;border-radius:99px;font-weight:700;}
+    @media(max-width:680px){.n-links{display:none;}.n-more{margin-left:auto;}}
+
+    /* ── SEARCH MODAL ── */
+    .search-modal{position:fixed;inset:0;z-index:500;display:none;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding-top:72px;}
+    .search-modal.open{display:flex;}
+    .search-box{background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,.18);overflow:hidden;margin:0 16px;}
+    .search-top{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);}
+    .search-top svg{width:18px;height:18px;color:var(--muted);flex-shrink:0;}
+    .search-input{flex:1;border:none;outline:none;font-family:'Rubik',sans-serif;font-size:16px;font-weight:400;color:var(--text);background:none;}
+    .search-input::placeholder{color:#bbb;}
+    .search-close-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .search-close-btn svg{width:14px;height:14px;color:var(--muted);}
+
+    /* Kawasan grid in search */
+    .search-kawasan{padding:16px 20px 8px;}
+    .search-kawasan-ttl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:12px;font-family:'Rubik',sans-serif;}
+    .kawasan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    .kawasan-chip{
+      display:flex;flex-direction:column;padding:11px 12px;border-radius:11px;
+      border:1.5px solid var(--border);background:#fff;cursor:pointer;
+      transition:all .15s;text-decoration:none;
+    }
+    .kawasan-chip:hover,.kawasan-chip.active{border-color:var(--accent);background:var(--accent-light);}
+    .kawasan-chip-name{font-size:13px;font-weight:700;color:var(--text);font-family:'Rubik',sans-serif;margin-bottom:3px;}
+    .kawasan-chip:hover .kawasan-chip-name,.kawasan-chip.active .kawasan-chip-name{color:var(--accent);}
+    .kawasan-chip-count{font-size:11px;color:var(--muted);font-family:'Rubik',sans-serif;}
+    .kawasan-chip:hover .kawasan-chip-count,.kawasan-chip.active .kawasan-chip-count{color:var(--accent);}
+
+    /* Article results */
+    .search-results-wrap{border-top:1px solid var(--border);max-height:320px;overflow-y:auto;}
+    .search-results-ttl{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;padding:12px 20px 6px;font-family:'Rubik',sans-serif;}
+    .s-result{display:flex;gap:12px;padding:10px 20px;text-decoration:none;transition:all .15s;}
+    .s-result:hover{background:var(--bg);}
+    .s-result-img{width:52px;height:52px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+    .s-result-tag{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:3px;font-family:'Rubik',sans-serif;}
+    .s-result-ttl{font-size:13px;font-weight:600;color:var(--text);line-height:1.35;font-family:'Rubik',sans-serif;}
+    .s-result-meta{font-size:11px;color:var(--muted);margin-top:3px;font-family:'Rubik',sans-serif;}
+    .search-empty{padding:28px 20px;text-align:center;font-size:14px;color:var(--muted);font-family:'Rubik',sans-serif;}
+
+    /* ── ABOUT MODAL ── */
+    .modal-overlay{position:fixed;inset:0;z-index:500;display:none;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .modal-overlay.open{display:flex;}
+    .modal-box{background:#fff;border-radius:20px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.18);overflow:hidden;}
+    .modal-header{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .modal-title{font-family:'Rubik',sans-serif;font-size:18px;font-weight:700;color:var(--text);}
+    .modal-close-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .modal-close-btn svg{width:14px;height:14px;color:var(--muted);}
+    .modal-body{padding:24px 28px 28px;}
+    .modal-body p{font-size:14.5px;color:var(--text2);line-height:1.78;margin-bottom:14px;font-family:'Rubik',sans-serif;}
+    .modal-body p:last-child{margin-bottom:0;}
+    .modal-body strong{color:var(--text);font-weight:700;}
+    .about-stat-row{display:flex;gap:10px;margin:16px 0;}
+    .about-stat{flex:1;background:var(--accent-light);border-radius:12px;padding:14px;text-align:center;border:1px solid var(--accent-mid);}
+    .about-stat-v{font-family:'Rubik',sans-serif;font-size:22px;font-weight:800;color:var(--accent);}
+    .about-stat-l{font-size:12px;color:var(--muted);margin-top:3px;font-family:'Rubik',sans-serif;font-weight:500;}
 
     /* ── PAGE ── */
     .page{max-width:740px;margin:0 auto;padding:0 20px;}
-
-    /* ── BREADCRUMB ── */
-    .breadcrumb{
-      display:flex;align-items:center;gap:6px;
-      padding:84px 0 20px;flex-wrap:wrap;
-    }
+    .breadcrumb{display:flex;align-items:center;gap:6px;padding:84px 0 20px;flex-wrap:wrap;}
     .bc{font-size:13px;color:var(--muted);text-decoration:none;font-family:'Rubik',sans-serif;}
     .bc:hover{color:var(--accent);}
+    .bc.link{cursor:pointer;text-decoration:underline;text-decoration-color:transparent;transition:.15s;}
+    .bc.link:hover{text-decoration-color:var(--accent);}
     .bc-sep{font-size:12px;color:#ccc;}
     .bc.active{color:var(--text2);font-weight:500;}
 
     /* ── HERO ── */
-    .hero{
-      position:relative;border-radius:16px 16px 0 0;overflow:hidden;
-      height:420px;margin-bottom:0;
-    }
+    .hero{position:relative;border-radius:16px 16px 0 0;overflow:hidden;height:420px;}
     .hero img{width:100%;height:100%;object-fit:cover;display:block;}
-    .hero-overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.08) 55%,transparent 100%);
-    }
-    .hero-cnt{
-      position:absolute;bottom:0;left:0;right:0;
-      padding:28px 30px;
-    }
-    .hero-tag{
-      display:inline-block;background:var(--accent);
-      color:#fff;font-size:11px;font-weight:700;padding:4px 12px;
-      border-radius:99px;letter-spacing:.5px;font-family:'Rubik',sans-serif;
-      margin-bottom:12px;text-transform:uppercase;
-    }
-    .hero-title{
-      font-family:'Rubik',sans-serif;
-      font-size:clamp(19px,3vw,27px);
-      font-weight:800;color:#fff;line-height:1.28;
-      margin-bottom:16px;letter-spacing:-.3px;
-    }
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.08) 55%,transparent 100%);}
+    .hero-cnt{position:absolute;bottom:0;left:0;right:0;padding:28px 30px;}
+    .hero-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;letter-spacing:.5px;font-family:'Rubik',sans-serif;margin-bottom:12px;text-transform:uppercase;}
+    .hero-title{font-family:'Rubik',sans-serif;font-size:clamp(19px,3vw,27px);font-weight:800;color:#fff;line-height:1.28;margin-bottom:16px;letter-spacing:-.3px;}
     .hero-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-    .hm-item{
-      display:flex;align-items:center;gap:6px;
-      font-size:13px;color:rgba(255,255,255,.8);font-family:'Rubik',sans-serif;
-    }
+    .hm-item{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,.8);font-family:'Rubik',sans-serif;}
     .hm-item svg{width:13px;height:13px;opacity:.7;flex-shrink:0;}
     .hm-sep{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;}
 
-    /* ── ARTICLE BODY — no card, no border, flows from hero ── */
-    .art-body{
-      background:var(--surface);
-      padding:36px 38px 40px;
-    }
-
-    /* Lead — removed blue left border */
-    .a-lead{
-      font-size:17px;color:var(--text2);line-height:1.88;
-      margin-bottom:32px;font-style:italic;font-weight:400;
-    }
-
-    /* Headings */
-    .art-body h2{
-      font-family:'Rubik',sans-serif;
-      font-size:20px;font-weight:700;
-      color:var(--text);margin:36px 0 12px;
-      letter-spacing:-.2px;line-height:1.3;
-    }
-    .art-body p{
-      font-size:15.5px;color:var(--text2);line-height:1.9;
-      margin-bottom:18px;font-weight:400;
-    }
+    /* ── ARTICLE ── */
+    .art-body{background:var(--surface);padding:36px 38px 40px;}
+    .a-lead{font-size:17px;color:var(--text2);line-height:1.88;margin-bottom:32px;font-style:italic;}
+    .art-body h2{font-family:'Rubik',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin:36px 0 12px;letter-spacing:-.2px;line-height:1.3;}
+    .art-body p{font-size:15.5px;color:var(--text2);line-height:1.9;margin-bottom:18px;}
     .art-body strong{color:var(--text);font-weight:700;}
-
-    /* Lists */
-    .art-body ul{
-      list-style:none;padding:0;margin:0 0 18px;
-      display:flex;flex-direction:column;gap:10px;
-    }
-    .art-body ul li{
-      font-size:15.5px;color:var(--text2);line-height:1.75;
-      display:flex;align-items:flex-start;gap:10px;
-    }
-    .art-body ul li::before{
-      content:'';width:5px;height:5px;border-radius:50%;
-      background:var(--accent);flex-shrink:0;margin-top:10px;
-    }
-
-    /* Image */
+    .art-body ul{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:10px;}
+    .art-body ul li{font-size:15.5px;color:var(--text2);line-height:1.75;display:flex;align-items:flex-start;gap:10px;}
+    .art-body ul li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:10px;}
     .img-wrap{margin:24px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
     .img-wrap img{width:100%;display:block;max-height:380px;object-fit:cover;}
-    .img-cap{
-      font-size:12.5px;color:var(--muted);padding:9px 14px;
-      background:var(--bg);font-style:italic;line-height:1.5;
-      font-family:'Rubik',sans-serif;
-    }
+    .img-cap{font-size:12.5px;color:var(--muted);padding:9px 14px;background:var(--bg);font-style:italic;line-height:1.5;font-family:'Rubik',sans-serif;}
     .img-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0;}
     .img-pair .img-wrap{margin:0;}
     .img-pair .img-wrap img{max-height:200px;}
-
-    /* Timeline */
     .timeline{margin:24px 0;display:flex;flex-direction:column;}
     .tl{display:flex;gap:16px;padding-bottom:22px;position:relative;}
-    .tl::before{
-      content:'';position:absolute;left:13px;top:32px;bottom:0;width:2px;
-      background:linear-gradient(180deg,var(--accent-mid),transparent);
-    }
+    .tl::before{content:'';position:absolute;left:13px;top:32px;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent-mid),transparent);}
     .tl:last-child::before{display:none;}
-    .tl-dot{
-      width:28px;height:28px;border-radius:50%;flex-shrink:0;
-      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 2px 8px rgba(37,99,235,.28);
-    }
+    .tl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(37,99,235,.28);}
     .tl-dot svg{width:12px;height:12px;color:#fff;}
     .tl-body{flex:1;padding-top:3px;}
     .tl-yr{font-family:'Rubik',sans-serif;font-size:11px;font-weight:700;color:var(--accent);margin-bottom:2px;letter-spacing:.6px;text-transform:uppercase;}
     .tl-ttl{font-family:'Rubik',sans-serif;font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:3px;}
     .tl-txt{font-size:13.5px;color:var(--muted);line-height:1.65;font-family:'Rubik',sans-serif;}
-
-    /* Quote */
-    .a-quote{
-      border-left:3px solid var(--accent);padding:16px 20px;margin:26px 0;
-      background:var(--accent-light);border-radius:0 10px 10px 0;
-    }
-    .a-quote p{font-family:'Rubik',sans-serif;font-size:16px;font-style:italic;color:var(--text2);line-height:1.72;margin-bottom:8px;}
-    .a-quote cite{font-size:12px;color:var(--muted);font-style:normal;font-weight:600;}
-
-    /* Info box */
     .info-box{background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:12px;padding:18px 20px;margin:24px 0;}
     .info-box-ttl{font-family:'Rubik',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;}
     .info-box ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0;}
     .info-box li{font-size:14.5px;color:var(--text2);line-height:1.65;display:flex;align-items:flex-start;gap:8px;font-family:'Rubik',sans-serif;}
     .info-box li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:8px;}
-
-    /* Location card */
-    .loc-card{
-      margin:32px 0 8px;border:1px solid var(--border);border-radius:14px;
-      overflow:hidden;background:#fff;
-    }
-    .loc-header{
-      background:#1e3a5f;padding:14px 20px;
-      display:flex;align-items:center;gap:10px;
-    }
+    .loc-card{margin:32px 0 8px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .loc-header{background:#1e3a5f;padding:14px 20px;display:flex;align-items:center;gap:10px;}
     .loc-header svg{width:16px;height:16px;color:#93c5fd;flex-shrink:0;}
     .loc-header-txt{font-family:'Rubik',sans-serif;font-size:14px;font-weight:700;color:#fff;}
-    .loc-body{padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
+    .loc-body{padding:16px 20px;background:#fff;display:flex;flex-direction:column;gap:10px;}
     .loc-row{display:flex;align-items:flex-start;gap:10px;}
     .loc-row svg{width:14px;height:14px;color:var(--muted);flex-shrink:0;margin-top:2px;}
     .loc-row-txt{font-size:14px;color:var(--text2);line-height:1.55;font-family:'Rubik',sans-serif;}
     .loc-row-txt strong{color:var(--text);font-weight:600;}
-    .loc-map-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 20px;border-radius:9px;margin-top:6px;
-      background:#1e3a5f;color:#fff;
-      font-size:13.5px;font-weight:600;font-family:'Rubik',sans-serif;
-      text-decoration:none;transition:all .2s;align-self:flex-start;
-      border:none;cursor:pointer;
-    }
-    .loc-map-btn:hover{background:#162d4a;box-shadow:0 4px 16px rgba(30,58,95,.35);transform:translateY(-1px);}
+    .loc-map-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:9px;margin-top:6px;background:#1e3a5f;color:#fff;font-size:13.5px;font-weight:600;font-family:'Rubik',sans-serif;text-decoration:none;transition:all .2s;align-self:flex-start;}
+    .loc-map-btn:hover{background:#162d4a;transform:translateY(-1px);}
     .loc-map-btn svg{width:14px;height:14px;color:#93c5fd;}
-
-    /* ── ARTICLE FOOTER (tags + share) ── */
-    .art-foot{
-      background:var(--surface);
-      border-top:1px solid var(--border);
-      padding:20px 38px 28px;
-      display:flex;align-items:center;
-      justify-content:space-between;flex-wrap:wrap;gap:14px;
-    }
+    .art-foot{background:var(--surface);border-top:1px solid var(--border);padding:20px 38px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
     .foot-tags{display:flex;gap:7px;flex-wrap:wrap;}
-    .f-tag{
-      padding:5px 12px;border-radius:99px;background:var(--bg);
-      border:1px solid var(--border);font-size:12px;font-weight:600;
-      color:var(--text2);cursor:pointer;transition:all .15s;font-family:'Rubik',sans-serif;
-    }
+    .f-tag{padding:5px 12px;border-radius:99px;background:var(--bg);border:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s;font-family:'Rubik',sans-serif;}
     .f-tag:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
-
-    /* Share */
     .share-row{display:flex;align-items:center;gap:8px;}
     .share-lbl{font-size:13px;font-weight:600;color:var(--muted);font-family:'Rubik',sans-serif;}
-    .sh-btn{
-      width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
-      background:#fff;display:flex;align-items:center;justify-content:center;
-      cursor:pointer;transition:all .15s;text-decoration:none;position:relative;
-    }
+    .sh-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;text-decoration:none;}
     .sh-btn svg{width:15px;height:15px;}
     .sh-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);transform:translateY(-1px);}
-    /* Toast */
-    .toast{
-      position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-      background:#1a1a1a;color:#fff;font-family:'Rubik',sans-serif;font-size:13px;
-      font-weight:500;padding:10px 20px;border-radius:99px;
-      opacity:0;pointer-events:none;transition:all .25s;z-index:999;
-    }
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;font-family:'Rubik',sans-serif;font-size:13px;font-weight:500;padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-    /* Divider after article */
-    .art-end{height:1px;background:var(--border);margin:0;}
-
-    /* ── RELATED ── */
     .related-section{padding:36px 0 20px;}
-    .rel-heading{font-family:'Rubik',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-.2px;}
+    .rel-heading{font-family:'Rubik',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;}
     .rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .rel-item{
-      background:#fff;border:1px solid var(--border);border-radius:12px;
-      overflow:hidden;text-decoration:none;transition:all .18s;display:block;
-    }
+    .rel-item{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;transition:all .18s;display:block;}
     .rel-item:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);}
-    .rel-img{width:100%;height:120px;object-fit:cover;display:block;}
+    .rel-img{width:100%;height:130px;object-fit:cover;display:block;}
     .rel-body{padding:12px 14px;}
     .rel-tag{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:6px;font-family:'Rubik',sans-serif;}
     .rel-ttl{font-size:13px;font-weight:600;color:var(--text);line-height:1.38;font-family:'Rubik',sans-serif;}
     .rel-date{font-size:11px;color:var(--muted);margin-top:5px;font-family:'Rubik',sans-serif;}
 
     /* ── FOOTER ── */
-    .site-footer{
-      background:#fff;
-      border-top:1px solid var(--border);
-      margin-top:48px;
-    }
-    .footer-inner{
-      max-width:740px;margin:0 auto;padding:28px 20px;
-      display:flex;align-items:center;justify-content:space-between;
-      flex-wrap:wrap;gap:20px;
-    }
-    .ft-brand{display:flex;align-items:center;gap:9px;}
-    .ft-ico{
-      width:30px;height:30px;border-radius:8px;
-      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
-      display:flex;align-items:center;justify-content:center;
-    }
-    .ft-ico svg{width:14px;height:14px;}
-    .ft-name{font-family:'Rubik',sans-serif;font-weight:800;font-size:16px;color:var(--text);}
-    .ft-links-row{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
-    .ft-link{font-size:13.5px;color:var(--muted);text-decoration:none;font-family:'Rubik',sans-serif;transition:.15s;padding:6px 10px;border-radius:7px;}
-    .ft-link:hover{color:var(--accent);background:var(--accent-light);}
-    .footer-bottom{
-      border-top:1px solid var(--border);
-      max-width:740px;margin:0 auto;
-      padding:14px 20px;
-    }
-    .fb-copy{font-size:12.5px;color:var(--muted);font-family:'Rubik',sans-serif;}
+    .site-footer{background:#0f172a;margin-top:56px;}
+    .footer-main{max-width:740px;margin:0 auto;padding:40px 20px 32px;display:flex;align-items:flex-start;gap:48px;}
+    .ft-brand-col{flex:1;}
+    .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+    .ft-name{font-family:'Rubik',sans-serif;font-weight:800;font-size:18px;color:#fff;}
+    .ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;font-family:'Rubik',sans-serif;margin-bottom:18px;max-width:280px;}
+    .ft-socials{display:flex;gap:8px;}
+    .ft-soc{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;text-decoration:none;}
+    .ft-soc:hover{background:var(--accent);border-color:var(--accent);}
+    .ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
+    .ft-col-ttl{font-family:'Rubik',sans-serif;font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;}
+    .ft-col-link{font-size:13.5px;color:#94a3b8;text-decoration:none;font-family:'Rubik',sans-serif;transition:.15s;}
+    .ft-col-link:hover{color:#e2e8f0;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:740px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .fb-copy{font-size:12.5px;color:#475569;font-family:'Rubik',sans-serif;}
+    .fb-badge{font-size:12px;color:#475569;font-family:'Rubik',sans-serif;display:flex;align-items:center;gap:5px;}
+    .fb-badge svg{width:13px;height:13px;color:#3b82f6;}
 
     @media(max-width:680px){
-      .navbar{padding:0 16px;}
-      .hero{height:260px;border-radius:12px 12px 0 0;}
+      .hero{height:280px;border-radius:12px 12px 0 0;}
       .hero-cnt{padding:16px 18px;}
       .art-body{padding:22px 18px 24px;}
       .art-foot{padding:16px 18px 22px;}
       .img-pair{grid-template-columns:1fr;}
+      .rel-grid{grid-template-columns:1fr 1fr;}
+      .kawasan-grid{grid-template-columns:repeat(2,1fr);}
+      .footer-main{flex-direction:column;gap:28px;padding:28px 20px 24px;}
+      .footer-bottom{flex-direction:column;align-items:flex-start;}
+    }
+    @media(max-width:380px){
       .rel-grid{grid-template-columns:1fr;}
-      .footer-inner{flex-direction:column;align-items:flex-start;gap:14px;}
+      .kawasan-grid{grid-template-columns:repeat(2,1fr);}
     }
   </style>
 </head>
 <body>
 
-<div class="rp"><div class="rp-bar" id="rbar"></div></div>
-<div class="toast" id="toast">Tautan berhasil disalin!</div>
+<!-- REDIRECT OVERLAY -->
+<div class="redirect-overlay" id="redirectOverlay">
+  <div class="redirect-spinner"></div>
+  <div class="redirect-msg">Sedang mengalihkan…</div>
+  <div class="redirect-sub">Mohon tunggu sebentar</div>
+</div>
 
-<!-- NAVBAR -->
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- PROGRESS -->
+<div class="rp"><div class="rp-bar" id="rbar"></div></div>
+
+<!-- ══ NAVBAR ══ -->
 <nav class="navbar">
-  <a class="n-logo" href="index.html">
-    <div class="n-logo-ico">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    </div>
-    <span class="n-logo-txt">crbon.id</span>
+  <a class="n-logo" href="index.html" data-nav>
+    <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
+      <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
+      <defs><linearGradient id="lg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+    </svg>
+    <span class="n-logo-txt">nainpedia.com</span>
   </a>
-  <nav class="n-links">
-    <a class="n-link" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Beranda
+  <div class="n-links">
+    <a class="n-link" href="index.html" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Beranda
     </a>
-    <a class="n-link active" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Sejarah
-    </a>
-    <a class="n-link" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Kawasan
-    </a>
-    <a class="n-link" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Tokoh
-    </a>
-    <!-- More dropdown -->
-    <div class="n-more" id="nMore">
-      <button class="n-more-btn" onclick="toggleMore()">
-        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    <a class="n-link active" href="#">Sejarah</a>
+    <a class="n-link" href="#" data-nav>Kawasan</a>
+    <a class="n-link" href="#" data-nav>Tokoh</a>
+  </div>
+  <div class="n-more" id="nMore">
+    <button class="n-more-btn" id="moreBtn" aria-label="Menu lainnya">
+      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    </button>
+    <div class="n-dropdown" id="nDropdown">
+      <div class="n-dd-label">Jelajahi</div>
+      <button class="n-dd-item" id="btnOpenSearch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Cari Artikel
       </button>
-      <div class="n-dropdown">
-        <a class="n-dd-item" href="#">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Tentang
-        </a>
-        <a class="n-dd-item" href="#">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Newsletter
-        </a>
-        <a class="n-dd-item" href="#">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          Cari
-        </a>
-      </div>
+      <div class="n-dd-sep"></div>
+      <div class="n-dd-label">Info</div>
+      <button class="n-dd-item" id="btnOpenAbout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Tentang Nainpedia
+      </button>
+      <button class="n-dd-item" id="btnNewsletter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+        <span class="n-dd-badge">Segera</span>
+      </button>
     </div>
-  </nav>
+  </div>
 </nav>
 
-<!-- PAGE -->
-<div class="page">
+<!-- ══ SEARCH MODAL ══ -->
+<div class="search-modal" id="searchModal">
+  <div class="search-box">
+    <div class="search-top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="searchInput" placeholder="Cari artikel sejarah Cirebon…" autocomplete="off"/>
+      <button class="search-close-btn" id="btnCloseSearch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <!-- Kawasan grid -->
+    <div class="search-kawasan">
+      <div class="search-kawasan-ttl">Pilih Kawasan</div>
+      <div class="kawasan-grid" id="kawasanGrid"><!-- diisi JS --></div>
+    </div>
+    <!-- Results -->
+    <div class="search-results-wrap" id="searchResultsWrap" style="display:none;">
+      <div class="search-results-ttl" id="searchResultsTtl">Artikel</div>
+      <div id="searchResults"></div>
+    </div>
+  </div>
+</div>
 
-  <!-- BREADCRUMB -->
+<!-- ══ ABOUT MODAL ══ -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Tentang Nainpedia</div>
+      <button class="modal-close-btn" id="btnCloseAbout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="aboutBody"><!-- diisi JS --></div>
+  </div>
+</div>
+
+<!-- ══ PAGE ══ -->
+<div class="page">
   <div class="breadcrumb">
-    <a class="bc" href="index.html">Beranda</a>
+    <a class="bc" href="index.html" data-nav>Beranda</a>
     <span class="bc-sep">›</span>
-    <a class="bc" href="#">Lemahwungkuk</a>
+    <span class="bc link" id="bcKawasan">Lemahwungkuk</span>
     <span class="bc-sep">›</span>
     <span class="bc active">Gedung BAT Cirebon</span>
   </div>
 
-  <!-- HERO — borderless top, merges into article body -->
+  <!-- HERO -->
   <div class="hero">
-    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=88" alt="Gedung BAT Cirebon"/>
+    <img src="https://files.catbox.moe/x2vl9q.jpeg" alt="Gedung BAT Cirebon"/>
     <div class="hero-overlay"></div>
     <div class="hero-cnt">
       <span class="hero-tag">Lemahwungkuk · Cagar Budaya</span>
@@ -404,7 +342,7 @@
       <div class="hero-meta">
         <span class="hm-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Editor crbon.id
+          Nain
         </span>
         <span class="hm-sep"></span>
         <span class="hm-item">
@@ -414,121 +352,93 @@
         <span class="hm-sep"></span>
         <span class="hm-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          8 menit baca
+          10 menit baca
         </span>
       </div>
     </div>
   </div>
 
-  <!-- ARTICLE BODY — directly attached, no card/border separation -->
+  <!-- ARTICLE -->
   <div class="art-body">
-
-    <p class="a-lead">Gedung BAT (British American Tobacco) merupakan salah satu bangunan cagar budaya paling ikonik di Kota Cirebon. Terletak di Jalan Pasuketan, Kelurahan Lemahwungkuk, gedung ini menjadi saksi perkembangan industri rokok modern di Indonesia sejak masa kolonial Belanda. Dengan arsitektur bergaya Art Deco yang megah, Gedung BAT tidak hanya memiliki nilai sejarah industri, tetapi juga menjadi salah satu landmark bersejarah Kota Cirebon.</p>
+    <p class="a-lead">Gedung BAT (British American Tobacco) merupakan salah satu bangunan cagar budaya paling ikonik di Kota Cirebon. Terletak di Jalan Pasuketan, Kelurahan Lemahwungkuk, gedung ini menjadi saksi perkembangan industri rokok modern di Indonesia sejak masa kolonial Belanda. Dengan arsitektur bergaya Art Deco yang megah, Gedung BAT tidak hanya memiliki nilai sejarah industri, tetapi juga menjadi salah satu landmark bersejarah yang tak lekang oleh waktu.</p>
 
     <h2>Awal Pendirian</h2>
     <p>Sejarah Gedung BAT bermula pada tahun <strong>1917</strong>, ketika sebuah perusahaan bernama <strong>Indo Egyptian Cigarettes Company</strong> mendirikan fasilitas produksi rokok di Cirebon. Lokasi Cirebon dipilih karena merupakan kota pelabuhan penting di pesisir utara Jawa yang memudahkan distribusi bahan baku maupun hasil produksi ke berbagai daerah dan luar negeri.</p>
-    <p>Pada tahun <strong>1923</strong>, perusahaan tersebut bergabung dengan <strong>British American Tobacco (BAT)</strong>, perusahaan rokok multinasional yang berkantor pusat di London, Inggris. Sejak saat itu, kepemilikan pabrik beralih sepenuhnya kepada BAT dan menjadi salah satu pusat produksi rokok putih terbesar di Hindia Belanda.</p>
+    <p>Kota Cirebon pada awal abad ke-20 merupakan salah satu pusat ekonomi penting di Jawa bagian barat. Keberadaan pelabuhan yang aktif, jaringan kereta api yang menghubungkan Cirebon dengan Batavia dan Surabaya, serta tersedianya tenaga kerja lokal yang melimpah menjadikan kota ini pilihan ideal untuk mendirikan fasilitas industri skala besar.</p>
+    <p>Pada tahun <strong>1923</strong>, perusahaan tersebut bergabung dengan <strong>British American Tobacco (BAT)</strong>, perusahaan rokok multinasional yang berkantor pusat di London, Inggris. Sejak saat itu, kepemilikan pabrik beralih sepenuhnya kepada BAT dan menjadikannya salah satu pusat produksi rokok putih terbesar di Hindia Belanda.</p>
 
     <div class="img-wrap">
-      <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1000&q=85" alt="Kawasan Lemahwungkuk Cirebon"/>
+      <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1000&q=85" alt="Kawasan Lemahwungkuk"/>
       <div class="img-cap">Kawasan Lemahwungkuk — jantung kota lama Cirebon tempat Gedung BAT berdiri sejak lebih dari satu abad lalu.</div>
     </div>
 
     <h2>Renovasi Bergaya Art Deco</h2>
-    <p>Pada tahun <strong>1924</strong>, bangunan pabrik mengalami renovasi besar oleh biro arsitek <strong>F.D. Cuypers &amp; Hulswit</strong>, yang dikenal banyak merancang bangunan kolonial di Indonesia. Renovasi tersebut mengubah wajah gedung menjadi bergaya <strong>Art Deco</strong>, dengan ciri khas bentuk geometris, garis-garis tegas, jendela besar, dan perpaduan ornamen Eropa dengan sentuhan lokal. Tahun pembangunan ini juga masih dapat dilihat pada bagian depan bangunan.</p>
+    <p>Pada tahun <strong>1924</strong>, bangunan pabrik mengalami renovasi besar yang dikerjakan oleh biro arsitek <strong>F.D. Cuypers &amp; Hulswit</strong>, sebuah firma arsitektur Belanda yang terkenal merancang sejumlah bangunan penting di Hindia Belanda.</p>
+    <p>Hasil renovasi tersebut mengubah wajah gedung menjadi bergaya <strong>Art Deco</strong> — bentuk geometris yang tegas, fasad simetris, jendela-jendela besar berbingkai tebal untuk memaksimalkan pencahayaan alami, dan perpaduan ornamen Eropa dengan elemen lokal yang khas. Tahun pembangunan ini masih terukir jelas pada bagian depan bangunan hingga hari ini.</p>
 
     <div class="info-box">
       <div class="info-box-ttl">Keunikan Arsitektur Gedung BAT</div>
       <ul>
         <li>Bergaya <strong>Art Deco</strong> khas awal abad ke-20 — salah satu terbaik di pesisir utara Jawa.</li>
         <li>Fasad <strong>simetris</strong> dengan garis-garis geometris yang tegas dan bersih.</li>
-        <li>Jendela-jendela besar untuk memaksimalkan <strong>pencahayaan dan sirkulasi udara</strong>.</li>
+        <li>Jendela-jendela besar untuk memaksimalkan <strong>pencahayaan alami dan sirkulasi udara</strong>.</li>
         <li>Dibangun dari material berkualitas tinggi — tetap kokoh meski berusia lebih dari 100 tahun.</li>
         <li>Dirancang oleh <strong>F.D. Cuypers &amp; Hulswit</strong>, biro arsitektur kolonial ternama di Hindia Belanda.</li>
+        <li>Tahun pembangunan <strong>1924</strong> masih terukir jelas pada fasad depan bangunan.</li>
       </ul>
     </div>
 
     <h2>Masa Kejayaan Industri Rokok</h2>
-    <p>Sejak pertengahan 1920-an hingga awal 1940-an, Gedung BAT menjadi pusat produksi berbagai merek rokok putih yang dipasarkan ke seluruh Hindia Belanda. <strong>Ribuan tenaga kerja lokal</strong> bekerja di pabrik ini, sehingga BAT memberikan kontribusi besar terhadap perekonomian Kota Cirebon. Kehadiran pabrik juga mendorong pertumbuhan kawasan perdagangan dan permukiman di sekitarnya.</p>
+    <p>Sejak pertengahan 1920-an hingga awal 1940-an, Gedung BAT menjadi pusat produksi berbagai merek rokok putih yang dipasarkan ke seluruh Hindia Belanda. <strong>Ribuan tenaga kerja lokal</strong> bekerja di pabrik ini, memberikan kontribusi besar terhadap perekonomian Kota Cirebon.</p>
+    <p>Selain menyerap tenaga kerja, kehadiran pabrik BAT juga mendorong pembangunan infrastruktur di kawasan Lemahwungkuk. Jalan-jalan diperlebar, fasilitas transportasi ditingkatkan, dan kawasan permukiman bagi para pekerja mulai terbentuk di sekitar pabrik.</p>
 
     <div class="img-pair">
       <div class="img-wrap">
         <img src="https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=85" alt="Kawasan Kota Lama Cirebon"/>
-        <div class="img-cap">Kawasan kota lama Cirebon yang berkembang di sekitar fasilitas industri kolonial.</div>
+        <div class="img-cap">Kawasan kota lama Cirebon yang berkembang pesat di sekitar fasilitas industri kolonial.</div>
       </div>
       <div class="img-wrap">
         <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=85" alt="Arsitektur Kolonial Cirebon"/>
-        <div class="img-cap">Jejak arsitektur kolonial Belanda yang masih tersisa di Cirebon.</div>
+        <div class="img-cap">Jejak arsitektur kolonial Belanda yang masih tersisa di berbagai sudut Cirebon.</div>
       </div>
     </div>
 
     <h2>Linimasa Perjalanan Gedung BAT</h2>
-    <p>Lebih dari satu abad, Gedung BAT telah melewati berbagai babak sejarah — dari masa keemasan industri rokok, gejolak perang, hingga era modern.</p>
-
     <div class="timeline">
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">1917</div>
-          <div class="tl-ttl">Indo Egyptian Cigarettes Company Berdiri</div>
-          <div class="tl-txt">Fasilitas produksi rokok pertama didirikan di Cirebon, memanfaatkan posisi strategis kota pelabuhan di pesisir utara Jawa.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">1917</div><div class="tl-ttl">Indo Egyptian Cigarettes Company Berdiri</div><div class="tl-txt">Fasilitas produksi rokok pertama didirikan di Cirebon, memanfaatkan posisi strategis kota pelabuhan di pesisir utara Jawa.</div></div>
       </div>
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">1923</div>
-          <div class="tl-ttl">Bergabung dengan British American Tobacco</div>
-          <div class="tl-txt">Perusahaan diakuisisi oleh BAT, salah satu perusahaan rokok multinasional terbesar dunia berkantor pusat di London.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">1923</div><div class="tl-ttl">Bergabung dengan British American Tobacco</div><div class="tl-txt">Perusahaan diakuisisi oleh BAT, perusahaan rokok multinasional terbesar yang berkantor pusat di London.</div></div>
       </div>
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">1924</div>
-          <div class="tl-ttl">Renovasi Bergaya Art Deco</div>
-          <div class="tl-txt">Biro arsitek F.D. Cuypers &amp; Hulswit merenovasi total bangunan menjadi bergaya Art Deco — identitas visual yang masih dikenali hingga hari ini.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">1924</div><div class="tl-ttl">Renovasi Bergaya Art Deco</div><div class="tl-txt">Biro arsitek F.D. Cuypers &amp; Hulswit merenovasi total bangunan menjadi bergaya Art Deco.</div></div>
       </div>
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">1940-an</div>
-          <div class="tl-ttl">Pendudukan Jepang — Produksi Terhenti</div>
-          <div class="tl-txt">Saat Jepang menduduki Indonesia, aset perusahaan asing termasuk pabrik BAT diambil alih. Produksi rokok sempat dihentikan selama masa pendudukan.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">1942–1945</div><div class="tl-ttl">Pendudukan Jepang — Produksi Terhenti</div><div class="tl-txt">Aset perusahaan diambil alih pemerintah militer Jepang. Produksi rokok dihentikan selama masa pendudukan.</div></div>
       </div>
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">1949</div>
-          <div class="tl-ttl">Beroperasi Kembali Setelah Kemerdekaan</div>
-          <div class="tl-txt">Perusahaan kembali beroperasi dengan nama British American Tobacco Manufacture (Indonesia) Limited, lalu menjadi PT BAT Indonesia di era Orde Baru.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">1949</div><div class="tl-ttl">Beroperasi Kembali Setelah Kemerdekaan</div><div class="tl-txt">Perusahaan kembali beroperasi sebagai British American Tobacco Manufacture (Indonesia) Limited, lalu menjadi PT BAT Indonesia.</div></div>
       </div>
       <div class="tl">
         <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-        <div class="tl-body">
-          <div class="tl-yr">Mei 2010</div>
-          <div class="tl-ttl">Akhir Aktivitas Produksi</div>
-          <div class="tl-txt">Seluruh kegiatan produksi resmi dihentikan dan dipindahkan ke Malang, Jawa Timur. Gedung tetap dipelihara sebagai warisan sejarah.</div>
-        </div>
+        <div class="tl-body"><div class="tl-yr">Mei 2010</div><div class="tl-ttl">Akhir Aktivitas Produksi</div><div class="tl-txt">Seluruh produksi dipindahkan ke Malang, Jawa Timur. Gedung dipertahankan sebagai warisan sejarah cagar budaya.</div></div>
       </div>
     </div>
 
     <h2>Status Sebagai Cagar Budaya</h2>
-    <p>Pemerintah Kota Cirebon menetapkan Gedung BAT sebagai salah satu <strong>bangunan cagar budaya</strong>. Status tersebut diberikan karena gedung ini memiliki nilai penting dari aspek sejarah, arsitektur, serta perkembangan industri di Indonesia. Hingga kini bangunan tersebut masih menjadi objek wisata sejarah, lokasi fotografi, dan salah satu ikon kota yang banyak dikunjungi wisatawan.</p>
+    <p>Pemerintah Kota Cirebon secara resmi menetapkan Gedung BAT sebagai salah satu <strong>bangunan cagar budaya</strong> yang dilindungi. Status ini memberikan perlindungan hukum dari ancaman pembongkaran dan membuka peluang pengembangan sebagai destinasi wisata sejarah.</p>
+    <p>Hingga kini, Gedung BAT berdiri kokoh di Jalan Pasuketan dan menjadi objek wisata sejarah yang paling banyak dikunjungi di Kota Cirebon. Banyak fotografer, peneliti, dan wisatawan yang datang untuk mengabadikan keindahan arsitektur Art Deco bangunan berusia lebih dari satu abad ini.</p>
 
-    <div class="a-quote">
-      <p>"Gedung BAT bukan sekadar bekas pabrik rokok — ia adalah cermin perkembangan industri modern Cirebon di masa kolonial, simbol dari peran kota ini sebagai simpul perdagangan dan produksi yang strategis di Nusantara."</p>
-      <cite>— Dinas Kebudayaan &amp; Pariwisata Kota Cirebon</cite>
-    </div>
+    <h2>Nilai Sejarah dan Warisan Budaya</h2>
+    <p>Gedung BAT bukan sekadar bekas pabrik rokok — ia adalah cermin perjalanan panjang Kota Cirebon sebagai salah satu kota terpenting di pesisir utara Jawa. Dari dinding-dindingnya yang kokoh, kita bisa membaca cerita tentang bagaimana modal asing masuk ke Hindia Belanda, bagaimana industrialisasi mengubah wajah kota, dan bagaimana sebuah kota bisa bangkit setelah masa-masa sulit.</p>
+    <p>Meski aktivitas industrinya telah berakhir pada 2010, Gedung BAT tetap berdiri sebagai ikon sejarah dan cagar budaya — mengingatkan kita pada perjalanan panjang Cirebon sebagai kota yang tidak pernah berhenti bergerak.</p>
 
-    <h2>Nilai Sejarah</h2>
-    <p>Gedung BAT bukan sekadar bekas pabrik rokok, tetapi merupakan simbol perkembangan industri modern di Cirebon pada masa kolonial. Bangunan ini mencerminkan peran Kota Cirebon sebagai <strong>pusat perdagangan dan industri yang strategis</strong>, sekaligus menjadi saksi berbagai peristiwa penting, mulai dari masa kolonial Belanda, pendudukan Jepang, kemerdekaan Indonesia, hingga perkembangan industri nasional pada abad ke-20.</p>
-    <p>Meski aktivitas industrinya telah berakhir pada 2010, Gedung BAT tetap berdiri sebagai ikon sejarah dan cagar budaya — mengingatkan kita pada perjalanan panjang Cirebon sebagai kota yang tidak pernah berhenti bergerak, dari era kesultanan, kolonialisme, hingga industri modern.</p>
-
-    <!-- LOCATION -->
     <div class="loc-card">
       <div class="loc-header">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -541,7 +451,7 @@
         </div>
         <div class="loc-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span class="loc-row-txt"><strong>Jam Kunjungan:</strong> Senin – Minggu, dapat dikunjungi dari luar sepanjang hari</span>
+          <span class="loc-row-txt"><strong>Jam Kunjungan:</strong> Dapat dikunjungi dari luar sepanjang hari, setiap hari</span>
         </div>
         <div class="loc-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
@@ -553,8 +463,7 @@
         </a>
       </div>
     </div>
-
-  </div><!-- end art-body -->
+  </div>
 
   <!-- TAGS + SHARE -->
   <div class="art-foot">
@@ -567,148 +476,370 @@
     </div>
     <div class="share-row">
       <span class="share-lbl">Bagikan:</span>
-      <!-- X / Twitter -->
-      <a class="sh-btn" href="#" title="Bagikan ke X" id="btn-twitter">
+      <a class="sh-btn" href="#" id="btn-twitter" title="X">
         <svg viewBox="0 0 24 24" fill="currentColor" style="color:#000;width:15px;height:15px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
-      <!-- WhatsApp -->
-      <a class="sh-btn" href="#" title="Bagikan ke WhatsApp" id="btn-wa">
+      <a class="sh-btn" href="#" id="btn-wa" title="WhatsApp">
         <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       </a>
-      <!-- Facebook -->
-      <a class="sh-btn" href="#" title="Bagikan ke Facebook" id="btn-fb">
+      <a class="sh-btn" href="#" id="btn-fb" title="Facebook">
         <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1877F2;width:15px;height:15px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       </a>
-      <!-- Copy link -->
-      <a class="sh-btn" href="#" title="Salin tautan" id="sh-copy">
+      <a class="sh-btn" href="#" id="sh-copy" title="Salin tautan">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);width:15px;height:15px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
       </a>
     </div>
   </div>
 
-  <!-- RELATED ARTICLES -->
+  <!-- RELATED -->
   <div class="related-section">
     <div class="rel-heading">Artikel Terkait</div>
-    <div class="rel-grid">
-      <a class="rel-item" href="#">
-        <img class="rel-img" src="https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=400&q=80" alt=""/>
-        <div class="rel-body">
-          <span class="rel-tag">KASEPUHAN</span>
-          <div class="rel-ttl">Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527</div>
-          <div class="rel-date">2 Jun 2025</div>
-        </div>
-      </a>
-      <a class="rel-item" href="#">
-        <img class="rel-img" src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80" alt=""/>
-        <div class="rel-body">
-          <span class="rel-tag">PESISIR UTARA</span>
-          <div class="rel-ttl">Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab</div>
-          <div class="rel-date">20 Mei 2025</div>
-        </div>
-      </a>
-      <a class="rel-item" href="#">
-        <img class="rel-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=400&q=80" alt=""/>
-        <div class="rel-body">
-          <span class="rel-tag">TRUSMI</span>
-          <div class="rel-ttl">Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu</div>
-          <div class="rel-date">4 Jun 2025</div>
-        </div>
-      </a>
-      <a class="rel-item" href="#">
-        <img class="rel-img" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80" alt=""/>
-        <div class="rel-body">
-          <span class="rel-tag">LEMAHWUNGKUK</span>
-          <div class="rel-ttl">Lemahwungkuk: Permukiman Tertua Cirebon yang Jadi Cikal Bakal Kota</div>
-          <div class="rel-date">17 Mei 2025</div>
-        </div>
-      </a>
-    </div>
+    <div class="rel-grid" id="relatedGrid"><!-- diisi JS --></div>
   </div>
+</div>
 
-</div><!-- end .page -->
-
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="ft-brand">
-      <div class="ft-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  <div class="footer-main">
+    <div class="ft-brand-col">
+      <div class="ft-brand">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <rect width="34" height="34" rx="10" fill="url(#lg2)"/>
+          <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
+          <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+        </svg>
+        <span class="ft-name">Nawaku</span>
       </div>
-      <span class="ft-name">Nawaku</span>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+      <div class="ft-socials">
+        <a class="ft-soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a class="ft-soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a class="ft-soc" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
     </div>
-    <div class="ft-links-row">
-      <a class="ft-link" href="#">Beranda</a>
-      <a class="ft-link" href="#">Kawasan</a>
-      <a class="ft-link" href="#">Tentang</a>
-      <a class="ft-link" href="#">Privasi</a>
-      <a class="ft-link" href="#">Ketentuan</a>
+    <div class="ft-right">
+      <div class="ft-col-ttl">Nawaku</div>
+      <a class="ft-col-link" href="#" onclick="openAboutModal();return false;">Tentang Kami</a>
+      <a class="ft-col-link" href="#" data-nav>Tim Redaksi</a>
+      <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
+      <a class="ft-col-link" href="#" data-nav>Kebijakan Privasi</a>
+      <a class="ft-col-link" href="#" data-nav>Ketentuan</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="fb-copy">© 2026 crbon.id — Sejarah Cirebon dalam satu tempat.</span>
+    <span class="fb-copy" id="ftCopy">© 2025 Nawaku.com</span>
+    <span class="fb-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
+      Dibuat dengan penuh semangat
+    </span>
   </div>
 </footer>
 
 <script>
-  /* Read progress */
-  window.addEventListener('scroll', () => {
-    const d = document.documentElement;
-    document.getElementById('rbar').style.width =
-      (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
-  });
+/* ══════════════════════════════════════
+   LOAD DATABASE & BOOT
+══════════════════════════════════════ */
+let DB = null;
 
-  /* More dropdown toggle */
-  function toggleMore() {
-    document.getElementById('nMore').classList.toggle('open');
+async function loadDB() {
+  try {
+    const res = await fetch('./db.json');
+    DB = await res.json();
+  } catch(e) {
+    // fallback minimal jika fetch gagal (file:// protocol)
+    DB = {
+      site:{ name:'Nawaku', tagline:'Mengabadikan sejarah setiap sudut Kota Cirebon.', description:'Nawaku adalah ruang baca digital yang mengabadikan sejarah Cirebon.', about_extended:'Dikelola oleh tim jurnalis dan peneliti sejarah lokal.', year_founded:2023 },
+      stats:{ articles:127, kawasan:22, tahun_berdiri:2023 },
+      kawasan:[
+        {id:'lemahwungkuk',name:'Lemahwungkuk',desc:'Kawasan kota lama dengan bangunan kolonial.',article_count:14,url:'kawasan-lemahwungkuk.html'},
+        {id:'kasepuhan',name:'Kasepuhan',desc:'Pusat Kesultanan Cirebon.',article_count:11,url:'kawasan-kasepuhan.html'},
+        {id:'trusmi',name:'Trusmi',desc:'Kampung batik tulis tertua.',article_count:9,url:'kawasan-trusmi.html'},
+        {id:'pesisir',name:'Pesisir Utara',desc:'Jalur perdagangan lintas nusantara.',article_count:10,url:'kawasan-pesisir.html'},
+        {id:'gunung-jati',name:'Gunung Jati',desc:'Makam Sunan Gunung Jati.',article_count:7,url:'kawasan-gunung-jati.html'},
+        {id:'jamblang',name:'Jamblang',desc:'Daerah kuliner legendaris nasi jamblang.',article_count:4,url:'kawasan-jamblang.html'},
+      ],
+      articles:[
+        {id:'gedung-bat',title:'Sejarah Gedung BAT Cirebon',kawasan_id:'lemahwungkuk',kawasan_name:'Lemahwungkuk',date:'17 Mei 2025',read_time:10,img:'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=200&q=70',url:'sejarah-gedung-bat-cirebon.html'},
+        {id:'keraton-kasepuhan',title:'Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon',kawasan_id:'kasepuhan',kawasan_name:'Kasepuhan',date:'2 Jun 2025',read_time:8,img:'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70',url:'keraton-kasepuhan.html'},
+        {id:'pelabuhan-cirebon',title:'Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab',kawasan_id:'pesisir',kawasan_name:'Pesisir Utara',date:'20 Mei 2025',read_time:7,img:'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=200&q=70',url:'pelabuhan-cirebon.html'},
+        {id:'batik-trusmi',title:'Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu',kawasan_id:'trusmi',kawasan_name:'Trusmi',date:'4 Jun 2025',read_time:6,img:'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70',url:'batik-trusmi.html'},
+        {id:'lemahwungkuk-kota',title:'Lemahwungkuk: Permukiman Tertua Cirebon',kawasan_id:'lemahwungkuk',kawasan_name:'Lemahwungkuk',date:'17 Mei 2025',read_time:9,img:'https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=200&q=70',url:'lemahwungkuk-kota.html'},
+        {id:'sunan-gunung-jati',title:'Makam Sunan Gunung Jati: Jejak Wali di Tanah Cirebon',kawasan_id:'gunung-jati',kawasan_name:'Gunung Jati',date:'10 Mei 2025',read_time:8,img:'https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70',url:'sunan-gunung-jati.html'},
+        {id:'nasi-jamblang',title:'Nasi Jamblang: Kuliner Bersejarah dari Desa Jamblang',kawasan_id:'jamblang',kawasan_name:'Jamblang',date:'12 Apr 2025',read_time:5,img:'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70',url:'nasi-jamblang.html'},
+      ]
+    };
   }
-  document.addEventListener('click', (e) => {
-    const m = document.getElementById('nMore');
-    if (!m.contains(e.target)) m.classList.remove('open');
-  });
+  boot();
+}
 
-  /* Toast helper */
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+function boot() {
+  renderFooter();
+  renderRelated();
+  renderKawasanGrid();
+  renderAboutModal();
+  setupBreadcrumb();
+}
+
+/* ── FOOTER dari DB ── */
+function renderFooter() {
+  const s = DB.site;
+  document.getElementById('ftDesc').textContent = s.tagline;
+  document.getElementById('ftCopy').textContent = `© ${s.year_founded}–${new Date().getFullYear()} ${s.name}.com — ${s.tagline}`;
+}
+
+/* ── RELATED ARTICLES dari DB (exclude current) ── */
+function renderRelated() {
+  const grid = document.getElementById('relatedGrid');
+  const items = DB.articles.filter(a => a.id !== 'gedung-bat').slice(0, 4);
+  grid.innerHTML = items.map(a => `
+    <a class="rel-item" href="${a.url}" data-nav>
+      <img class="rel-img" src="${a.img}" alt=""/>
+      <div class="rel-body">
+        <span class="rel-tag">${a.kawasan_name.toUpperCase()}</span>
+        <div class="rel-ttl">${a.title}</div>
+        <div class="rel-date">${a.date}</div>
+      </div>
+    </a>
+  `).join('');
+  grid.querySelectorAll('[data-nav]').forEach(attachNav);
+}
+
+/* ── BREADCRUMB kawasan link ── */
+function setupBreadcrumb() {
+  const kw = DB.kawasan.find(k => k.id === 'lemahwungkuk');
+  const el = document.getElementById('bcKawasan');
+  if (kw) {
+    el.textContent = kw.name;
+    el.addEventListener('click', () => goRedirect(kw.url));
   }
+}
 
-  /* Share buttons */
-  document.getElementById('btn-twitter').addEventListener('click', (e) => {
-    e.preventDefault();
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent('Sejarah Gedung BAT Cirebon — via @nawakucom');
-    window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank', 'width=600,height=400');
-  });
+/* ── KAWASAN GRID di search ── */
+let activeKawasan = null;
 
-  document.getElementById('btn-wa').addEventListener('click', (e) => {
-    e.preventDefault();
-    const text = encodeURIComponent('Sejarah Gedung BAT Cirebon\n\n' + window.location.href);
-    window.open('https://wa.me/?text=' + text, '_blank');
-  });
+function renderKawasanGrid() {
+  const grid = document.getElementById('kawasanGrid');
+  grid.innerHTML = DB.kawasan.map(k => `
+    <div class="kawasan-chip" data-kid="${k.id}" data-kurl="${k.url}">
+      <span class="kawasan-chip-name">${k.name}</span>
+      <span class="kawasan-chip-count">${k.article_count} artikel</span>
+    </div>
+  `).join('');
 
-  document.getElementById('btn-fb').addEventListener('click', (e) => {
-    e.preventDefault();
-    const url = encodeURIComponent(window.location.href);
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank', 'width=600,height=400');
-  });
+  grid.querySelectorAll('.kawasan-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const kid = chip.dataset.kid;
+      const kurl = chip.dataset.kurl;
 
-  document.getElementById('sh-copy').addEventListener('click', (e) => {
-    e.preventDefault();
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      showToast('Tautan berhasil disalin!');
-    }).catch(() => {
-      /* fallback for non-secure context */
-      const ta = document.createElement('textarea');
-      ta.value = window.location.href;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('Tautan berhasil disalin!');
+      if (activeKawasan === kid) {
+        // sudah aktif — klik lagi navigasi ke halaman kawasan
+        closeSearch();
+        goRedirect(kurl);
+        return;
+      }
+
+      // set active
+      grid.querySelectorAll('.kawasan-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeKawasan = kid;
+
+      // tampilkan artikel di kawasan ini
+      const arts = DB.articles.filter(a => a.kawasan_id === kid);
+      const wrap = document.getElementById('searchResultsWrap');
+      const ttl = document.getElementById('searchResultsTtl');
+      const res = document.getElementById('searchResults');
+      const kw = DB.kawasan.find(k => k.id === kid);
+      ttl.textContent = `Artikel di ${kw ? kw.name : kid}`;
+
+      if (!arts.length) {
+        res.innerHTML = '<div class="search-empty">Belum ada artikel untuk kawasan ini.</div>';
+      } else {
+        res.innerHTML = arts.map(a => `
+          <a class="s-result" href="${a.url}" data-nav>
+            <img class="s-result-img" src="${a.img}" alt=""/>
+            <div>
+              <div class="s-result-tag">${a.kawasan_name.toUpperCase()}</div>
+              <div class="s-result-ttl">${a.title}</div>
+              <div class="s-result-meta">${a.date} · ${a.read_time} menit baca</div>
+            </div>
+          </a>
+        `).join('');
+        res.querySelectorAll('[data-nav]').forEach(attachNav);
+      }
+      wrap.style.display = 'block';
     });
   });
+}
+
+/* ── ABOUT MODAL dari DB ── */
+function renderAboutModal() {
+  const s = DB.site;
+  const st = DB.stats;
+  document.getElementById('aboutBody').innerHTML = `
+    <div class="about-stat-row">
+      <div class="about-stat"><div class="about-stat-v">${st.articles}+</div><div class="about-stat-l">Artikel</div></div>
+      <div class="about-stat"><div class="about-stat-v">${st.kawasan}</div><div class="about-stat-l">Kawasan</div></div>
+      <div class="about-stat"><div class="about-stat-v">${st.tahun_berdiri}</div><div class="about-stat-l">Berdiri</div></div>
+    </div>
+    <p><strong>${s.name}</strong> — ${s.description}</p>
+    <p>${s.about_extended}</p>
+  `;
+}
+
+/* ══════════════════════════════════════
+   UI INTERACTIONS
+══════════════════════════════════════ */
+
+/* Read progress */
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('rbar').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+});
+
+/* Three-dot dropdown */
+document.getElementById('moreBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('nMore').classList.toggle('open');
+});
+document.addEventListener('click', () => document.getElementById('nMore').classList.remove('open'));
+
+/* Redirect */
+function goRedirect(url) {
+  if (!url || url === '#') return;
+  const o = document.getElementById('redirectOverlay');
+  o.classList.add('show');
+  setTimeout(() => { window.location.href = url; }, 1600);
+}
+function attachNav(el) {
+  el.addEventListener('click', e => {
+    const href = el.getAttribute('href');
+    if (!href || href === '#') return;
+    e.preventDefault();
+    goRedirect(href);
+  });
+}
+document.querySelectorAll('[data-nav]').forEach(attachNav);
+
+/* Toast */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* Share */
+document.getElementById('btn-twitter').addEventListener('click', e => {
+  e.preventDefault();
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('Sejarah Gedung BAT Cirebon — via @nawakucom') + '&url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+});
+document.getElementById('btn-wa').addEventListener('click', e => {
+  e.preventDefault();
+  window.open('https://wa.me/?text=' + encodeURIComponent('Sejarah Gedung BAT Cirebon\n\n' + window.location.href), '_blank');
+});
+document.getElementById('btn-fb').addEventListener('click', e => {
+  e.preventDefault();
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+});
+document.getElementById('sh-copy').addEventListener('click', e => {
+  e.preventDefault();
+  const doCopy = () => showToast('Tautan berhasil disalin!');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href).then(doCopy).catch(() => { fallbackCopy(); doCopy(); });
+  } else { fallbackCopy(); doCopy(); }
+});
+function fallbackCopy() {
+  const ta = document.createElement('textarea');
+  ta.value = window.location.href;
+  ta.style.cssText = 'position:fixed;opacity:0;';
+  document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); document.body.removeChild(ta);
+}
+
+/* Search */
+function openSearch() {
+  document.getElementById('nMore').classList.remove('open');
+  document.getElementById('searchModal').classList.add('open');
+  document.getElementById('searchInput').focus();
+  activeKawasan = null;
+  document.getElementById('searchResultsWrap').style.display = 'none';
+}
+function closeSearch() {
+  document.getElementById('searchModal').classList.remove('open');
+  document.querySelectorAll('.kawasan-chip').forEach(c => c.classList.remove('active'));
+  activeKawasan = null;
+  document.getElementById('searchResultsWrap').style.display = 'none';
+  document.getElementById('searchInput').value = '';
+}
+document.getElementById('btnOpenSearch').addEventListener('click', openSearch);
+document.getElementById('btnCloseSearch').addEventListener('click', closeSearch);
+document.getElementById('searchModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('searchModal')) closeSearch();
+});
+
+/* Search input — filter artikel berdasarkan teks */
+document.getElementById('searchInput').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    document.getElementById('searchResultsWrap').style.display = 'none';
+    document.querySelectorAll('.kawasan-chip').forEach(c => c.classList.remove('active'));
+    activeKawasan = null;
+    return;
+  }
+  const arts = DB.articles.filter(a =>
+    a.title.toLowerCase().includes(q) ||
+    a.kawasan_name.toLowerCase().includes(q)
+  );
+  const wrap = document.getElementById('searchResultsWrap');
+  const ttl = document.getElementById('searchResultsTtl');
+  const res = document.getElementById('searchResults');
+  ttl.textContent = `Hasil pencarian "${e.target.value}"`;
+  if (!arts.length) {
+    res.innerHTML = '<div class="search-empty">Artikel tidak ditemukan.</div>';
+  } else {
+    res.innerHTML = arts.map(a => `
+      <a class="s-result" href="${a.url}" data-nav>
+        <img class="s-result-img" src="${a.img}" alt=""/>
+        <div>
+          <div class="s-result-tag">${a.kawasan_name.toUpperCase()}</div>
+          <div class="s-result-ttl">${a.title}</div>
+          <div class="s-result-meta">${a.date} · ${a.read_time} menit baca</div>
+        </div>
+      </a>
+    `).join('');
+    res.querySelectorAll('[data-nav]').forEach(attachNav);
+  }
+  wrap.style.display = 'block';
+});
+
+/* About */
+function openAboutModal() {
+  document.getElementById('nMore').classList.remove('open');
+  document.getElementById('aboutModal').classList.add('open');
+}
+function closeAboutModal() {
+  document.getElementById('aboutModal').classList.remove('open');
+}
+document.getElementById('btnOpenAbout').addEventListener('click', openAboutModal);
+document.getElementById('btnCloseAbout').addEventListener('click', closeAboutModal);
+document.getElementById('aboutModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('aboutModal')) closeAboutModal();
+});
+document.querySelector('[onclick="openAboutModal();return false;"]')?.addEventListener('click', e => { e.preventDefault(); openAboutModal(); });
+
+/* Newsletter */
+document.getElementById('btnNewsletter').addEventListener('click', () => { document.getElementById('nMore').classList.remove('open'); goRedirect('newsletter.html'); });
+document.getElementById('ftNewsletter').addEventListener('click', e => { e.preventDefault(); goRedirect('newsletter.html'); });
+
+/* ESC */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeSearch(); closeAboutModal(); }
+});
+
+/* Boot */
+loadDB();
 </script>
 </body>
-  </html>#
+</html>
