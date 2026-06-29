@@ -1,0 +1,182 @@
+{
+  "site": {
+    "name": "Nawaku",
+    "tagline": "Mengabadikan sejarah setiap sudut Kota Cirebon.",
+    "description": "Nawaku adalah ruang baca digital yang didedikasikan untuk mengabadikan sejarah setiap sudut Kota Cirebon — dari kawasan pesisir yang ramai, keraton-keraton megah, kampung-kampung batik, hingga gedung-gedung peninggalan kolonial yang bisu namun penuh cerita.",
+    "about_extended": "Kami percaya bahwa sejarah lokal bukan sekadar catatan masa lalu, melainkan identitas yang membentuk siapa kita hari ini. Setiap artikel ditulis dengan riset mendalam dan disajikan dengan bahasa yang mudah dipahami oleh semua kalangan. Nawaku dikelola oleh tim jurnalis dan peneliti sejarah lokal yang berkomitmen menjaga akurasi dan kedalaman setiap konten.",
+    "year_founded": 2023
+  },
+  "stats": {
+    "articles": 200,
+    "kawasan": 22,
+    "tahun_berdiri": 2023
+  },
+  "kawasan": [
+    {
+      "id": "lemahwungkuk",
+      "name": "Lemahwungkuk",
+      "desc": "Kawasan kota lama dengan bangunan kolonial bersejarah.",
+      "article_count": 14,
+      "url": "kawasan-lemahwungkuk.html"
+    },
+    {
+      "id": "kasepuhan",
+      "name": "Kasepuhan",
+      "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan.",
+      "article_count": 11,
+      "url": "kawasan-kasepuhan.html"
+    },
+    {
+      "id": "kanoman",
+      "name": "Kanoman",
+      "desc": "Salah satu dari empat keraton yang ada di Cirebon.",
+      "article_count": 8,
+      "url": "kawasan-kanoman.html"
+    },
+    {
+      "id": "trusmi",
+      "name": "Trusmi",
+      "desc": "Kampung batik tulis tertua dan terbesar di Cirebon.",
+      "article_count": 9,
+      "url": "kawasan-trusmi.html"
+    },
+    {
+      "id": "plered",
+      "name": "Plered",
+      "desc": "Sentra kerajinan gerabah dan batik khas Cirebon.",
+      "article_count": 6,
+      "url": "kawasan-plered.html"
+    },
+    {
+      "id": "gunung-jati",
+      "name": "Gunung Jati",
+      "desc": "Makam Sunan Gunung Jati, wali penyebar Islam di Cirebon.",
+      "article_count": 7,
+      "url": "kawasan-gunung-jati.html"
+    },
+    {
+      "id": "plumbon",
+      "name": "Plumbon",
+      "desc": "Kecamatan di barat Cirebon dengan kekayaan sejarah perdagangan.",
+      "article_count": 5,
+      "url": "kawasan-plumbon.html"
+    },
+    {
+      "id": "jamblang",
+      "name": "Jamblang",
+      "desc": "Daerah penghasil kuliner legendaris nasi jamblang Cirebon.",
+      "article_count": 4,
+      "url": "kawasan-jamblang.html"
+    },
+    {
+      "id": "palimanan",
+      "name": "Palimanan",
+      "desc": "Kawasan bersejarah di timur Cirebon dekat Sungai Cimanuk.",
+      "article_count": 6,
+      "url": "kawasan-palimanan.html"
+    },
+    {
+      "id": "gegesik",
+      "name": "Gegesik",
+      "desc": "Sentra wayang kulit dan seni tradisional Cirebon.",
+      "article_count": 3,
+      "url": "kawasan-gegesik.html"
+    },
+    {
+      "id": "sumber",
+      "name": "Sumber",
+      "desc": "Pusat pemerintahan Kabupaten Cirebon.",
+      "article_count": 5,
+      "url": "kawasan-sumber.html"
+    },
+    {
+      "id": "pesisir",
+      "name": "Pesisir Utara",
+      "desc": "Pelabuhan dan jalur perdagangan lintas nusantara.",
+      "article_count": 10,
+      "url": "kawasan-pesisir.html"
+    }
+  ],
+  "articles": [
+    {
+      "id": "gedung-bat",
+      "title": "Sejarah Gedung BAT Cirebon: Saksi Bisu Kejayaan Industri Rokok",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "17 Mei 2025",
+      "read_time": 10,
+      "img": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=200&q=70",
+      "url": "sejarah-gedung-bat-cirebon.html"
+    },
+    {
+      "id": "keraton-kasepuhan",
+      "title": "Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527",
+      "kawasan_id": "kasepuhan",
+      "kawasan_name": "Kasepuhan",
+      "date": "2 Jun 2025",
+      "read_time": 8,
+      "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
+      "url": "keraton-kasepuhan.html"
+    },
+    {
+      "id": "pelabuhan-cirebon",
+      "title": "Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab",
+      "kawasan_id": "pesisir",
+      "kawasan_name": "Pesisir Utara",
+      "date": "20 Mei 2025",
+      "read_time": 7,
+      "img": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=200&q=70",
+      "url": "pelabuhan-cirebon.html"
+    },
+    {
+      "id": "batik-trusmi",
+      "title": "Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu",
+      "kawasan_id": "trusmi",
+      "kawasan_name": "Trusmi",
+      "date": "4 Jun 2025",
+      "read_time": 6,
+      "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
+      "url": "batik-trusmi.html"
+    },
+    {
+      "id": "lemahwungkuk-kota",
+      "title": "Lemahwungkuk: Permukiman Tertua Cirebon yang Jadi Cikal Bakal Kota",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "17 Mei 2025",
+      "read_time": 9,
+      "img": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=200&q=70",
+      "url": "lemahwungkuk-kota.html"
+    },
+    {
+      "id": "sunan-gunung-jati",
+      "title": "Makam Sunan Gunung Jati: Jejak Wali di Tanah Cirebon",
+      "kawasan_id": "gunung-jati",
+      "kawasan_name": "Gunung Jati",
+      "date": "10 Mei 2025",
+      "read_time": 8,
+      "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
+      "url": "sunan-gunung-jati.html"
+    },
+    {
+      "id": "keraton-kanoman",
+      "title": "Keraton Kanoman: Warisan Kedua Kesultanan Cirebon",
+      "kawasan_id": "kanoman",
+      "kawasan_name": "Kanoman",
+      "date": "28 Apr 2025",
+      "read_time": 7,
+      "img": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=200&q=70",
+      "url": "keraton-kanoman.html"
+    },
+    {
+      "id": "nasi-jamblang",
+      "title": "Nasi Jamblang: Kuliner Bersejarah dari Desa Jamblang",
+      "kawasan_id": "jamblang",
+      "kawasan_name": "Jamblang",
+      "date": "12 Apr 2025",
+      "read_time": 5,
+      "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
+      "url": "nasi-jamblang.html"
+    }
+  ]
+    }
