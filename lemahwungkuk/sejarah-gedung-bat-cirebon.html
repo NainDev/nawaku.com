@@ -544,13 +544,13 @@ let DB = null;
 
 async function loadDB() {
   try {
-    const res = await fetch('./db.json');
+    const res = await fetch('db.json');
     DB = await res.json();
   } catch(e) {
     // fallback minimal jika fetch gagal (file:// protocol)
     DB = {
       site:{ name:'Nawaku', tagline:'Mengabadikan sejarah setiap sudut Kota Cirebon.', description:'Nawaku adalah ruang baca digital yang mengabadikan sejarah Cirebon.', about_extended:'Dikelola oleh tim jurnalis dan peneliti sejarah lokal.', year_founded:2023 },
-      stats:{ articles:127, kawasan:22, tahun_berdiri:2023 },
+      stats:{ articles:130, kawasan:22, tahun_berdiri:2023 },
       kawasan:[
         {id:'lemahwungkuk',name:'Lemahwungkuk',desc:'Kawasan kota lama dengan bangunan kolonial.',article_count:14,url:'kawasan-lemahwungkuk.html'},
         {id:'kasepuhan',name:'Kasepuhan',desc:'Pusat Kesultanan Cirebon.',article_count:11,url:'kawasan-kasepuhan.html'},
