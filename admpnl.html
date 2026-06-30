@@ -1,1 +1,670 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — Kelola Database Nawaku</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;
+  --border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;
+  --danger:#dc2626;--danger-light:#fef2f2;--success:#16a34a;
+}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:14px;}
+.n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:32px;height:32px;flex-shrink:0;}
+.n-logo-txt{font-weight:800;font-size:17px;color:#1a1a1a;letter-spacing:-.3px;}
+.n-badge{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:99px;letter-spacing:.3px;}
+.n-status{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500;}
+.dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0;}
+.dot.on{background:var(--success);}
+.dot.busy{background:#f59e0b;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* LAYOUT */
+.wrap{max-width:1180px;margin:0 auto;padding:24px 20px 60px;display:grid;grid-template-columns:260px 1fr;gap:20px;}
+@media(max-width:880px){.wrap{grid-template-columns:1fr;}}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.card-ttl{font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-ttl svg{width:16px;height:16px;color:var(--accent);}
+
+/* FORM */
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--text2);margin-bottom:5px;}
+.field input,.field textarea,.field select{
+  width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;
+  font-family:'Rubik',sans-serif;font-size:13.5px;color:var(--text);background:#fff;
+  outline:none;transition:border-color .15s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:64px;line-height:1.5;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 16px;border-radius:9px;border:none;font-family:'Rubik',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;}
+.btn svg{width:14px;height:14px;flex-shrink:0;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#1d4ed8;}
+.btn-primary:disabled{background:#cbd5e1;cursor:not-allowed;}
+.btn-outline{background:#fff;border:1px solid var(--border);color:var(--text2);}
+.btn-outline:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.btn-danger{background:var(--danger-light);color:var(--danger);border:1px solid #fecaca;}
+.btn-danger:hover{background:#fee2e2;}
+.btn-sm{padding:6px 11px;font-size:12.5px;}
+.btn-block{width:100%;}
+
+/* SIDEBAR KAWASAN LIST */
+.kawasan-list{display:flex;flex-direction:column;gap:6px;}
+.kawasan-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:9px;cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
+.kawasan-item:hover{background:var(--bg);}
+.kawasan-item.active{background:var(--accent-light);border-color:var(--accent-mid);}
+.ki-name{font-size:13.5px;font-weight:600;color:var(--text);}
+.kawasan-item.active .ki-name{color:var(--accent);}
+.ki-count{font-size:11px;color:var(--muted);background:var(--bg);padding:2px 7px;border-radius:99px;flex-shrink:0;}
+.kawasan-item.active .ki-count{background:#fff;}
+.empty-note{font-size:12.5px;color:var(--muted);padding:10px 4px;line-height:1.6;}
+
+/* MAIN PANEL */
+.kawasan-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px;}
+.kh-title{font-size:19px;font-weight:800;color:var(--text);}
+.kh-id{font-size:12px;color:var(--muted);font-family:monospace;margin-top:3px;}
+
+/* ARTICLE LIST */
+.art-list{display:flex;flex-direction:column;gap:10px;}
+.art-item{border:1px solid var(--border);border-radius:11px;overflow:hidden;}
+.art-item-head{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;background:#fff;}
+.art-item-head:hover{background:var(--bg);}
+.art-thumb{width:42px;height:42px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--bg);border:1px solid var(--border);}
+.art-info{flex:1;min-width:0;}
+.art-title{font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.art-meta{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.art-chevron{width:16px;height:16px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.art-item.open .art-chevron{transform:rotate(180deg);}
+.art-item-body{display:none;padding:16px 18px 18px;border-top:1px solid var(--border);background:var(--bg);}
+.art-item.open .art-item-body{display:block;}
+.art-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;}
+
+.add-art-btn{margin-top:6px;border:1.5px dashed var(--border);background:transparent;color:var(--muted);border-radius:11px;padding:12px;width:100%;cursor:pointer;font-family:'Rubik',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;}
+.add-art-btn:hover{border-color:var(--accent-mid);color:var(--accent);background:var(--accent-light);}
+.add-art-btn svg{width:15px;height:15px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;font-size:13px;font-weight:500;padding:11px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;display:flex;align-items:center;gap:8px;max-width:90vw;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.error{background:#dc2626;}
+.toast svg{width:15px;height:15px;flex-shrink:0;}
+
+/* CONNECT GATE */
+.connect-gate{max-width:480px;margin:60px auto;}
+.connect-gate .card{margin-bottom:0;}
+.gate-icon{width:48px;height:48px;border-radius:13px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.gate-icon svg{width:24px;height:24px;color:var(--accent);}
+
+.locked-overlay{display:none;}
+#mainArea.locked .locked-overlay{display:flex;}
+#mainArea{position:relative;}
+.locked-overlay{position:absolute;inset:0;background:rgba(247,248,250,.7);backdrop-filter:blur(1px);align-items:center;justify-content:center;font-size:13.5px;color:var(--muted);font-weight:500;border-radius:14px;}
+
+.badge-soft{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.4px;margin-left:6px;}
+.section-sep{height:1px;background:var(--border);margin:18px 0;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="n-logo" href="#">
+    <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
+      <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
+      <defs><linearGradient id="lg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+    </svg>
+    <span class="n-logo-txt">Nawaku</span>
+  </a>
+  <span class="n-badge">Admin Database</span>
+  <div class="n-status" id="connStatus">
+    <span class="dot" id="connDot"></span>
+    <span id="connText">Belum terhubung ke GitHub</span>
+  </div>
+</nav>
+
+<!-- ══ CONNECT GATE ══ -->
+<div class="connect-gate" id="connectGate">
+  <div class="card">
+    <div class="gate-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    </div>
+    <div class="card-ttl">Hubungkan ke Repo GitHub</div>
+    <p class="hint" style="margin-bottom:16px;">Isi detail repo tempat <strong>db.json</strong> disimpan. Token hanya disimpan sementara di sesi browser ini (tidak permanen) dan tidak pernah dikirim ke server lain selain GitHub.</p>
+
+    <div class="field">
+      <label>Pemilik repo (username/organisasi)</label>
+      <input type="text" id="ghOwner" placeholder="contoh: nain"/>
+    </div>
+    <div class="field">
+      <label>Nama repo</label>
+      <input type="text" id="ghRepo" placeholder="contoh: nawaku"/>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Branch</label>
+        <input type="text" id="ghBranch" placeholder="main" value="main"/>
+      </div>
+      <div class="field">
+        <label>Path file JSON</label>
+        <input type="text" id="ghPath" placeholder="db.json" value="db.json"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Personal Access Token (fine-grained, scope Contents: Read & write)</label>
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+      <div class="hint">Buat di GitHub → Settings → Developer settings → Fine-grained tokens. Batasi hanya ke repo ini.</div>
+    </div>
+    <button class="btn btn-primary btn-block" id="btnConnect">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Hubungkan &amp; Muat Database
+    </button>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div class="wrap" id="appWrap" style="display:none;">
+
+  <!-- SIDEBAR -->
+  <div>
+    <div class="card">
+      <div class="card-ttl">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Pengaturan Situs
+      </div>
+      <button class="btn btn-outline btn-block btn-sm" id="btnEditSite">Edit Info Situs</button>
+    </div>
+
+    <div class="card">
+      <div class="card-ttl">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+        Kawasan
+      </div>
+      <div class="kawasan-list" id="kawasanList"></div>
+      <button class="add-art-btn" id="btnAddKawasan" style="margin-top:12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Kawasan
+      </button>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="btnSave" style="padding:12px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Simpan ke GitHub
+    </button>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div id="mainArea">
+    <div class="locked-overlay">Pilih kawasan di kiri untuk mulai mengedit, atau tambah kawasan baru.</div>
+
+    <!-- SITE FORM (toggle) -->
+    <div class="card" id="siteCard" style="display:none;">
+      <div class="card-ttl">Info Situs</div>
+      <div class="field"><label>Nama Situs</label><input type="text" id="siteName"/></div>
+      <div class="field"><label>Tagline</label><input type="text" id="siteTagline"/></div>
+      <div class="field"><label>Deskripsi</label><textarea id="siteDesc"></textarea></div>
+      <div class="field"><label>Deskripsi Panjang (Tentang Kami)</label><textarea id="siteAbout"></textarea></div>
+      <div class="field"><label>Tahun Berdiri</label><input type="number" id="siteYear"/></div>
+      <button class="btn btn-outline btn-sm" id="btnCloseSite">Tutup</button>
+    </div>
+
+    <!-- KAWASAN DETAIL -->
+    <div id="kawasanDetail" style="display:none;">
+      <div class="card">
+        <div class="kawasan-header">
+          <div>
+            <div class="kh-title" id="khTitle">—</div>
+            <div class="kh-id" id="khId">id: —</div>
+          </div>
+          <button class="btn btn-danger btn-sm" id="btnDeleteKawasan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Hapus
+          </button>
+        </div>
+
+        <div class="field"><label>Nama Kawasan</label><input type="text" id="kName"/></div>
+        <div class="field-row">
+          <div class="field"><label>ID (slug, otomatis)</label><input type="text" id="kIdInput"/></div>
+          <div class="field"><label>Label Lokasi</label><input type="text" id="kLocation" placeholder="Kota Cirebon, Jawa Barat"/></div>
+        </div>
+        <div class="field"><label>Deskripsi Singkat</label><textarea id="kDesc"></textarea></div>
+        <div class="field"><label>Gambar Hero (URL)</label><input type="text" id="kHero" placeholder="https://..."/></div>
+        <div class="field"><label>URL Halaman Kawasan</label><input type="text" id="kPageUrl" placeholder="kawasan/nama-kawasan.html"/></div>
+        <div class="hint">Halaman web kawasan ini otomatis terbentuk dari data di atas saat situs membaca db.json — pastikan <code>page_url</code> sesuai struktur folder situs kamu.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-ttl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Artikel <span class="badge-soft" id="artCountBadge">0</span>
+        </div>
+        <div class="art-list" id="artList"></div>
+        <button class="add-art-btn" id="btnAddArt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Tambah Artikel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let DB = null;
+let FILE_SHA = null;
+let GH = { owner:'', repo:'', branch:'main', path:'db.json', token:'' };
+let activeKawasanId = null;
+let busy = false;
+
+const $ = id => document.getElementById(id);
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+function showToast(msg, isError=false) {
+  const t = $('toast');
+  t.innerHTML = (isError
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  ) + '<span>'+msg+'</span>';
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(()=> t.classList.remove('show'), 3200);
+}
+
+function setBusy(state, label) {
+  busy = state;
+  $('connDot').className = 'dot' + (state ? ' busy' : (DB ? ' on' : ''));
+  if (label) $('connText').textContent = label;
+}
+
+/* ══════════════════════════════════════
+   GITHUB API
+══════════════════════════════════════ */
+function apiUrl() {
+  return `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;
+}
+
+async function loadFromGithub() {
+  setBusy(true, 'Memuat database…');
+  try {
+    const res = await fetch(apiUrl() + `?ref=${encodeURIComponent(GH.branch)}`, {
+      headers: {
+        'Authorization': `Bearer ${GH.token}`,
+        'Accept': 'application/vnd.github+json'
+      }
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    FILE_SHA = data.sha;
+    const jsonStr = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    DB = JSON.parse(jsonStr);
+    if (!DB.kawasan) DB.kawasan = [];
+    if (!DB.site) DB.site = { name:'', tagline:'', description:'', about_extended:'', year_founded: new Date().getFullYear() };
+
+    $('connDot').className = 'dot on';
+    $('connText').textContent = `Terhubung — ${GH.owner}/${GH.repo} (${GH.branch})`;
+    $('connectGate').style.display = 'none';
+    $('appWrap').style.display = 'grid';
+
+    renderKawasanList();
+    fillSiteForm();
+    showToast('Database berhasil dimuat dari GitHub');
+  } catch(e) {
+    showToast('Gagal memuat: ' + e.message, true);
+    $('connDot').className = 'dot';
+    $('connText').textContent = 'Gagal terhubung';
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function saveToGithub() {
+  if (!DB) return;
+  setBusy(true, 'Menyimpan…');
+  $('btnSave').disabled = true;
+  try {
+    const jsonStr = JSON.stringify(DB, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const res = await fetch(apiUrl(), {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${GH.token}`,
+        'Accept': 'application/vnd.github+json'
+      },
+      body: JSON.stringify({
+        message: `Update database via admin panel — ${new Date().toLocaleString('id-ID')}`,
+        content: content,
+        sha: FILE_SHA,
+        branch: GH.branch
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const result = await res.json();
+    FILE_SHA = result.content.sha;
+    $('connText').textContent = `Terhubung — ${GH.owner}/${GH.repo} (${GH.branch})`;
+    showToast('Tersimpan ke GitHub! Situs akan otomatis ter-update.');
+  } catch(e) {
+    showToast('Gagal menyimpan: ' + e.message, true);
+  } finally {
+    setBusy(false);
+    $('btnSave').disabled = false;
+  }
+}
+
+/* ══════════════════════════════════════
+   CONNECT
+══════════════════════════════════════ */
+$('btnConnect').addEventListener('click', () => {
+  GH.owner = $('ghOwner').value.trim();
+  GH.repo = $('ghRepo').value.trim();
+  GH.branch = $('ghBranch').value.trim() || 'main';
+  GH.path = $('ghPath').value.trim() || 'db.json';
+  GH.token = $('ghToken').value.trim();
+
+  if (!GH.owner || !GH.repo || !GH.token) {
+    showToast('Lengkapi pemilik repo, nama repo, dan token terlebih dahulu', true);
+    return;
+  }
+  sessionStorage.setItem('nawaku_gh', JSON.stringify(GH));
+  loadFromGithub();
+});
+
+// restore session (token only kept for this browser tab session)
+(function restoreSession(){
+  try {
+    const saved = sessionStorage.getItem('nawaku_gh');
+    if (saved) {
+      const g = JSON.parse(saved);
+      $('ghOwner').value = g.owner || '';
+      $('ghRepo').value = g.repo || '';
+      $('ghBranch').value = g.branch || 'main';
+      $('ghPath').value = g.path || 'db.json';
+      $('ghToken').value = g.token || '';
+    }
+  } catch(e){}
+})();
+
+/* ══════════════════════════════════════
+   SLUG HELPER
+══════════════════════════════════════ */
+function slugify(str) {
+  return str.toLowerCase().trim()
+    .replace(/[^a-z0-9\s-]/g,'')
+    .replace(/\s+/g,'-')
+    .replace(/-+/g,'-');
+}
+
+/* ══════════════════════════════════════
+   SITE FORM
+══════════════════════════════════════ */
+function fillSiteForm() {
+  $('siteName').value = DB.site.name || '';
+  $('siteTagline').value = DB.site.tagline || '';
+  $('siteDesc').value = DB.site.description || '';
+  $('siteAbout').value = DB.site.about_extended || '';
+  $('siteYear').value = DB.site.year_founded || '';
+}
+['siteName','siteTagline','siteDesc','siteAbout','siteYear'].forEach(id=>{
+  $(id).addEventListener('input', () => {
+    DB.site.name = $('siteName').value;
+    DB.site.tagline = $('siteTagline').value;
+    DB.site.description = $('siteDesc').value;
+    DB.site.about_extended = $('siteAbout').value;
+    DB.site.year_founded = parseInt($('siteYear').value) || $('siteYear').value;
+  });
+});
+$('btnEditSite').addEventListener('click', () => {
+  $('siteCard').style.display = $('siteCard').style.display === 'none' ? 'block' : 'none';
+  $('kawasanDetail').style.display = 'none';
+  $('mainArea').classList.remove('locked');
+});
+$('btnCloseSite').addEventListener('click', () => $('siteCard').style.display = 'none');
+
+/* ══════════════════════════════════════
+   KAWASAN LIST
+══════════════════════════════════════ */
+function renderKawasanList() {
+  const list = $('kawasanList');
+  if (!DB.kawasan.length) {
+    list.innerHTML = '<div class="empty-note">Belum ada kawasan. Klik "Tambah Kawasan" untuk membuat yang pertama.</div>';
+    return;
+  }
+  list.innerHTML = DB.kawasan.map(k => `
+    <div class="kawasan-item ${k.id===activeKawasanId?'active':''}" data-kid="${k.id}">
+      <span class="ki-name">${escapeHtml(k.name||'(tanpa nama)')}</span>
+      <span class="ki-count">${(k.articles||[]).length}</span>
+    </div>
+  `).join('');
+  list.querySelectorAll('.kawasan-item').forEach(el=>{
+    el.addEventListener('click', ()=> selectKawasan(el.dataset.kid));
+  });
+}
+
+$('btnAddKawasan').addEventListener('click', () => {
+  const name = prompt('Nama kawasan baru:');
+  if (!name || !name.trim()) return;
+  let id = slugify(name);
+  let suffix = 1;
+  const baseId = id;
+  while (DB.kawasan.some(k => k.id === id)) { id = baseId + '-' + (++suffix); }
+  const newK = {
+    id, name: name.trim(),
+    desc: '', hero_image: '', location_label: '',
+    page_url: `kawasan/${id}.html`,
+    articles: []
+  };
+  DB.kawasan.push(newK);
+  renderKawasanList();
+  selectKawasan(id);
+  showToast('Kawasan baru ditambahkan — jangan lupa simpan ke GitHub');
+});
+
+function selectKawasan(id) {
+  activeKawasanId = id;
+  $('siteCard').style.display = 'none';
+  renderKawasanList();
+  const k = DB.kawasan.find(x => x.id === id);
+  if (!k) return;
+  $('kawasanDetail').style.display = 'block';
+  $('mainArea').classList.remove('locked');
+
+  $('khTitle').textContent = k.name || '(tanpa nama)';
+  $('khId').textContent = 'id: ' + k.id;
+  $('kName').value = k.name || '';
+  $('kIdInput').value = k.id || '';
+  $('kLocation').value = k.location_label || '';
+  $('kDesc').value = k.desc || '';
+  $('kHero').value = k.hero_image || '';
+  $('kPageUrl').value = k.page_url || '';
+
+  renderArticles(k);
+}
+
+function getActiveKawasan() {
+  return DB.kawasan.find(x => x.id === activeKawasanId);
+}
+
+['kName','kIdInput','kLocation','kDesc','kHero','kPageUrl'].forEach(fid=>{
+  $(fid).addEventListener('input', () => {
+    const k = getActiveKawasan();
+    if (!k) return;
+    k.name = $('kName').value;
+    k.location_label = $('kLocation').value;
+    k.desc = $('kDesc').value;
+    k.hero_image = $('kHero').value;
+    k.page_url = $('kPageUrl').value;
+    $('khTitle').textContent = k.name || '(tanpa nama)';
+  });
+});
+$('kIdInput').addEventListener('change', () => {
+  const k = getActiveKawasan();
+  const newId = slugify($('kIdInput').value);
+  if (!newId) { $('kIdInput').value = k.id; return; }
+  if (DB.kawasan.some(x => x.id === newId && x !== k)) {
+    showToast('ID tersebut sudah dipakai kawasan lain', true);
+    $('kIdInput').value = k.id;
+    return;
+  }
+  k.id = newId;
+  activeKawasanId = newId;
+  $('khId').textContent = 'id: ' + newId;
+  renderKawasanList();
+});
+
+$('btnDeleteKawasan').addEventListener('click', () => {
+  const k = getActiveKawasan();
+  if (!k) return;
+  if (!confirm(`Hapus kawasan "${k.name}" beserta ${(k.articles||[]).length} artikel di dalamnya? Tindakan ini tidak bisa dibatalkan kecuali kamu belum menyimpan.`)) return;
+  DB.kawasan = DB.kawasan.filter(x => x.id !== k.id);
+  activeKawasanId = null;
+  $('kawasanDetail').style.display = 'none';
+  $('mainArea').classList.add('locked');
+  renderKawasanList();
+  showToast('Kawasan dihapus — jangan lupa simpan ke GitHub');
+});
+
+/* ══════════════════════════════════════
+   ARTICLES
+══════════════════════════════════════ */
+function renderArticles(k) {
+  const wrap = $('artList');
+  $('artCountBadge').textContent = (k.articles||[]).length;
+  if (!k.articles || !k.articles.length) {
+    wrap.innerHTML = '<div class="empty-note">Belum ada artikel di kawasan ini.</div>';
+    return;
+  }
+  wrap.innerHTML = k.articles.map((a, idx) => `
+    <div class="art-item" data-idx="${idx}">
+      <div class="art-item-head">
+        <img class="art-thumb" src="${a.image||''}" onerror="this.style.visibility='hidden'" alt=""/>
+        <div class="art-info">
+          <div class="art-title">${escapeHtml(a.title||'(tanpa judul)')}</div>
+          <div class="art-meta">${escapeHtml(a.date||'-')} · ${a.read_time||0} menit baca</div>
+        </div>
+        <svg class="art-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="art-item-body">
+        <div class="field"><label>Judul</label><input type="text" data-f="title" value="${escapeAttr(a.title)}"/></div>
+        <div class="field"><label>Ringkasan (excerpt)</label><textarea data-f="excerpt">${escapeHtml(a.excerpt||'')}</textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Tanggal</label><input type="text" data-f="date" placeholder="17 Mei 2025" value="${escapeAttr(a.date)}"/></div>
+          <div class="field"><label>Waktu Baca (menit)</label><input type="number" data-f="read_time" value="${a.read_time||''}"/></div>
+        </div>
+        <div class="field"><label>URL Gambar</label><input type="text" data-f="image" value="${escapeAttr(a.image)}"/></div>
+        <div class="field"><label>URL Halaman Artikel</label><input type="text" data-f="url" value="${escapeAttr(a.url)}"/></div>
+        <div class="field"><label>ID Artikel (slug, otomatis)</label><input type="text" data-f="id" value="${escapeAttr(a.id)}"/></div>
+        <div class="art-actions">
+          <button class="btn btn-danger btn-sm" data-action="delete-art">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Hapus Artikel
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('.art-item-head').forEach(head=>{
+    head.addEventListener('click', () => head.closest('.art-item').classList.toggle('open'));
+  });
+
+  wrap.querySelectorAll('.art-item').forEach(item => {
+    const idx = parseInt(item.dataset.idx);
+    item.querySelectorAll('[data-f]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const field = inp.dataset.f;
+        const k2 = getActiveKawasan();
+        let val = inp.value;
+        if (field === 'read_time') val = parseInt(val) || 0;
+        k2.articles[idx][field] = val;
+        if (field === 'title' || field === 'date' || field === 'read_time' || field === 'image') {
+          updateArtHeadDisplay(item, k2.articles[idx]);
+        }
+      });
+    });
+    item.querySelector('[data-action="delete-art"]').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const k2 = getActiveKawasan();
+      if (!confirm(`Hapus artikel "${k2.articles[idx].title}"?`)) return;
+      k2.articles.splice(idx,1);
+      renderArticles(k2);
+      renderKawasanList();
+      showToast('Artikel dihapus — jangan lupa simpan ke GitHub');
+    });
+  });
+}
+
+function updateArtHeadDisplay(item, a) {
+  item.querySelector('.art-title').textContent = a.title || '(tanpa judul)';
+  item.querySelector('.art-meta').textContent = `${a.date||'-'} · ${a.read_time||0} menit baca`;
+  const thumb = item.querySelector('.art-thumb');
+  thumb.src = a.image || '';
+  thumb.style.visibility = 'visible';
+}
+
+$('btnAddArt').addEventListener('click', () => {
+  const k = getActiveKawasan();
+  if (!k) return;
+  const title = prompt('Judul artikel baru:');
+  if (!title || !title.trim()) return;
+  let id = slugify(title);
+  let suffix = 1; const baseId = id;
+  if (!k.articles) k.articles = [];
+  while (k.articles.some(a => a.id === id)) { id = baseId + '-' + (++suffix); }
+  k.articles.push({
+    id, title: title.trim(), excerpt: '',
+    date: '', read_time: 5, image: '',
+    url: `artikel/${id}.html`
+  });
+  renderArticles(k);
+  renderKawasanList();
+  // auto-open newest
+  const items = document.querySelectorAll('.art-item');
+  items[items.length-1].classList.add('open');
+  showToast('Artikel baru ditambahkan — jangan lupa simpan ke GitHub');
+});
+
+/* ══════════════════════════════════════
+   SAVE
+══════════════════════════════════════ */
+$('btnSave').addEventListener('click', saveToGithub);
+
+/* ══════════════════════════════════════
+   UTIL
+══════════════════════════════════════ */
+function escapeHtml(str) {
+  if (str === undefined || str === null) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function escapeAttr(str) { return escapeHtml(str); }
+
+/* prevent accidental tab close with unsaved work (best effort) */
+window.addEventListener('beforeunload', (e) => {
+  if (DB) { e.preventDefault(); e.returnValue=''; }
+});
+</script>
+</body>
+</html>
