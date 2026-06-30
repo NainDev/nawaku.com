@@ -418,7 +418,7 @@ const PAGE_SIZE = 6;
 
 async function loadDB() {
   try {
-    const res = await fetch('db.json');
+    const res = await fetch('./lemahwungkuk/db.json');
     DB = await res.json();
   } catch(e) {
     DB = {
