@@ -13,13 +13,6 @@
   },
   "kawasan": [
     {
-      "id": "lemahwungkuk",
-      "name": "Lemahwungkuk",
-      "desc": "Kawasan kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 14,
-      "url": "kawasan-lemahwungkuk.html"
-    },
-    {
       "id": "kasepuhan",
       "name": "Kasepuhan",
       "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan.",
