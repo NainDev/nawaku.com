@@ -1,0 +1,264 @@
+{
+  "site": {
+    "name": "Nawaku",
+    "tagline": "Mengabadikan sejarah setiap sudut Kota Cirebon.",
+    "description": "Nawaku adalah ruang baca digital yang didedikasikan untuk mengabadikan sejarah setiap sudut Kota Cirebon — dari kawasan pesisir yang ramai, keraton-keraton megah, kampung-kampung batik, hingga gedung-gedung peninggalan kolonial yang bisu namun penuh cerita.",
+    "about_extended": "Kami percaya bahwa sejarah lokal bukan sekadar catatan masa lalu, melainkan identitas yang membentuk siapa kita hari ini. Setiap artikel ditulis dengan riset mendalam dan disajikan dengan bahasa yang mudah dipahami oleh semua kalangan. Nawaku dikelola oleh tim jurnalis dan peneliti sejarah lokal yang berkomitmen menjaga akurasi dan kedalaman setiap konten.",
+    "year_founded": 2023
+  },
+
+  "kawasan": [
+    {
+      "id": "lemahwungkuk",
+      "name": "Lemahwungkuk",
+      "desc": "Kawasan kota lama dengan bangunan kolonial bersejarah — jantung Kota Cirebon yang menyimpan jejak peradaban ratusan tahun.",
+      "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
+      "location_label": "Kota Cirebon, Jawa Barat",
+      "page_url": "kawasan/lemahwungkuk.html",
+      "articles": [
+        {
+          "id": "gedung-bat",
+          "title": "Sejarah Gedung BAT Cirebon: Saksi Bisu Kejayaan Industri Rokok di Kota Udang",
+          "excerpt": "Gedung BAT merupakan salah satu bangunan cagar budaya paling ikonik di Kota Cirebon. Dengan arsitektur bergaya Art Deco yang megah, gedung ini menyimpan cerita tentang kejayaan industri rokok di masa kolonial Belanda.",
+          "date": "17 Mei 2025",
+          "read_time": 10,
+          "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80",
+          "url": "artikel/sejarah-gedung-bat-cirebon.html"
+        },
+        {
+          "id": "lemahwungkuk-kota",
+          "title": "Lemahwungkuk: Permukiman Tertua Cirebon yang Jadi Cikal Bakal Kota",
+          "excerpt": "Sebelum menjadi kawasan modern seperti sekarang, Lemahwungkuk adalah cikal bakal permukiman pertama yang membentuk Kota Cirebon.",
+          "date": "17 Mei 2025",
+          "read_time": 9,
+          "image": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=80",
+          "url": "artikel/lemahwungkuk-permukiman-tertua.html"
+        },
+        {
+          "id": "arsitek-cuypers",
+          "title": "Arsitek F.D. Cuypers dan Jejak Kolonial di Lemahwungkuk",
+          "excerpt": "Firma arsitek Belanda yang membentuk wajah kawasan perdagangan Lemahwungkuk hingga hari ini.",
+          "date": "5 Mei 2025",
+          "read_time": 7,
+          "image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=80",
+          "url": "artikel/arsitek-cuypers-lemahwungkuk.html"
+        },
+        {
+          "id": "pasar-kanoman",
+          "title": "Pasar Kanoman: Denyut Nadi Perdagangan Kota Lama Cirebon",
+          "excerpt": "Pasar bersejarah yang menjadi pusat aktivitas ekonomi masyarakat Lemahwungkuk selama berabad-abad.",
+          "date": "28 Apr 2025",
+          "read_time": 6,
+          "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80",
+          "url": "artikel/pasar-kanoman.html"
+        },
+        {
+          "id": "pelabuhan-lama",
+          "title": "Jejak Pelabuhan Lama di Kawasan Lemahwungkuk",
+          "excerpt": "Bagaimana Lemahwungkuk tumbuh menjadi kawasan vital berkat aktivitas pelabuhan yang ramai di masa lampau.",
+          "date": "20 Apr 2025",
+          "read_time": 8,
+          "image": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=600&q=80",
+          "url": "artikel/pelabuhan-lama-lemahwungkuk.html"
+        },
+        {
+          "id": "rumah-tionghoa",
+          "title": "Rumah Tionghoa Peranakan di Gang Setan, Lemahwungkuk",
+          "excerpt": "Bangunan-bangunan berarsitektur perpaduan Tiongkok–Belanda yang masih berdiri di gang-gang sempit kawasan ini.",
+          "date": "14 Apr 2025",
+          "read_time": 5,
+          "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80",
+          "url": "artikel/rumah-tionghoa-lemahwungkuk.html"
+        },
+        {
+          "id": "stasiun-cirebon",
+          "title": "Stasiun Cirebon: Gerbang Kota yang Lahir di Era Kolonial",
+          "excerpt": "Dibangun pada 1912, stasiun ini menjadi salah satu simpul transportasi terpenting di Jawa Barat.",
+          "date": "7 Apr 2025",
+          "read_time": 9,
+          "image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=80",
+          "url": "artikel/stasiun-cirebon.html"
+        },
+        {
+          "id": "klenteng-talang",
+          "title": "Klenteng Talang: Simbol Harmoni Tiga Agama di Cirebon",
+          "excerpt": "Klenteng tertua di Cirebon yang hingga kini menjadi tempat ibadah dan saksi kerukunan umat beragama.",
+          "date": "1 Apr 2025",
+          "read_time": 6,
+          "image": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80",
+          "url": "artikel/klenteng-talang.html"
+        }
+      ]
+    },
+
+    {
+      "id": "kasepuhan",
+      "name": "Kasepuhan",
+      "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan yang berdiri sejak 1527.",
+      "hero_image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=1400&q=85",
+      "location_label": "Kota Cirebon, Jawa Barat",
+      "page_url": "kawasan/kasepuhan.html",
+      "articles": [
+        {
+          "id": "keraton-kasepuhan",
+          "title": "Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527",
+          "excerpt": "Keraton tertua dan terbesar di Cirebon yang menjadi pusat kekuasaan Kesultanan Cirebon selama berabad-abad.",
+          "date": "2 Jun 2025",
+          "read_time": 8,
+          "image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=80",
+          "url": "artikel/keraton-kasepuhan.html"
+        }
+      ]
+    },
+
+    {
+      "id": "kanoman",
+      "name": "Kanoman",
+      "desc": "Salah satu dari empat keraton yang ada di Cirebon, berdiri sejak abad ke-17.",
+      "hero_image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=1400&q=85",
+      "location_label": "Kota Cirebon, Jawa Barat",
+      "page_url": "kawasan/kanoman.html",
+      "articles": [
+        {
+          "id": "keraton-kanoman",
+          "title": "Keraton Kanoman: Warisan Kedua Kesultanan Cirebon",
+          "excerpt": "Lahir dari perpecahan internal keraton, Kanoman tumbuh menjadi pusat budaya tersendiri di Cirebon.",
+          "date": "28 Apr 2025",
+          "read_time": 7,
+          "image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&q=80",
+          "url": "artikel/keraton-kanoman.html"
+        }
+      ]
+    },
+
+    {
+      "id": "trusmi",
+      "name": "Trusmi",
+      "desc": "Kampung batik tulis tertua dan terbesar di Cirebon, pusat produksi batik megamendung.",
+      "hero_image": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/trusmi.html",
+      "articles": [
+        {
+          "id": "batik-trusmi",
+          "title": "Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu",
+          "excerpt": "Di balik motif megamendung yang ikonik, Trusmi menyimpan sejarah panjang sebagai pusat kerajinan batik Cirebon.",
+          "date": "4 Jun 2025",
+          "read_time": 6,
+          "image": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80",
+          "url": "artikel/batik-trusmi.html"
+        }
+      ]
+    },
+
+    {
+      "id": "plered",
+      "name": "Plered",
+      "desc": "Sentra kerajinan gerabah dan batik khas Cirebon yang berdekatan dengan Trusmi.",
+      "hero_image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/plered.html",
+      "articles": []
+    },
+
+    {
+      "id": "gunung-jati",
+      "name": "Gunung Jati",
+      "desc": "Makam Sunan Gunung Jati, salah satu Wali Songo penyebar Islam di tanah Cirebon.",
+      "hero_image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/gunung-jati.html",
+      "articles": [
+        {
+          "id": "sunan-gunung-jati",
+          "title": "Makam Sunan Gunung Jati: Jejak Wali di Tanah Cirebon",
+          "excerpt": "Salah satu situs ziarah paling ramai di Jawa Barat, menyimpan sejarah penyebaran Islam di pesisir utara.",
+          "date": "10 Mei 2025",
+          "read_time": 8,
+          "image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=600&q=80",
+          "url": "artikel/sunan-gunung-jati.html"
+        }
+      ]
+    },
+
+    {
+      "id": "plumbon",
+      "name": "Plumbon",
+      "desc": "Kecamatan di barat Cirebon dengan kekayaan sejarah perdagangan dan jalur niaga lama.",
+      "hero_image": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/plumbon.html",
+      "articles": []
+    },
+
+    {
+      "id": "jamblang",
+      "name": "Jamblang",
+      "desc": "Daerah penghasil kuliner legendaris nasi jamblang yang melegenda hingga ke luar daerah.",
+      "hero_image": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/jamblang.html",
+      "articles": [
+        {
+          "id": "nasi-jamblang",
+          "title": "Nasi Jamblang: Kuliner Bersejarah dari Desa Jamblang",
+          "excerpt": "Berawal dari bekal kerja paksa era kolonial, nasi jamblang kini jadi kuliner kebanggaan Cirebon.",
+          "date": "12 Apr 2025",
+          "read_time": 5,
+          "image": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80",
+          "url": "artikel/nasi-jamblang.html"
+        }
+      ]
+    },
+
+    {
+      "id": "palimanan",
+      "name": "Palimanan",
+      "desc": "Kawasan bersejarah di timur Cirebon dekat Sungai Cimanuk, dulunya jalur perdagangan penting.",
+      "hero_image": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/palimanan.html",
+      "articles": []
+    },
+
+    {
+      "id": "gegesik",
+      "name": "Gegesik",
+      "desc": "Sentra wayang kulit dan seni tradisional Cirebon yang masih lestari hingga kini.",
+      "hero_image": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/gegesik.html",
+      "articles": []
+    },
+
+    {
+      "id": "sumber",
+      "name": "Sumber",
+      "desc": "Pusat pemerintahan Kabupaten Cirebon dengan beberapa bangunan administratif bersejarah.",
+      "hero_image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=1400&q=85",
+      "location_label": "Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/sumber.html",
+      "articles": []
+    },
+
+    {
+      "id": "pesisir",
+      "name": "Pesisir Utara",
+      "desc": "Pelabuhan dan jalur perdagangan lintas nusantara yang menghubungkan Cirebon dengan dunia luar sejak abad ke-15.",
+      "hero_image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1400&q=85",
+      "location_label": "Kota & Kabupaten Cirebon, Jawa Barat",
+      "page_url": "kawasan/pesisir.html",
+      "articles": [
+        {
+          "id": "pelabuhan-cirebon",
+          "title": "Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab",
+          "excerpt": "Jalur dagang internasional yang menjadikan Cirebon sebagai persimpangan budaya selama berabad-abad.",
+          "date": "20 Mei 2025",
+          "read_time": 7,
+          "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80",
+          "url": "artikel/pelabuhan-cirebon.html"
+        }
+      ]
+    }
+  ]
+}
