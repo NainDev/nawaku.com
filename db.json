@@ -7,8 +7,8 @@
     "year_founded": 2023
   },
   "stats": {
-    "articles": 150,
-    "kawasan": 22,
+    "articles": 8,
+    "kawasan": 10,
     "tahun_berdiri": 2023
   },
   "kawasan": [
@@ -16,64 +16,91 @@
       "id": "kasepuhan",
       "name": "Kasepuhan",
       "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan.",
-      "article_count": 11,
-      "url": "kawasan-kasepuhan.html"
+      "article_count": 1,
+      "url": "kawasan-kasepuhan.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "kanoman",
       "name": "Kanoman",
       "desc": "Salah satu dari empat keraton yang ada di Cirebon.",
-      "article_count": 8,
-      "url": "kawasan-kanoman.html"
+      "article_count": 1,
+      "url": "kawasan-kanoman.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "trusmi",
       "name": "Trusmi",
       "desc": "Kampung batik tulis tertua dan terbesar di Cirebon.",
-      "article_count": 9,
-      "url": "kawasan-trusmi.html"
+      "article_count": 1,
+      "url": "kawasan-trusmi.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "plered",
       "name": "Plered",
       "desc": "Sentra kerajinan gerabah dan batik khas Cirebon.",
-      "article_count": 6,
-      "url": "kawasan-plered.html"
+      "article_count": 0,
+      "url": "kawasan-plered.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "gunung-jati",
       "name": "Gunung Jati",
       "desc": "Makam Sunan Gunung Jati, wali penyebar Islam di Cirebon.",
-      "article_count": 7,
-      "url": "kawasan-gunung-jati.html"
+      "article_count": 1,
+      "url": "kawasan-gunung-jati.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "plumbon",
       "name": "Plumbon",
       "desc": "Kecamatan di barat Cirebon dengan kekayaan sejarah perdagangan.",
-      "article_count": 5,
-      "url": "kawasan-plumbon.html"
+      "article_count": 0,
+      "url": "kawasan-plumbon.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "jamblang",
       "name": "Jamblang",
       "desc": "Daerah penghasil kuliner legendaris nasi jamblang Cirebon.",
-      "article_count": 4,
-      "url": "kawasan-jamblang.html"
+      "article_count": 1,
+      "url": "kawasan-jamblang.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "palimanan",
       "name": "Palimanan",
       "desc": "Kawasan bersejarah di timur Cirebon dekat Sungai Cimanuk.",
-      "article_count": 6,
-      "url": "kawasan-palimanan.html"
+      "article_count": 0,
+      "url": "kawasan-palimanan.html",
+      "hero_image": "",
+      "layout": "grid"
     },
     {
       "id": "gegesik",
       "name": "Gegesik",
       "desc": "Sentra wayang kulit dan seni tradisional Cirebon.",
-      "article_count": 3,
-      "url": "kawasan-gegesik.html"
+      "article_count": 0,
+      "url": "kawasan-gegesik.html",
+      "hero_image": "",
+      "layout": "grid"
+    },
+    {
+      "id": "lemahwungkuk",
+      "name": "lemahwungkuk",
+      "desc": "",
+      "article_count": 2,
+      "url": "kawasan-lemahwungkuk.html",
+      "hero_image": "",
+      "layout": "grid"
     }
   ],
   "articles": [
@@ -85,7 +112,8 @@
       "date": "17 Mei 2025",
       "read_time": 10,
       "img": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=200&q=70",
-      "url": "sejarah-gedung-bat-cirebon.html"
+      "url": "sejarah-gedung-bat-cirebon.html",
+      "excerpt": ""
     },
     {
       "id": "keraton-kasepuhan",
@@ -95,7 +123,8 @@
       "date": "2 Jun 2025",
       "read_time": 8,
       "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
-      "url": "keraton-kasepuhan.html"
+      "url": "keraton-kasepuhan.html",
+      "excerpt": ""
     },
     {
       "id": "pelabuhan-cirebon",
@@ -105,7 +134,8 @@
       "date": "20 Mei 2025",
       "read_time": 7,
       "img": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=200&q=70",
-      "url": "pelabuhan-cirebon.html"
+      "url": "pelabuhan-cirebon.html",
+      "excerpt": ""
     },
     {
       "id": "batik-trusmi",
@@ -115,7 +145,8 @@
       "date": "4 Jun 2025",
       "read_time": 6,
       "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
-      "url": "batik-trusmi.html"
+      "url": "batik-trusmi.html",
+      "excerpt": ""
     },
     {
       "id": "lemahwungkuk-kota",
@@ -125,7 +156,8 @@
       "date": "17 Mei 2025",
       "read_time": 9,
       "img": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=200&q=70",
-      "url": "lemahwungkuk-kota.html"
+      "url": "lemahwungkuk-kota.html",
+      "excerpt": ""
     },
     {
       "id": "sunan-gunung-jati",
@@ -135,7 +167,8 @@
       "date": "10 Mei 2025",
       "read_time": 8,
       "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
-      "url": "sunan-gunung-jati.html"
+      "url": "sunan-gunung-jati.html",
+      "excerpt": ""
     },
     {
       "id": "keraton-kanoman",
@@ -145,7 +178,8 @@
       "date": "28 Apr 2025",
       "read_time": 7,
       "img": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=200&q=70",
-      "url": "keraton-kanoman.html"
+      "url": "keraton-kanoman.html",
+      "excerpt": ""
     },
     {
       "id": "nasi-jamblang",
@@ -155,7 +189,8 @@
       "date": "12 Apr 2025",
       "read_time": 5,
       "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
-      "url": "nasi-jamblang.html"
+      "url": "nasi-jamblang.html",
+      "excerpt": ""
     }
   ]
 }
