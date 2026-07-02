@@ -7,7 +7,7 @@
     "year_founded": 2023
   },
   "stats": {
-    "articles": 7,
+    "articles": 8,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -97,7 +97,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 2,
+      "article_count": 3,
       "url": "kawasan-lemahwungkuk.html",
       "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "carousel"
@@ -180,6 +180,17 @@
       "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
       "url": "nasi-jamblang.html",
       "excerpt": "Kuliner legendaris yang berasal dari Desa Jamblang, Cirebon."
+    },
+    {
+      "id": "syalwa",
+      "title": "syalwa",
+      "excerpt": "Kanjeng ratu",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/4jezu9.jpg",
+      "url": "syalwa.html"
     }
   ]
 }
