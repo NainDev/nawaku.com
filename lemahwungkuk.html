@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -53,7 +52,7 @@
 
     .featured{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;text-decoration:none;transition:all .2s;}
     .featured:hover{box-shadow:0 8px 32px rgba(0,0,0,.09);transform:translateY(-2px);}
-    .featured-img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block;}
+    .featured-img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block;background:var(--bg);}
     .featured-body{padding:28px 28px 24px;display:flex;flex-direction:column;justify-content:center;}
     .featured-tag{font-size:10.5px;font-weight:800;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:12px;letter-spacing:.4px;text-transform:uppercase;}
     .featured-title{font-size:clamp(16px,2.2vw,20px);font-weight:700;color:var(--text);line-height:1.35;margin-bottom:12px;letter-spacing:-.2px;}
@@ -69,7 +68,7 @@
     .art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
     .art-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;transition:all .18s;display:flex;flex-direction:column;}
     .art-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.08);transform:translateY(-2px);}
-    .art-card-img{width:100%;height:160px;object-fit:cover;display:block;}
+    .art-card-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--bg);}
     .art-card-body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;}
     .art-card-tag{font-size:10px;font-weight:800;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;}
     .art-card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.42;margin-bottom:auto;}
@@ -154,7 +153,7 @@
 <div class="toast" id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;font-size:13px;font-weight:500;padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;"></div>
 
 <nav class="navbar">
-  <a class="n-logo" href="../index.html" data-nav>
+  <a class="n-logo" href="index.html" data-nav>
     <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
       <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -164,7 +163,7 @@
     <span class="n-logo-txt">Nawaku</span>
   </a>
   <div class="n-spacer"></div>
-  <a class="n-home-btn" href="../index.html" data-nav>
+  <a class="n-home-btn" href="index.html" data-nav>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Beranda
   </a>
@@ -175,9 +174,9 @@
   <div class="kawasan-hero-overlay"></div>
   <div class="kawasan-hero-cnt">
     <div class="kawasan-breadcrumb">
-      <a class="kbc" href="../index.html" data-nav>Beranda</a>
+      <a class="kbc" href="index.html" data-nav>Beranda</a>
       <span class="kbc-sep">›</span>
-      <a class="kbc" href="../index.html" data-nav>Kawasan</a>
+      <a class="kbc" href="index.html" data-nav>Kawasan</a>
       <span class="kbc-sep">›</span>
       <span class="kbc active" id="bcName">Lemahwungkuk</span>
     </div>
@@ -187,10 +186,6 @@
       <span class="kawasan-badge" id="kwCountBadge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         — Artikel
-      </span>
-      <span class="kawasan-badge" id="kwLocBadge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        —
       </span>
     </div>
   </div>
@@ -260,7 +255,7 @@
           <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
           <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
         </svg>
-        <span class="ft-name">NAINPEDIA</span>
+        <span class="ft-name">NAWAKU</span>
       </div>
       <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
       <div class="ft-socials">
@@ -270,7 +265,7 @@
       </div>
     </div>
     <div class="ft-right">
-      <div class="ft-col-ttl">Nainpedia</div>
+      <div class="ft-col-ttl">Nawaku</div>
       <a class="ft-col-link" href="#" data-nav>Tentang Kami</a>
       <a class="ft-col-link" href="#" data-nav>Tim Redaksi</a>
       <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
@@ -297,37 +292,42 @@
   NawakuDB.load().then(db => {
     DB = db;
     kw = NawakuDB.getKawasan(db, KAWASAN_ID);
-    articles = kw ? kw.articles : [];
+
+    if (!kw) {
+      document.querySelector('.main').innerHTML = '<div class="empty-state">Kawasan tidak ditemukan.</div>';
+      NawakuDB.renderFooter(db);
+      return;
+    }
+
+    // Artikel dihitung LIVE dari db.articles (relasi kawasan_id), sesuai admin panel
+    articles = NawakuDB.articlesOf(db, KAWASAN_ID);
 
     /* Hero */
-    document.getElementById('heroImg').src = kw.hero_image;
+    document.getElementById('heroImg').src = kw.hero_image || '';
     document.getElementById('heroImg').alt = kw.name;
     document.getElementById('bcName').textContent = kw.name;
     document.getElementById('kwTitle').textContent = kw.name;
-    document.getElementById('kwDesc').textContent = kw.desc;
+    document.getElementById('kwDesc').textContent = kw.desc || '';
     document.getElementById('kwCountBadge').innerHTML = `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
       ${articles.length} Artikel
     `;
-    document.getElementById('kwLocBadge').innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      ${kw.location_label}
-    `;
     document.getElementById('allCount').textContent = `${articles.length} artikel`;
+    document.title = `${kw.name} — Kawasan Sejarah Cirebon · Nawaku`;
 
     /* Featured = artikel pertama */
     if (articles.length) {
       const f = articles[0];
       const fc = document.getElementById('featuredCard');
-      fc.href = '../' + f.url;
+      fc.href = f.url;
       fc.style.display = 'grid';
-      document.getElementById('featuredImg').src = f.image;
+      document.getElementById('featuredImg').src = f.img || '';
       document.getElementById('featuredImg').alt = f.title;
       document.getElementById('featuredTag').textContent = kw.name.toUpperCase();
       document.getElementById('featuredTitle').textContent = f.title;
-      document.getElementById('featuredExcerpt').textContent = f.excerpt;
-      document.getElementById('featuredDate').textContent = f.date;
-      document.getElementById('featuredTime').textContent = `${f.read_time} menit baca`;
+      document.getElementById('featuredExcerpt').textContent = f.excerpt || '';
+      document.getElementById('featuredDate').textContent = f.date || '';
+      document.getElementById('featuredTime').textContent = `${f.read_time || 0} menit baca`;
       NawakuDB.attachNav(fc);
     }
 
@@ -336,30 +336,31 @@
     NawakuDB.renderFooter(db);
     NawakuDB.attachNavAll();
 
-    document.getElementById('ftNewsletter').addEventListener('click', e => {
-      e.preventDefault(); NawakuDB.goRedirect('../newsletter.html');
+    const nl = document.getElementById('ftNewsletter');
+    if (nl) nl.addEventListener('click', e => {
+      e.preventDefault(); NawakuDB.goRedirect('newsletter.html');
     });
   });
 
   function renderGrid(arts, count) {
     const grid = document.getElementById('artGrid');
-    if (!arts.length && count === PAGE_SIZE) {
+    if (!arts.length) {
       grid.innerHTML = '<div class="empty-state">Belum ada artikel tambahan untuk kawasan ini.</div>';
       document.getElementById('loadMoreWrap').style.display = 'none';
       return;
     }
     const toShow = arts.slice(0, count);
     grid.innerHTML = toShow.map(a => `
-      <a class="art-card" href="../${a.url}" data-nav>
-        <img class="art-card-img" src="${a.image}" alt="${a.title}" loading="lazy"/>
+      <a class="art-card" href="${a.url}" data-nav>
+        <img class="art-card-img" src="${a.img || ''}" alt="${a.title}" loading="lazy"/>
         <div class="art-card-body">
           <span class="art-card-tag">${kw.name.toUpperCase()}</span>
           <div class="art-card-title">${a.title}</div>
           <div class="art-card-footer">
-            <span class="art-card-date">${a.date}</span>
+            <span class="art-card-date">${a.date || ''}</span>
             <span class="art-card-time">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              ${a.read_time} mnt
+              ${a.read_time || 0} mnt
             </span>
           </div>
         </div>
@@ -380,9 +381,9 @@
     const others = (db.kawasan || []).filter(k => k.id !== KAWASAN_ID);
     const grid = document.getElementById('otherGrid');
     grid.innerHTML = others.map(k => `
-      <a class="other-chip" href="../${k.page_url}" data-nav>
+      <a class="other-chip" href="${k.url}" data-nav>
         <span class="other-chip-name">${k.name}</span>
-        <span class="other-chip-count">${(k.articles||[]).length} artikel</span>
+        <span class="other-chip-count">${NawakuDB.articleCountOf(db, k.id)} artikel</span>
         <span class="other-chip-arrow">→</span>
       </a>
     `).join('');
