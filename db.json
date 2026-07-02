@@ -95,11 +95,11 @@
     },
     {
       "id": "lemahwungkuk",
-      "name": "lemahwungkuk",
-      "desc": "",
+      "name": "Lemahwungkuk",
+      "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
       "article_count": 2,
       "url": "kawasan-lemahwungkuk.html",
-      "hero_image": "",
+      "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "grid"
     }
   ],
@@ -113,40 +113,7 @@
       "read_time": 10,
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "url": "sejarah-gedung-bat-cirebon.html",
-      "excerpt": ""
-    },
-    {
-      "id": "keraton-kasepuhan",
-      "title": "Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527",
-      "kawasan_id": "kasepuhan",
-      "kawasan_name": "Kasepuhan",
-      "date": "2 Jun 2025",
-      "read_time": 8,
-      "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
-      "url": "keraton-kasepuhan.html",
-      "excerpt": ""
-    },
-    {
-      "id": "pelabuhan-cirebon",
-      "title": "Sejarah Pelabuhan Cirebon: Kapal dari Tiongkok, Gujarat, dan Arab",
-      "kawasan_id": "pesisir",
-      "kawasan_name": "Pesisir Utara",
-      "date": "20 Mei 2025",
-      "read_time": 7,
-      "img": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=200&q=70",
-      "url": "pelabuhan-cirebon.html",
-      "excerpt": ""
-    },
-    {
-      "id": "batik-trusmi",
-      "title": "Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu",
-      "kawasan_id": "trusmi",
-      "kawasan_name": "Trusmi",
-      "date": "4 Jun 2025",
-      "read_time": 6,
-      "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
-      "url": "batik-trusmi.html",
-      "excerpt": ""
+      "excerpt": "Saksi bisu kejayaan industri rokok di Kota Udang."
     },
     {
       "id": "lemahwungkuk-kota",
@@ -157,7 +124,29 @@
       "read_time": 9,
       "img": "https://images.unsplash.com/photo-1531167343268-e7abaaac55cd?w=200&q=70",
       "url": "lemahwungkuk-kota.html",
-      "excerpt": ""
+      "excerpt": "Menelusuri jejak permukiman tertua yang menjadi cikal bakal Kota Cirebon."
+    },
+    {
+      "id": "keraton-kasepuhan",
+      "title": "Keraton Kasepuhan: Simbol Kejayaan Kesultanan Cirebon Sejak 1527",
+      "kawasan_id": "kasepuhan",
+      "kawasan_name": "Kasepuhan",
+      "date": "2 Jun 2025",
+      "read_time": 8,
+      "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
+      "url": "keraton-kasepuhan.html",
+      "excerpt": "Simbol kejayaan Kesultanan Cirebon yang berdiri sejak 1527."
+    },
+    {
+      "id": "batik-trusmi",
+      "title": "Sisi Lain Kampung Batik Trusmi yang Jarang Orang Tahu",
+      "kawasan_id": "trusmi",
+      "kawasan_name": "Trusmi",
+      "date": "4 Jun 2025",
+      "read_time": 6,
+      "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
+      "url": "batik-trusmi.html",
+      "excerpt": "Kisah di balik kampung batik tulis tertua dan terbesar di Cirebon."
     },
     {
       "id": "sunan-gunung-jati",
@@ -168,7 +157,7 @@
       "read_time": 8,
       "img": "https://images.unsplash.com/photo-1545459720-aac8509eb02d?w=200&q=70",
       "url": "sunan-gunung-jati.html",
-      "excerpt": ""
+      "excerpt": "Menelusuri jejak wali penyebar Islam di tanah Cirebon."
     },
     {
       "id": "keraton-kanoman",
@@ -179,7 +168,7 @@
       "read_time": 7,
       "img": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=200&q=70",
       "url": "keraton-kanoman.html",
-      "excerpt": ""
+      "excerpt": "Warisan kedua dari empat keraton yang ada di Cirebon."
     },
     {
       "id": "nasi-jamblang",
@@ -190,7 +179,7 @@
       "read_time": 5,
       "img": "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=70",
       "url": "nasi-jamblang.html",
-      "excerpt": ""
+      "excerpt": "Kuliner legendaris yang berasal dari Desa Jamblang, Cirebon."
     }
   ]
 }
