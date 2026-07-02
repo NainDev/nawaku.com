@@ -26,7 +26,7 @@ const NawakuDB = (() => {
     // deteksi sederhana: jika berada di folder kawasan/ atau artikel/, naik satu level
     const inSubfolder = window.location.pathname.includes('/kawasan/') ||
                          window.location.pathname.includes('/artikel/');
-    return inSubfolder ? '../database/db.json' : 'database/db.json';
+    return inSubfolder ? '../db.json' : 'db.json';
   }
 
   async function load() {
