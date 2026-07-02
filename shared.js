@@ -1,41 +1,41 @@
 /* ══════════════════════════════════════════════════
    NAWAKU — SHARED HELPER
-   Dipakai oleh semua halaman: beranda, kawasan, artikel.
-   Tugasnya: ambil database/db.json (SATU sumber data),
-   lalu sediakan fungsi-fungsi siap pakai.
+   Satu area: index.html, kawasan-*.html, artikel-*.html,
+   db.json, shared.js, admin.html semua sejajar (root yang sama).
 
-   Cara pakai di halaman lain:
-   <script src="../shared.js"></script>  (sesuaikan path relatif)
+   Struktur db.json (SAMA PERSIS dengan yang ditulis admin.html):
+   {
+     site: {...},
+     stats: {...},
+     kawasan: [ {id,name,desc,article_count,url,hero_image,layout} ],
+     articles: [ {id,title,kawasan_id,kawasan_name,date,read_time,img,url,excerpt} ]
+   }
+
+   Jumlah artikel per kawasan SELALU dihitung live dari articles[]
+   yang kawasan_id-nya cocok — bukan dari article_count (field itu
+   hanya cache yang disamakan admin panel saat menyimpan).
+
+   Cara pakai di semua halaman (path sama, tanpa ../ karena satu area):
+   <script src="shared.js"></script>
    <script>
-     NawakuDB.load().then(db => {
-       // db.site, db.kawasan (array, tiap kawasan punya .articles)
-     });
+     NawakuDB.load().then(db => { ... });
    </script>
 ═══════════════════════════════════════════════════ */
 
 const NawakuDB = (() => {
   let cache = null;
+  const DB_PATH = 'db.json'; // satu area — semua file sejajar, tidak ada subfolder
 
-  /* Path ke db.json — otomatis menyesuaikan posisi file saat ini.
-     index.html (root)        -> database/db.json
-     kawasan/xxx.html         -> ../database/db.json
-     artikel/xxx.html         -> ../database/db.json
-  */
-  function resolveDbPath() {
-    const depth = window.location.pathname.split('/').filter(Boolean);
-    // deteksi sederhana: jika berada di folder kawasan/ atau artikel/, naik satu level
-    const inSubfolder = window.location.pathname.includes('/kawasan/') ||
-                         window.location.pathname.includes('/artikel/');
-    return inSubfolder ? 'db.json' : 'db.json';
-  }
-
-  async function load() {
-    if (cache) return cache;
+  async function load(force = false) {
+    if (cache && !force) return cache;
     try {
-      const res = await fetch(resolveDbPath());
+      const res = await fetch(DB_PATH, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       cache = await res.json();
+      if (!cache.kawasan) cache.kawasan = [];
+      if (!cache.articles) cache.articles = [];
     } catch (e) {
-      console.warn('Gagal memuat database/db.json, memakai data cadangan.', e);
+      console.warn('Gagal memuat db.json, memakai data cadangan.', e);
       cache = fallbackData();
     }
     return cache;
@@ -46,24 +46,26 @@ const NawakuDB = (() => {
     return (db.kawasan || []).find(k => k.id === id) || null;
   }
 
-  /* Semua artikel dari semua kawasan, digabung jadi satu list flat
-     (berguna untuk pencarian / artikel terkait lintas kawasan) */
+  /* Semua artikel milik satu kawasan (live, urut sesuai urutan di articles[]) */
+  function articlesOf(db, kawasanId) {
+    return (db.articles || []).filter(a => a.kawasan_id === kawasanId);
+  }
+
+  /* Jumlah artikel live untuk satu kawasan */
+  function articleCountOf(db, kawasanId) {
+    return articlesOf(db, kawasanId).length;
+  }
+
+  /* Semua artikel, flat (berguna untuk beranda / pencarian lintas kawasan) */
   function allArticles(db) {
-    const out = [];
-    (db.kawasan || []).forEach(k => {
-      (k.articles || []).forEach(a => {
-        out.push({ ...a, kawasan_id: k.id, kawasan_name: k.name });
-      });
-    });
-    return out;
+    return db.articles || [];
   }
 
-  /* Total artikel di seluruh database */
   function totalArticles(db) {
-    return allArticles(db).length;
+    return (db.articles || []).length;
   }
 
-  /* Data fallback minimal jika fetch gagal (mis. dibuka via file:// tanpa server) */
+  /* Data fallback minimal jika fetch gagal */
   function fallbackData() {
     return {
       site: {
@@ -73,30 +75,21 @@ const NawakuDB = (() => {
         about_extended: 'Dikelola oleh tim jurnalis dan peneliti sejarah lokal.',
         year_founded: 2023
       },
-      kawasan: [
-        {
-          id: 'lemahwungkuk', name: 'Lemahwungkuk',
-          desc: 'Kawasan kota lama dengan bangunan kolonial bersejarah.',
-          hero_image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85',
-          location_label: 'Kota Cirebon, Jawa Barat',
-          page_url: 'kawasan/lemahwungkuk.html',
-          articles: [
-            { id:'gedung-bat', title:'Sejarah Gedung BAT Cirebon', excerpt:'Saksi bisu kejayaan industri rokok di Kota Udang.', date:'17 Mei 2025', read_time:10, image:'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80', url:'artikel/sejarah-gedung-bat-cirebon.html' }
-          ]
-        }
-      ]
+      stats: { articles: 0, kawasan: 0, tahun_berdiri: 2023 },
+      kawasan: [],
+      articles: []
     };
   }
 
   /* ── RENDER FOOTER (dipakai semua halaman) ── */
-  function renderFooter(db, opts = {}) {
-    const s = db.site;
+  function renderFooter(db) {
+    const s = db.site || {};
     const descEl = document.getElementById('ftDesc');
     const copyEl = document.getElementById('ftCopy');
-    if (descEl) descEl.textContent = s.tagline;
+    if (descEl) descEl.textContent = s.tagline || '';
     if (copyEl) {
       const year = new Date().getFullYear();
-      copyEl.textContent = `© ${s.year_founded}–${year} ${s.name}.com — ${s.tagline}`;
+      copyEl.textContent = `© ${s.year_founded || year}–${year} ${s.name || 'Nawaku'}.com — ${s.tagline || ''}`;
     }
   }
 
@@ -130,7 +123,7 @@ const NawakuDB = (() => {
   }
 
   return {
-    load, getKawasan, allArticles, totalArticles,
+    load, getKawasan, articlesOf, articleCountOf, allArticles, totalArticles,
     renderFooter, goRedirect, attachNav, attachNavAll, showToast
   };
 })();
