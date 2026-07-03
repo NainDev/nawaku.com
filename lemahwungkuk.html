@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Lemahwungkuk — Kawasan Sejarah Cirebon · Nawaku</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="layout-styles.css"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
@@ -283,6 +284,7 @@
 </footer>
 
 <script src="shared.js"></script>
+<script src="layout-engine.js"></script>
 <script>
   const KAWASAN_ID = 'lemahwungkuk';
   let visibleCount = 6;
@@ -343,32 +345,19 @@
   });
 
   function renderGrid(arts, count) {
-    const grid = document.getElementById('artGrid');
-    if (!arts.length) {
-      grid.innerHTML = '<div class="empty-state">Belum ada artikel tambahan untuk kawasan ini.</div>';
-      document.getElementById('loadMoreWrap').style.display = 'none';
+    // Carousel & list menampilkan semua artikel langsung (scroll/stack), tanpa "muat lebih banyak"
+    const layout = (kw && kw.layout) || 'grid';
+    const lmw = document.getElementById('loadMoreWrap');
+
+    if (layout === 'carousel' || layout === 'list') {
+      NawakuLayout.render('artGrid', arts, kw);
+      lmw.style.display = 'none';
       return;
     }
-    const toShow = arts.slice(0, count);
-    grid.innerHTML = toShow.map(a => `
-      <a class="art-card" href="${a.url}" data-nav>
-        <img class="art-card-img" src="${a.img || ''}" alt="${a.title}" loading="lazy"/>
-        <div class="art-card-body">
-          <span class="art-card-tag">${kw.name.toUpperCase()}</span>
-          <div class="art-card-title">${a.title}</div>
-          <div class="art-card-footer">
-            <span class="art-card-date">${a.date || ''}</span>
-            <span class="art-card-time">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              ${a.read_time || 0} mnt
-            </span>
-          </div>
-        </div>
-      </a>
-    `).join('');
-    NawakuDB.attachNavAll('.art-card[data-nav]');
 
-    const lmw = document.getElementById('loadMoreWrap');
+    // grid & masonry tetap pakai paginasi "muat lebih banyak"
+    const toShow = arts.slice(0, count);
+    NawakuLayout.render('artGrid', toShow, kw);
     lmw.style.display = arts.length > count ? 'block' : 'none';
   }
 
