@@ -1,0 +1,61 @@
+/* ══════════════════════════════════════════════════
+   NAWAKU — LAYOUT STYLES (tambahan)
+   Sertakan setelah CSS utama di tiap halaman kawasan-*.html:
+   <link rel="stylesheet" href="layout-styles.css"/>
+   Mode "grid" pakai class lama (.art-grid, .art-card) yang sudah ada
+   di <style> tiap halaman. File ini menambah mode: carousel, list, masonry.
+═══════════════════════════════════════════════════ */
+
+/* ── CAROUSEL (geser kanan-kiri) ── */
+.art-carousel-wrap{position:relative;display:flex;align-items:center;gap:8px;}
+.art-carousel{
+  display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:4px 2px 12px;scrollbar-width:thin;flex:1;
+}
+.art-carousel::-webkit-scrollbar{height:6px;}
+.art-carousel::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:99px;}
+.art-carousel .art-card{
+  flex:0 0 260px;scroll-snap-align:start;
+}
+.carousel-btn{
+  flex-shrink:0;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--border,#e8e8e8);
+  background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:var(--text2,#444);transition:all .15s;
+}
+.carousel-btn:hover{background:var(--accent-light,#eff4ff);border-color:var(--accent-mid,#bfdbfe);color:var(--accent,#2563eb);}
+.carousel-btn svg{width:16px;height:16px;}
+@media(max-width:640px){
+  .carousel-btn{width:32px;height:32px;}
+  .art-carousel .art-card{flex-basis:200px;}
+}
+
+/* ── LIST (kartu horizontal besar) ── */
+.art-list{display:flex;flex-direction:column;gap:14px;}
+.art-list-card{
+  display:grid;grid-template-columns:180px 1fr;gap:0;background:#fff;
+  border:1px solid var(--border,#e8e8e8);border-radius:14px;overflow:hidden;
+  text-decoration:none;transition:all .18s;
+}
+.art-list-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.08);transform:translateY(-2px);}
+.art-list-img{width:100%;height:100%;min-height:120px;object-fit:cover;display:block;background:var(--bg,#f7f8fa);}
+.art-list-body{padding:16px 18px;display:flex;flex-direction:column;}
+.art-list-title{font-size:15px;font-weight:700;color:var(--text,#1a1a1a);line-height:1.4;margin-bottom:6px;}
+.art-list-excerpt{font-size:13px;color:var(--text2,#444);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+@media(max-width:640px){
+  .art-list-card{grid-template-columns:110px 1fr;}
+  .art-list-title{font-size:13.5px;}
+  .art-list-excerpt{-webkit-line-clamp:2;font-size:12px;}
+}
+
+/* ── MASONRY (kolom bertingkat) ── */
+.art-masonry{columns:3 220px;column-gap:20px;}
+.art-masonry .art-card{
+  break-inside:avoid;margin-bottom:20px;display:inline-block;width:100%;
+}
+.art-masonry .art-card:nth-child(3n+1) .art-card-img{height:180px;}
+.art-masonry .art-card:nth-child(3n+2) .art-card-img{height:130px;}
+.art-masonry .art-card:nth-child(3n+3) .art-card-img{height:210px;}
+@media(max-width:640px){
+  .art-masonry{columns:2 160px;}
+}
