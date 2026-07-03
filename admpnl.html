@@ -12,13 +12,18 @@
   --border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;
   --danger:#dc2626;--danger-light:#fef2f2;--success:#16a34a;--warn:#d97706;--warn-light:#fffbeb;
 }
-body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s;}
+body.dark{
+  --bg:#0f1115;--surface:#171a21;--text:#f1f5f9;--text2:#cbd5e1;--muted:#7b8494;
+  --border:#262b36;--accent-light:#1c2536;--accent-mid:#2d3f61;
+}
 
 /* NAVBAR */
 .navbar{position:sticky;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:14px;}
+body.dark .navbar{background:rgba(23,26,33,.97);}
 .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
 .logo-mark{width:32px;height:32px;flex-shrink:0;}
-.n-logo-txt{font-weight:800;font-size:17px;color:#1a1a1a;letter-spacing:-.3px;}
+.n-logo-txt{font-weight:800;font-size:17px;color:var(--text);letter-spacing:-.3px;}
 .n-badge{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:99px;letter-spacing:.3px;}
 .n-status{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500;}
 .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0;}
@@ -27,6 +32,9 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .n-disconnect{font-size:12px;color:var(--muted);background:none;border:1px solid var(--border);padding:5px 11px;border-radius:99px;cursor:pointer;font-family:'Rubik',sans-serif;}
 .n-disconnect:hover{border-color:var(--danger);color:var(--danger);}
+.n-theme-btn{background:none;border:1px solid var(--border);width:32px;height:32px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);flex-shrink:0;}
+.n-theme-btn:hover{border-color:var(--accent-mid);color:var(--accent);}
+.n-theme-btn svg{width:15px;height:15px;}
 
 /* LAYOUT */
 .wrap{max-width:1280px;margin:0 auto;padding:24px 20px 60px;display:grid;grid-template-columns:280px 1fr;gap:20px;}
@@ -43,7 +51,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .field label{display:block;font-size:12.5px;font-weight:600;color:var(--text2);margin-bottom:5px;}
 .field input,.field textarea,.field select{
   width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;
-  font-family:'Rubik',sans-serif;font-size:13.5px;color:var(--text);background:#fff;
+  font-family:'Rubik',sans-serif;font-size:13.5px;color:var(--text);background:var(--surface);
   outline:none;transition:border-color .15s;
 }
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);}
@@ -61,7 +69,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-primary:hover{background:#1d4ed8;}
 .btn-primary:disabled{background:#cbd5e1;cursor:not-allowed;}
-.btn-outline{background:#fff;border:1px solid var(--border);color:var(--text2);}
+.btn-outline{background:var(--surface);border:1px solid var(--border);color:var(--text2);}
 .btn-outline:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
 .btn-danger{background:var(--danger-light);color:var(--danger);border:1px solid #fecaca;}
 .btn-danger:hover{background:#fee2e2;}
@@ -80,24 +88,25 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .ki-name{font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .kawasan-item.active .ki-name{color:var(--accent);}
 .ki-count{font-size:11px;color:var(--muted);background:var(--bg);padding:2px 7px;border-radius:99px;flex-shrink:0;}
-.kawasan-item.active .ki-count{background:#fff;}
+.kawasan-item.active .ki-count{background:var(--surface);}
 .empty-note{font-size:12.5px;color:var(--muted);padding:10px 4px;line-height:1.6;}
 
 /* MAIN PANEL */
-.kawasan-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px;}
+.kawasan-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
 .kh-title{font-size:19px;font-weight:800;color:var(--text);}
 .kh-id{font-size:12px;color:var(--muted);font-family:monospace;margin-top:3px;}
-.kh-actions{display:flex;gap:8px;flex-shrink:0;}
+.kh-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;}
 
 /* HERO PREVIEW */
-.hero-preview{width:100%;height:140px;border-radius:10px;background:var(--bg) center/cover no-repeat;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12.5px;}
+.hero-preview{width:100%;height:140px;border-radius:10px;background:var(--bg) center/cover no-repeat;border:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12.5px;position:relative;}
+.hero-preview.invalid::after{content:'⚠ Gambar gagal dimuat / URL tidak valid';position:absolute;bottom:8px;left:8px;right:8px;background:rgba(217,119,6,.92);color:#fff;font-size:11px;font-weight:600;padding:6px 10px;border-radius:7px;}
 
 /* ARTICLE LIST */
 .art-toolbar{display:flex;gap:8px;margin-bottom:12px;}
 .art-toolbar .search-box{flex:1;margin-bottom:0;}
 .art-list{display:flex;flex-direction:column;gap:10px;}
 .art-item{border:1px solid var(--border);border-radius:11px;overflow:hidden;}
-.art-item-head{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;background:#fff;}
+.art-item-head{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;background:var(--surface);}
 .art-item-head:hover{background:var(--bg);}
 .art-thumb{width:42px;height:42px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--bg);border:1px solid var(--border);}
 .art-info{flex:1;min-width:0;}
@@ -107,7 +116,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .art-item.open .art-chevron{transform:rotate(180deg);}
 .art-item-body{display:none;padding:16px 18px 18px;border-top:1px solid var(--border);background:var(--bg);}
 .art-item.open .art-item-body{display:block;}
-.art-actions{display:flex;justify-content:space-between;gap:8px;margin-top:6px;}
+.art-actions{display:flex;justify-content:space-between;gap:8px;margin-top:6px;flex-wrap:wrap;}
 .art-actions-right{display:flex;gap:8px;}
 
 .add-art-btn{margin-top:6px;border:1.5px dashed var(--border);background:transparent;color:var(--muted);border-radius:11px;padding:12px;width:100%;cursor:pointer;font-family:'Rubik',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;}
@@ -115,10 +124,13 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .add-art-btn svg{width:15px;height:15px;}
 
 /* TABS for layout choice */
-.seg{display:flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;}
-.seg button{flex:1;padding:8px 10px;background:#fff;border:none;font-family:'Rubik',sans-serif;font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:9px;overflow:hidden;}
+.seg button{padding:9px 6px;background:var(--surface);border:none;font-family:'Rubik',sans-serif;font-size:11.5px;font-weight:600;color:var(--text2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-right:1px solid var(--border);}
+.seg button:last-child{border-right:none;}
 .seg button.active{background:var(--accent);color:#fff;}
-.seg button svg{width:14px;height:14px;}
+.seg button svg{width:16px;height:16px;}
+
+/* mini layout preview icons drawn purely in CSS/SVG already inline */
 
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;font-size:13px;font-weight:500;padding:11px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:999;display:flex;align-items:center;gap:8px;max-width:90vw;}
@@ -136,6 +148,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 #mainArea.locked .locked-overlay{display:flex;}
 #mainArea{position:relative;}
 .locked-overlay{position:absolute;inset:0;background:rgba(247,248,250,.7);backdrop-filter:blur(1px);align-items:center;justify-content:center;font-size:13.5px;color:var(--muted);font-weight:500;border-radius:14px;text-align:center;padding:20px;}
+body.dark .locked-overlay{background:rgba(15,17,21,.7);}
 
 .badge-soft{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.4px;margin-left:6px;}
 .badge-warn{background:var(--warn-light);color:var(--warn);}
@@ -148,6 +161,12 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .stat-label{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px;}
 .stat-box.warn .stat-num{color:var(--warn);}
 
+.stats-row2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+@media(max-width:700px){.stats-row2{grid-template-columns:repeat(2,1fr);}}
+.mini-chart{display:flex;align-items:flex-end;gap:3px;height:44px;margin-top:8px;}
+.mini-bar{flex:1;background:var(--accent-light);border-radius:3px 3px 0 0;position:relative;min-height:3px;}
+.mini-bar.top3{background:var(--accent);}
+
 /* OVERVIEW TABLE */
 .ov-table{width:100%;border-collapse:collapse;}
 .ov-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--border);}
@@ -157,9 +176,25 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .ov-table tr.clickable:hover{background:var(--bg);}
 .ov-name{font-weight:600;}
 .ov-mismatch{color:var(--warn);font-weight:700;}
+.layout-pill{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--accent-light);color:var(--accent);}
 
 /* JSON tools */
 .json-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.json-preview{background:#0f1115;color:#c8e1ff;font-family:'SF Mono',Consolas,monospace;font-size:11.5px;line-height:1.6;padding:14px;border-radius:10px;max-height:320px;overflow:auto;white-space:pre-wrap;word-break:break-all;}
+
+/* Activity log */
+.log-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;}
+.log-item{font-size:12px;color:var(--text2);padding:8px 10px;background:var(--bg);border-radius:8px;display:flex;justify-content:space-between;gap:10px;}
+.log-time{color:var(--muted);flex-shrink:0;font-size:11px;}
+
+/* filter chips */
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.filter-chip{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;}
+.filter-chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* open-page link on kawasan header */
+.kh-open-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;margin-top:4px;}
+.kh-open-link svg{width:12px;height:12px;}
 </style>
 </head>
 <body>
@@ -179,6 +214,9 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     <span class="dot" id="connDot"></span>
     <span id="connText">Belum terhubung ke GitHub</span>
   </div>
+  <button class="n-theme-btn" id="btnTheme" title="Ganti tema gelap/terang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
   <button class="n-disconnect" id="btnDisconnect" style="display:none;">Putuskan</button>
 </nav>
 
@@ -189,7 +227,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
     </div>
     <div class="card-ttl">Hubungkan ke Repo GitHub</div>
-    <p class="hint" style="margin-bottom:16px;">Isi detail repo tempat <strong>db.json</strong> disimpan.</p>
+    <p class="hint" style="margin-bottom:16px;">Isi detail repo tempat <strong>db.json</strong> disimpan. Semua file (db.json, shared.js, layout-engine.js, kawasan-*.html) satu area/root yang sama.</p>
 
     <div class="field">
       <label>Pemilik repo (username/organisasi)</label>
@@ -238,6 +276,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
       <button class="btn btn-outline btn-block btn-sm" id="btnEditSite">Edit Info Situs</button>
       <button class="btn btn-outline btn-block btn-sm" id="btnShowOverview" style="margin-top:8px;">Lihat Ringkasan Semua Kawasan</button>
+      <button class="btn btn-outline btn-block btn-sm" id="btnShowLog" style="margin-top:8px;">Riwayat Perubahan (sesi ini)</button>
     </div>
 
     <div class="card">
@@ -249,6 +288,11 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="kawasanSearch" placeholder="Cari kawasan…"/>
+      </div>
+      <div class="filter-chips" id="kawasanFilterChips">
+        <button class="filter-chip active" data-filter="all">Semua</button>
+        <button class="filter-chip" data-filter="empty">Kosong (0 artikel)</button>
+        <button class="filter-chip" data-filter="noimg">Tanpa gambar hero</button>
       </div>
       <div class="kawasan-list" id="kawasanList"></div>
       <button class="add-art-btn" id="btnAddKawasan" style="margin-top:12px;">
@@ -265,6 +309,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="json-actions">
         <button class="btn btn-outline btn-sm" id="btnExportJson">Unduh db.json</button>
         <button class="btn btn-outline btn-sm" id="btnImportJson">Impor JSON</button>
+        <button class="btn btn-outline btn-sm" id="btnPreviewJson">Lihat JSON Live</button>
       </div>
       <input type="file" id="jsonFileInput" accept=".json" style="display:none;"/>
     </div>
@@ -294,11 +339,27 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="card" id="overviewCard" style="display:none;">
       <div class="card-ttl">Ringkasan Semua Kawasan &amp; Artikel</div>
       <div class="stats-row" id="statsRow"></div>
+      <div class="stats-row2" id="statsRow2"></div>
       <div class="hint" style="margin-bottom:12px;">Klik nama kawasan untuk langsung membuka &amp; mengeditnya. Kolom "Selisih" menandai kawasan yang jumlah artikelnya berbeda dari <code>article_count</code> tersimpan — akan otomatis disamakan saat kamu menyimpan.</div>
       <div style="overflow-x:auto;">
         <table class="ov-table" id="overviewTable"></table>
       </div>
       <button class="btn btn-outline btn-sm" id="btnCloseOverview" style="margin-top:14px;">Tutup</button>
+    </div>
+
+    <!-- ACTIVITY LOG (toggle) -->
+    <div class="card" id="logCard" style="display:none;">
+      <div class="card-ttl">Riwayat Perubahan (sesi ini, belum tentu tersimpan)</div>
+      <div class="log-list" id="logList"></div>
+      <button class="btn btn-outline btn-sm" id="btnCloseLog" style="margin-top:14px;">Tutup</button>
+    </div>
+
+    <!-- JSON PREVIEW (toggle) -->
+    <div class="card" id="jsonPreviewCard" style="display:none;">
+      <div class="card-ttl">Pratinjau JSON Langsung (live)</div>
+      <div class="hint" style="margin-bottom:10px;">Ini persis apa yang akan ditulis ke db.json saat kamu menekan "Simpan ke GitHub".</div>
+      <pre class="json-preview" id="jsonPreviewBox"></pre>
+      <button class="btn btn-outline btn-sm" id="btnCloseJsonPreview" style="margin-top:14px;">Tutup</button>
     </div>
 
     <!-- KAWASAN DETAIL -->
@@ -308,6 +369,10 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
           <div>
             <div class="kh-title" id="khTitle">—</div>
             <div class="kh-id" id="khId">id: —</div>
+            <a class="kh-open-link" id="khOpenLink" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Buka halaman publik
+            </a>
           </div>
           <div class="kh-actions">
             <button class="btn btn-outline btn-sm" id="btnDuplicateKawasan" title="Duplikat kawasan ini">
@@ -343,11 +408,19 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
               Grid
             </button>
             <button data-val="carousel" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              Geser (Carousel)
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/><polyline points="9 18 15 12 9 6" transform="translate(10,0)"/></svg>
+              Geser
+            </button>
+            <button data-val="list" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Daftar
+            </button>
+            <button data-val="masonry" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="10" width="7" height="11"/></svg>
+              Masonry
             </button>
           </div>
-          <div class="hint">Menentukan bagaimana daftar artikel ditampilkan di halaman kawasan publik: grid statis atau slider geser kanan-kiri.</div>
+          <div class="hint">Menentukan bagaimana daftar artikel ditampilkan di halaman kawasan publik: <strong>Grid</strong> statis dengan tombol "muat lebih banyak", <strong>Geser</strong> carousel horizontal, <strong>Daftar</strong> kartu horizontal besar, atau <strong>Masonry</strong> kolom bertingkat. Perubahan ini langsung memengaruhi halaman kawasan-{id}.html setelah disimpan.</div>
         </div>
       </div>
 
@@ -361,6 +434,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" id="artSearch" placeholder="Cari artikel di kawasan ini…"/>
           </div>
+          <button class="btn btn-outline btn-sm" id="btnSortArt" title="Urutkan berdasarkan tanggal terbaru">Urutkan Tanggal</button>
         </div>
         <div class="art-list" id="artList"></div>
         <button class="add-art-btn" id="btnAddArt">
@@ -377,21 +451,43 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 <script>
 /* ══════════════════════════════════════
    STATE
-   Catatan struktur data (sesuai db.json asli):
+   Struktur data (SAMA PERSIS dengan db.json & shared.js):
    - DB.kawasan[]  : { id, name, desc, article_count, url, hero_image, layout }
    - DB.articles[] : { id, title, kawasan_id, kawasan_name, date, read_time, img, url, excerpt }
-   Jumlah artikel per kawasan dihitung LIVE dari DB.articles.filter(kawasan_id),
-   bukan dari field article_count manual (itulah sumber bug "0 semua" sebelumnya:
-   kode lama mencari kawasan.articles yang memang tidak pernah ada di skema ini).
+   Jumlah artikel per kawasan dihitung LIVE dari DB.articles.filter(kawasan_id).
+
+   layout kini mendukung 4 nilai: grid | carousel | list | masonry
+   (upgrade dari sebelumnya yang hanya grid | carousel).
 ══════════════════════════════════════ */
 let DB = null;
 let FILE_SHA = null;
 let GH = { owner:'', repo:'', branch:'main', path:'db.json', token:'' };
 let activeKawasanId = null;
 let busy = false;
+let kawasanFilter = 'all';
+let artSortDesc = false;
 const LS_KEY = 'nawaku_gh_v2';
+const activityLog = [];
 
 const $ = id => document.getElementById(id);
+
+function logActivity(msg) {
+  activityLog.unshift({ msg, time: new Date().toLocaleTimeString('id-ID') });
+  if (activityLog.length > 50) activityLog.pop();
+  if ($('logCard').style.display === 'block') renderLog();
+}
+
+/* ══════════════════════════════════════
+   THEME (dark mode) — fitur baru, tidak memengaruhi logika data
+══════════════════════════════════════ */
+(function initTheme(){
+  const saved = localStorage.getItem('nawaku_admin_theme');
+  if (saved === 'dark') document.body.classList.add('dark');
+})();
+$('btnTheme').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('nawaku_admin_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+});
 
 /* ══════════════════════════════════════
    TOAST
@@ -423,7 +519,6 @@ function articleCountOf(kawasanId) {
   return articlesOf(kawasanId).length;
 }
 function syncArticleCounts() {
-  // samakan field article_count tersimpan dengan jumlah artikel real
   DB.kawasan.forEach(k => { k.article_count = articleCountOf(k.id); });
   if (!DB.stats) DB.stats = {};
   DB.stats.articles = DB.articles.length;
@@ -458,12 +553,12 @@ async function loadFromGithub() {
     if (!DB.articles) DB.articles = [];
     if (!DB.site) DB.site = { name:'', tagline:'', description:'', about_extended:'', year_founded: new Date().getFullYear() };
     if (!DB.stats) DB.stats = { articles: DB.articles.length, kawasan: DB.kawasan.length, tahun_berdiri: DB.site.year_founded };
-    // pastikan tiap kawasan punya field baru (hero_image, layout) tanpa menghapus data lama
     DB.kawasan.forEach(k => {
       if (k.hero_image === undefined) k.hero_image = '';
       if (k.layout === undefined) k.layout = 'grid';
+      // migrasi lembut: layout lama yang belum dikenal, fallback ke grid
+      if (!['grid','carousel','list','masonry'].includes(k.layout)) k.layout = 'grid';
     });
-    // pastikan tiap artikel punya excerpt
     DB.articles.forEach(a => { if (a.excerpt === undefined) a.excerpt = ''; });
 
     $('connDot').className = 'dot on';
@@ -474,6 +569,7 @@ async function loadFromGithub() {
 
     renderKawasanList();
     fillSiteForm();
+    logActivity('Database dimuat dari GitHub');
     showToast(`Database dimuat: ${DB.kawasan.length} kawasan, ${DB.articles.length} artikel`);
   } catch(e) {
     showToast('Gagal memuat: ' + e.message, true);
@@ -514,6 +610,7 @@ async function saveToGithub() {
     $('connText').textContent = `Terhubung — ${GH.owner}/${GH.repo} (${GH.branch})`;
     renderKawasanList();
     if (activeKawasanId) renderArticles(getActiveKawasan());
+    logActivity('Disimpan ke GitHub — perubahan live di situs publik');
     showToast('Tersimpan ke GitHub! Situs akan otomatis ter-update.');
   } catch(e) {
     showToast('Gagal menyimpan: ' + e.message, true);
@@ -525,9 +622,6 @@ async function saveToGithub() {
 
 /* ══════════════════════════════════════
    CONNECT / TOKEN PERSISTENCE
-   Disimpan di localStorage (bukan sessionStorage) supaya
-   tidak perlu isi ulang setiap buka browser/tab baru,
-   sesuai permintaan. Bisa dimatikan lewat checkbox "ingat token".
 ══════════════════════════════════════ */
 $('btnConnect').addEventListener('click', () => {
   GH.owner = $('ghOwner').value.trim();
@@ -554,7 +648,6 @@ $('btnDisconnect').addEventListener('click', () => {
   location.reload();
 });
 
-// restore saved connection automatically on page load
 (function restoreSession(){
   try {
     const saved = localStorage.getItem(LS_KEY);
@@ -567,7 +660,6 @@ $('btnDisconnect').addEventListener('click', () => {
       $('ghToken').value = g.token || '';
       if (g.owner && g.repo && g.token) {
         GH = g;
-        // auto-connect
         loadFromGithub();
       }
     }
@@ -613,8 +705,46 @@ $('btnCloseSite').addEventListener('click', () => $('siteCard').style.display = 
 function closeAllPanels() {
   $('siteCard').style.display = 'none';
   $('overviewCard').style.display = 'none';
+  $('logCard').style.display = 'none';
+  $('jsonPreviewCard').style.display = 'none';
   $('kawasanDetail').style.display = 'none';
 }
+
+/* ══════════════════════════════════════
+   ACTIVITY LOG (fitur baru)
+══════════════════════════════════════ */
+$('btnShowLog').addEventListener('click', () => {
+  if (!DB) return;
+  closeAllPanels();
+  renderLog();
+  $('logCard').style.display = 'block';
+  $('mainArea').classList.remove('locked');
+});
+$('btnCloseLog').addEventListener('click', () => $('logCard').style.display = 'none');
+function renderLog() {
+  const wrap = $('logList');
+  if (!activityLog.length) {
+    wrap.innerHTML = '<div class="empty-note">Belum ada aktivitas di sesi ini.</div>';
+    return;
+  }
+  wrap.innerHTML = activityLog.map(l => `
+    <div class="log-item"><span>${escapeHtml(l.msg)}</span><span class="log-time">${l.time}</span></div>
+  `).join('');
+}
+
+/* ══════════════════════════════════════
+   JSON LIVE PREVIEW (fitur baru)
+══════════════════════════════════════ */
+$('btnPreviewJson').addEventListener('click', () => {
+  if (!DB) { showToast('Hubungkan database dulu', true); return; }
+  closeAllPanels();
+  const clone = JSON.parse(JSON.stringify(DB));
+  clone.kawasan.forEach(k => { k.article_count = articleCountOf(k.id); });
+  $('jsonPreviewBox').textContent = JSON.stringify(clone, null, 2);
+  $('jsonPreviewCard').style.display = 'block';
+  $('mainArea').classList.remove('locked');
+});
+$('btnCloseJsonPreview').addEventListener('click', () => $('jsonPreviewCard').style.display = 'none');
 
 /* ══════════════════════════════════════
    OVERVIEW (ringkasan semua kawasan + artikel)
@@ -628,16 +758,31 @@ $('btnShowOverview').addEventListener('click', () => {
 });
 $('btnCloseOverview').addEventListener('click', () => $('overviewCard').style.display = 'none');
 
+const layoutLabel = { grid: 'Grid', carousel: 'Geser', list: 'Daftar', masonry: 'Masonry' };
+
 function renderOverview() {
   const totalArt = DB.articles.length;
   const totalKaw = DB.kawasan.length;
   const orphan = DB.articles.filter(a => !DB.kawasan.some(k => k.id === a.kawasan_id)).length;
+  const noImage = DB.kawasan.filter(k => !k.hero_image).length;
+  const emptyKawasan = DB.kawasan.filter(k => articleCountOf(k.id) === 0).length;
+  const avgReadTime = totalArt ? Math.round(DB.articles.reduce((s,a)=>s+(a.read_time||0),0) / totalArt) : 0;
 
   $('statsRow').innerHTML = `
     <div class="stat-box"><div class="stat-num">${totalKaw}</div><div class="stat-label">Total Kawasan</div></div>
     <div class="stat-box"><div class="stat-num">${totalArt}</div><div class="stat-label">Total Artikel</div></div>
     <div class="stat-box ${orphan?'warn':''}"><div class="stat-num">${orphan}</div><div class="stat-label">Artikel Tanpa Kawasan</div></div>
   `;
+
+  $('statsRow2').innerHTML = `
+    <div class="stat-box ${emptyKawasan?'warn':''}"><div class="stat-num">${emptyKawasan}</div><div class="stat-label">Kawasan Kosong</div></div>
+    <div class="stat-box ${noImage?'warn':''}"><div class="stat-num">${noImage}</div><div class="stat-label">Tanpa Gambar Hero</div></div>
+    <div class="stat-box"><div class="stat-num">${avgReadTime}</div><div class="stat-label">Rata² Menit Baca</div></div>
+    <div class="stat-box"><div class="stat-num">${DB.kawasan.filter(k=>k.layout!=='grid').length}</div><div class="stat-label">Pakai Layout Non-Grid</div></div>
+  `;
+
+  const maxCount = Math.max(1, ...DB.kawasan.map(k => articleCountOf(k.id)));
+  const sorted = [...DB.kawasan].sort((a,b)=>articleCountOf(b.id)-articleCountOf(a.id));
 
   const rows = DB.kawasan.map(k => {
     const live = articleCountOf(k.id);
@@ -649,13 +794,14 @@ function renderOverview() {
         <td><code>${escapeHtml(k.id)}</code></td>
         <td>${live}</td>
         <td class="${mismatch?'ov-mismatch':''}">${mismatch ? stored+' → akan diperbarui' : 'sesuai'}</td>
-        <td>${k.layout==='carousel' ? 'Geser' : 'Grid'}</td>
+        <td><span class="layout-pill">${layoutLabel[k.layout] || 'Grid'}</span></td>
+        <td>${k.hero_image ? '✅' : '<span style="color:var(--warn);font-weight:700;">belum ada</span>'}</td>
       </tr>`;
   }).join('');
 
   $('overviewTable').innerHTML = `
-    <thead><tr><th>Kawasan</th><th>ID</th><th>Jumlah Artikel</th><th>Selisih</th><th>Tata Letak</th></tr></thead>
-    <tbody>${rows || '<tr><td colspan="5" class="empty-note">Belum ada kawasan.</td></tr>'}</tbody>
+    <thead><tr><th>Kawasan</th><th>ID</th><th>Jumlah Artikel</th><th>Selisih</th><th>Layout</th><th>Hero</th></tr></thead>
+    <tbody>${rows || '<tr><td colspan="6" class="empty-note">Belum ada kawasan.</td></tr>'}</tbody>
   `;
   $('overviewTable').querySelectorAll('tr[data-kid]').forEach(tr=>{
     tr.addEventListener('click', () => {
@@ -666,21 +812,31 @@ function renderOverview() {
 }
 
 /* ══════════════════════════════════════
-   KAWASAN LIST
+   KAWASAN LIST (+ filter chips baru)
 ══════════════════════════════════════ */
+$('kawasanFilterChips').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-chip');
+  if (!btn) return;
+  kawasanFilter = btn.dataset.filter;
+  $('kawasanFilterChips').querySelectorAll('.filter-chip').forEach(b => b.classList.toggle('active', b === btn));
+  renderKawasanList();
+});
+
 function renderKawasanList() {
   const list = $('kawasanList');
   const q = ($('kawasanSearch').value || '').toLowerCase().trim();
   $('kawasanTotalBadge').textContent = DB.kawasan.length;
 
-  const filtered = DB.kawasan.filter(k => !q || (k.name||'').toLowerCase().includes(q) || (k.id||'').toLowerCase().includes(q));
+  let filtered = DB.kawasan.filter(k => !q || (k.name||'').toLowerCase().includes(q) || (k.id||'').toLowerCase().includes(q));
+  if (kawasanFilter === 'empty') filtered = filtered.filter(k => articleCountOf(k.id) === 0);
+  if (kawasanFilter === 'noimg') filtered = filtered.filter(k => !k.hero_image);
 
   if (!DB.kawasan.length) {
     list.innerHTML = '<div class="empty-note">Belum ada kawasan. Klik "Tambah Kawasan" untuk membuat yang pertama.</div>';
     return;
   }
   if (!filtered.length) {
-    list.innerHTML = '<div class="empty-note">Tidak ada kawasan yang cocok dengan pencarian.</div>';
+    list.innerHTML = '<div class="empty-note">Tidak ada kawasan yang cocok dengan filter/pencarian.</div>';
     return;
   }
   list.innerHTML = filtered.map(k => `
@@ -711,7 +867,8 @@ $('btnAddKawasan').addEventListener('click', () => {
   DB.kawasan.push(newK);
   renderKawasanList();
   selectKawasan(id);
-  showToast('Kawasan baru ditambahkan — jangan lupa simpan ke GitHub');
+  logActivity(`Kawasan baru ditambahkan: ${name.trim()}`);
+  showToast('Kawasan baru ditambahkan — jangan lupa simpan ke GitHub. Ingat buat file kawasan-'+id+'.html di repo.');
 });
 
 $('btnDuplicateKawasan').addEventListener('click', () => {
@@ -724,6 +881,7 @@ $('btnDuplicateKawasan').addEventListener('click', () => {
   DB.kawasan.push(copy);
   renderKawasanList();
   selectKawasan(id);
+  logActivity(`Kawasan diduplikat dari: ${k.name}`);
   showToast('Kawasan diduplikat (tanpa artikel) — jangan lupa simpan ke GitHub');
 });
 
@@ -738,6 +896,7 @@ function selectKawasan(id) {
 
   $('khTitle').textContent = k.name || '(tanpa nama)';
   $('khId').textContent = 'id: ' + k.id;
+  $('khOpenLink').href = k.url || '#';
   $('kName').value = k.name || '';
   $('kIdInput').value = k.id || '';
   $('kUrl').value = k.url || '';
@@ -752,9 +911,14 @@ function selectKawasan(id) {
 
 function updateHeroPreview(url) {
   const el = $('kHeroPreview');
+  el.classList.remove('invalid');
   if (url) {
     el.style.backgroundImage = `url('${url.replace(/'/g,"\\'")}')`;
     el.textContent = '';
+    // validasi ringan: cek gambar bisa dimuat
+    const test = new Image();
+    test.onerror = () => el.classList.add('invalid');
+    test.src = url;
   } else {
     el.style.backgroundImage = 'none';
     el.textContent = 'Belum ada gambar';
@@ -771,8 +935,10 @@ $('layoutSeg').addEventListener('click', (e) => {
   if (!btn) return;
   const k = getActiveKawasan();
   if (!k) return;
+  const old = k.layout;
   k.layout = btn.dataset.val;
   setLayoutSeg(k.layout);
+  if (old !== k.layout) logActivity(`Layout "${k.name}" diubah: ${layoutLabel[old]||old} → ${layoutLabel[k.layout]}`);
 });
 
 function getActiveKawasan() {
@@ -787,6 +953,7 @@ function getActiveKawasan() {
     k.url = $('kUrl').value;
     k.desc = $('kDesc').value;
     $('khTitle').textContent = k.name || '(tanpa nama)';
+    $('khOpenLink').href = k.url || '#';
   });
 });
 $('kHero').addEventListener('input', () => {
@@ -807,12 +974,12 @@ $('kIdInput').addEventListener('change', () => {
   }
   const oldId = k.id;
   k.id = newId;
-  // ikutkan semua artikel yang menunjuk ke kawasan lama
   DB.articles.forEach(a => { if (a.kawasan_id === oldId) { a.kawasan_id = newId; a.kawasan_name = k.name; } });
   activeKawasanId = newId;
   $('khId').textContent = 'id: ' + newId;
   renderKawasanList();
   renderArticles(k);
+  logActivity(`ID kawasan diubah: ${oldId} → ${newId}`);
   showToast('ID kawasan diubah, artikel terkait ikut disesuaikan');
 });
 
@@ -827,19 +994,30 @@ $('btnDeleteKawasan').addEventListener('click', () => {
   $('kawasanDetail').style.display = 'none';
   $('mainArea').classList.add('locked');
   renderKawasanList();
+  logActivity(`Kawasan dihapus: ${k.name} (${n} artikel ikut terhapus)`);
   showToast('Kawasan & artikelnya dihapus — jangan lupa simpan ke GitHub');
 });
 
 /* ══════════════════════════════════════
-   ARTICLES
+   ARTICLES (+ sort baru)
 ══════════════════════════════════════ */
+$('btnSortArt').addEventListener('click', () => {
+  artSortDesc = !artSortDesc;
+  $('btnSortArt').textContent = artSortDesc ? 'Urutkan: Terbaru dulu' : 'Urutkan Tanggal';
+  const k = getActiveKawasan();
+  if (k) renderArticles(k);
+});
+
 function renderArticles(k) {
   const wrap = $('artList');
   const q = ($('artSearch').value || '').toLowerCase().trim();
-  const all = articlesOf(k.id);
+  let all = articlesOf(k.id);
   $('artCountBadge').textContent = all.length;
 
-  const list = all.filter(a => !q || (a.title||'').toLowerCase().includes(q));
+  let list = all.filter(a => !q || (a.title||'').toLowerCase().includes(q));
+  if (artSortDesc) {
+    list = [...list].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  }
 
   if (!all.length) {
     wrap.innerHTML = '<div class="empty-note">Belum ada artikel di kawasan ini. Klik "Tambah Artikel Baru" di bawah.</div>';
@@ -910,6 +1088,7 @@ function renderArticles(k) {
       const k2 = getActiveKawasan();
       renderArticles(k2);
       renderKawasanList();
+      logActivity(`Artikel dihapus: ${art.title}`);
       showToast('Artikel dihapus — jangan lupa simpan ke GitHub');
     });
     item.querySelector('[data-action="move-art"]').addEventListener('click', (e) => {
@@ -920,11 +1099,13 @@ function renderArticles(k) {
       if (!target) return;
       const targetK = DB.kawasan.find(k => k.id === target.trim());
       if (!targetK) { showToast('ID kawasan tidak ditemukan', true); return; }
+      const fromName = art.kawasan_name;
       art.kawasan_id = targetK.id;
       art.kawasan_name = targetK.name;
       const k2 = getActiveKawasan();
       renderArticles(k2);
       renderKawasanList();
+      logActivity(`Artikel "${art.title}" dipindah: ${fromName} → ${targetK.name}`);
       showToast(`Artikel dipindah ke "${targetK.name}" — jangan lupa simpan ke GitHub`);
     });
   });
@@ -961,6 +1142,7 @@ $('btnAddArt').addEventListener('click', () => {
   renderKawasanList();
   const items = document.querySelectorAll('.art-item');
   if (items.length) items[items.length-1].classList.add('open');
+  logActivity(`Artikel baru ditambahkan: ${title.trim()} (di ${k.name})`);
   showToast('Artikel baru ditambahkan — jangan lupa simpan ke GitHub');
 });
 
@@ -976,6 +1158,7 @@ $('btnExportJson').addEventListener('click', () => {
   a.href = url; a.download = 'db.json';
   a.click();
   URL.revokeObjectURL(url);
+  logActivity('db.json diunduh secara manual');
   showToast('db.json diunduh');
 });
 $('btnImportJson').addEventListener('click', () => $('jsonFileInput').click());
@@ -989,13 +1172,18 @@ $('jsonFileInput').addEventListener('change', (e) => {
       if (!parsed.kawasan || !parsed.articles) throw new Error('Format JSON tidak sesuai (harus punya "kawasan" dan "articles")');
       DB = parsed;
       if (!DB.site) DB.site = { name:'', tagline:'', description:'', about_extended:'', year_founded: new Date().getFullYear() };
-      DB.kawasan.forEach(k => { if (k.hero_image === undefined) k.hero_image=''; if (k.layout === undefined) k.layout='grid'; });
+      DB.kawasan.forEach(k => {
+        if (k.hero_image === undefined) k.hero_image='';
+        if (k.layout === undefined) k.layout='grid';
+        if (!['grid','carousel','list','masonry'].includes(k.layout)) k.layout='grid';
+      });
       DB.articles.forEach(a => { if (a.excerpt === undefined) a.excerpt=''; });
       activeKawasanId = null;
       closeAllPanels();
       $('mainArea').classList.add('locked');
       renderKawasanList();
       fillSiteForm();
+      logActivity('JSON diimpor dari file lokal');
       showToast('JSON berhasil diimpor ke editor (belum tersimpan ke GitHub)');
     } catch(err) {
       showToast('Gagal impor: ' + err.message, true);
@@ -1019,7 +1207,6 @@ function escapeHtml(str) {
 }
 function escapeAttr(str) { return escapeHtml(str); }
 
-/* prevent accidental tab close with unsaved work (best effort) */
 window.addEventListener('beforeunload', (e) => {
   if (DB) { e.preventDefault(); e.returnValue=''; }
 });
