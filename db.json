@@ -7,7 +7,7 @@
     "year_founded": 2023
   },
   "stats": {
-    "articles": 8,
+    "articles": 9,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -97,7 +97,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 3,
+      "article_count": 4,
       "url": "kawasan-lemahwungkuk.html",
       "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "carousel"
@@ -191,6 +191,17 @@
       "read_time": 5,
       "img": "https://files.catbox.moe/4jezu9.jpg",
       "url": "syalwa.html"
+    },
+    {
+      "id": "tes",
+      "title": "tes",
+      "excerpt": "",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "",
+      "read_time": 5,
+      "img": "",
+      "url": "tes.html"
     }
   ]
 }
