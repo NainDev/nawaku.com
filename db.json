@@ -120,7 +120,11 @@
       "url": "kawasan-lemahwungkuk.html",
       "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "masonry",
-      "featured_ids": [],
+      "featured_ids": [
+        "keraton-kasepuhan",
+        "gedung-bat",
+        "lemahwungkuk-kota"
+      ],
       "sections": [
         {
           "id": "section-3jct58",
