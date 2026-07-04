@@ -4,7 +4,8 @@
     "tagline": "Mengabadikan sejarah setiap sudut Cirebon.",
     "description": "Nawaku adalah ruang baca digital yang didedikasikan untuk mengabadikan sejarah setiap sudut Kota Cirebon — dari kawasan pesisir yang ramai, keraton-keraton megah, kampung-kampung batik, hingga gedung-gedung peninggalan kolonial yang bisu namun penuh cerita.",
     "about_extended": "Kami percaya bahwa sejarah lokal bukan sekadar catatan masa lalu, melainkan identitas yang membentuk siapa kita hari ini. Setiap artikel ditulis dengan riset mendalam dan disajikan dengan bahasa yang mudah dipahami oleh semua kalangan. Nawaku dikelola oleh tim jurnalis dan peneliti sejarah lokal yang berkomitmen menjaga akurasi dan kedalaman setiap konten.",
-    "year_founded": 2023
+    "year_founded": 2023,
+    "contact_email": "halo@nawaku.com"
   },
   "stats": {
     "articles": 9,
@@ -19,7 +20,9 @@
       "article_count": 1,
       "url": "kawasan-kasepuhan.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "kanoman",
@@ -28,7 +31,9 @@
       "article_count": 1,
       "url": "kawasan-kanoman.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "trusmi",
@@ -37,7 +42,9 @@
       "article_count": 1,
       "url": "kawasan-trusmi.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "plered",
@@ -46,7 +53,9 @@
       "article_count": 0,
       "url": "kawasan-plered.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "gunung-jati",
@@ -55,7 +64,9 @@
       "article_count": 1,
       "url": "kawasan-gunung-jati.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "plumbon",
@@ -64,7 +75,9 @@
       "article_count": 0,
       "url": "kawasan-plumbon.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "jamblang",
@@ -73,7 +86,9 @@
       "article_count": 1,
       "url": "kawasan-jamblang.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "palimanan",
@@ -82,7 +97,9 @@
       "article_count": 0,
       "url": "kawasan-palimanan.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "gegesik",
@@ -91,7 +108,9 @@
       "article_count": 0,
       "url": "kawasan-gegesik.html",
       "hero_image": "",
-      "layout": "grid"
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
     },
     {
       "id": "lemahwungkuk",
@@ -100,7 +119,19 @@
       "article_count": 4,
       "url": "kawasan-lemahwungkuk.html",
       "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
-      "layout": "masonry"
+      "layout": "masonry",
+      "featured_ids": [],
+      "sections": [
+        {
+          "id": "section-3jct58",
+          "title": "Section Baru",
+          "layout": "grid",
+          "article_ids": [
+            "lemahwungkuk-kota",
+            "gedung-bat"
+          ]
+        }
+      ]
     }
   ],
   "articles": [
