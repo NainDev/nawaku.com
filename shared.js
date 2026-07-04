@@ -65,6 +65,18 @@ const NawakuDB = (() => {
     return (db.articles || []).length;
   }
 
+  /* Cari satu artikel berdasarkan id (dipakai fitur featured_ids & sections) */
+  function getArticleById(db, id) {
+    return (db.articles || []).find(a => a.id === id) || null;
+  }
+
+  /* Ubah daftar id artikel menjadi daftar objek artikel (id yang tidak ketemu diabaikan,
+     bukan menyebabkan error, supaya admin panel yang menghapus artikel tidak merusak
+     section/featured yang masih menunjuk ke id lama) */
+  function resolveArticles(db, ids) {
+    return (ids || []).map(id => getArticleById(db, id)).filter(Boolean);
+  }
+
   /* Data fallback minimal jika fetch gagal */
   function fallbackData() {
     return {
@@ -124,6 +136,7 @@ const NawakuDB = (() => {
 
   return {
     load, getKawasan, articlesOf, articleCountOf, allArticles, totalArticles,
+    getArticleById, resolveArticles,
     renderFooter, goRedirect, attachNav, attachNavAll, showToast
   };
 })();
