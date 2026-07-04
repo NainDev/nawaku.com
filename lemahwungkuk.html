@@ -51,10 +51,8 @@
     .section-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
     .section-count{font-size:13px;color:var(--muted);font-weight:500;}
 
-    .featured{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;text-decoration:none;transition:all .2s;}
-    .featured:hover{box-shadow:0 8px 32px rgba(0,0,0,.09);transform:translateY(-2px);}
-    .featured-img{width:100%;height:100%;min-height:260px;object-fit:cover;display:block;background:var(--bg);}
-    .featured-body{padding:28px 28px 24px;display:flex;flex-direction:column;justify-content:center;}
+    /* Kartu "Artikel Pilihan" sekarang dirender lewat layout-engine.js (.featured-swipe-*),
+       tapi elemen meta di dalamnya (tag/excerpt/meta/read-more) memakai class umum berikut: */
     .featured-tag{font-size:10.5px;font-weight:800;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:12px;letter-spacing:.4px;text-transform:uppercase;}
     .featured-title{font-size:clamp(16px,2.2vw,20px);font-weight:700;color:var(--text);line-height:1.35;margin-bottom:12px;letter-spacing:-.2px;}
     .featured-excerpt{font-size:14px;color:var(--text2);line-height:1.72;margin-bottom:16px;}
@@ -64,7 +62,7 @@
     .a-meta-sep{width:3px;height:3px;border-radius:50%;background:var(--border);flex-shrink:0;}
     .read-more{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent);margin-top:14px;}
     .read-more svg{width:13px;height:13px;transition:transform .15s;}
-    .featured:hover .read-more svg{transform:translateX(3px);}
+    .featured-swipe-card:hover .read-more svg{transform:translateX(3px);}
 
     .art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
     .art-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;transition:all .18s;display:flex;flex-direction:column;}
@@ -83,17 +81,6 @@
     .load-more-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 28px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s;}
     .load-more-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
     .load-more-btn svg{width:15px;height:15px;}
-
-    .other-section{margin-top:56px;padding-top:40px;border-top:1px solid var(--border);}
-    .other-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;}
-    .other-chip{display:flex;flex-direction:column;padding:14px 16px;border-radius:12px;border:1.5px solid var(--border);background:#fff;cursor:pointer;text-decoration:none;transition:all .15s;}
-    .other-chip:hover{border-color:var(--accent);background:var(--accent-light);}
-    .other-chip-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
-    .other-chip:hover .other-chip-name{color:var(--accent);}
-    .other-chip-count{font-size:12px;color:var(--muted);}
-    .other-chip:hover .other-chip-count{color:var(--accent);}
-    .other-chip-arrow{font-size:16px;color:var(--border);margin-top:8px;transition:.15s;}
-    .other-chip:hover .other-chip-arrow{color:var(--accent);}
 
     .site-footer{background:#0f172a;margin-top:72px;}
     .footer-main{max-width:1100px;margin:0 auto;padding:40px 24px 32px;display:flex;align-items:flex-start;gap:56px;}
@@ -125,22 +112,17 @@
 
     @media(max-width:900px){
       .art-grid{grid-template-columns:repeat(2,1fr);}
-      .other-grid{grid-template-columns:repeat(3,1fr);}
-      .featured{grid-template-columns:1fr;}
-      .featured-img{min-height:200px;max-height:220px;}
     }
     @media(max-width:640px){
       .kawasan-hero{height:260px;}
       .kawasan-hero-cnt{padding:20px 16px;}
       .main{padding:28px 16px 48px;}
       .art-grid{grid-template-columns:1fr 1fr;}
-      .other-grid{grid-template-columns:repeat(2,1fr);}
       .footer-main{flex-direction:column;gap:28px;padding:28px 16px 24px;}
       .footer-bottom{flex-direction:column;align-items:flex-start;}
     }
     @media(max-width:420px){
       .art-grid{grid-template-columns:1fr;}
-      .other-grid{grid-template-columns:repeat(2,1fr);}
     }
   </style>
 </head>
@@ -194,32 +176,10 @@
 
 <div class="main">
 
-  <div class="section-head">
+  <div class="section-head" id="featuredHead">
     <span class="section-title">Artikel Pilihan</span>
   </div>
-  <a class="featured" id="featuredCard" href="#" data-nav style="display:none;">
-    <img class="featured-img" id="featuredImg" src="" alt=""/>
-    <div class="featured-body">
-      <span class="featured-tag" id="featuredTag"></span>
-      <div class="featured-title" id="featuredTitle"></div>
-      <div class="featured-excerpt" id="featuredExcerpt"></div>
-      <div class="featured-meta">
-        <span class="a-meta-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span id="featuredDate"></span>
-        </span>
-        <span class="a-meta-sep"></span>
-        <span class="a-meta-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span id="featuredTime"></span>
-        </span>
-      </div>
-      <span class="read-more">
-        Baca Selengkapnya
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </span>
-    </div>
-  </a>
+  <div id="featuredSwipe" style="display:none;margin-bottom:32px;"></div>
 
   <div class="section-head" style="margin-top:8px;">
     <span class="section-title">Semua Artikel</span>
@@ -237,12 +197,8 @@
     </button>
   </div>
 
-  <div class="other-section">
-    <div class="section-head">
-      <span class="section-title">Jelajahi Kawasan Lain</span>
-    </div>
-    <div class="other-grid" id="otherGrid"></div>
-  </div>
+  <!-- Bacaan tambahan: judul, layout, dan isi diatur sepenuhnya lewat admin panel (kw.sections) -->
+  <div id="sectionsWrap"></div>
 
 </div>
 
@@ -274,6 +230,26 @@
       <a class="ft-col-link" href="#" data-nav>Ketentuan</a>
     </div>
   </div>
+  <div class="footer-kawasan-section">
+    <div class="footer-kawasan-inner">
+      <div class="footer-kawasan-ttl">Jelajahi Kawasan Lain</div>
+      <div class="footer-kawasan-grid" id="otherGrid"></div>
+    </div>
+  </div>
+
+  <div class="footer-cta-section">
+    <div class="footer-cta-inner">
+      <div class="footer-cta-text">
+        <div class="footer-cta-ttl">Punya ide konten yang ingin kami tulis?</div>
+        <div class="footer-cta-sub">Ceritakan sudut Cirebon, bangunan, atau kisah yang menurutmu layak diabadikan. Kirimkan usulanmu, tim kami akan menindaklanjuti.</div>
+      </div>
+      <a class="footer-cta-btn" id="ctaRequestBtn" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+        Request / Kirim Ide
+      </a>
+    </div>
+  </div>
+
   <div class="footer-bottom">
     <span class="fb-copy" id="ftCopy">© 2025 Nawaku.com</span>
     <span class="fb-badge">
@@ -317,24 +293,24 @@
     document.getElementById('allCount').textContent = `${articles.length} artikel`;
     document.title = `${kw.name} — Kawasan Sejarah Cirebon · Nawaku`;
 
-    /* Featured = artikel pertama */
-    if (articles.length) {
-      const f = articles[0];
-      const fc = document.getElementById('featuredCard');
-      fc.href = f.url;
-      fc.style.display = 'grid';
-      document.getElementById('featuredImg').src = f.img || '';
-      document.getElementById('featuredImg').alt = f.title;
-      document.getElementById('featuredTag').textContent = kw.name.toUpperCase();
-      document.getElementById('featuredTitle').textContent = f.title;
-      document.getElementById('featuredExcerpt').textContent = f.excerpt || '';
-      document.getElementById('featuredDate').textContent = f.date || '';
-      document.getElementById('featuredTime').textContent = `${f.read_time || 0} menit baca`;
-      NawakuDB.attachNav(fc);
+    /* Artikel Pilihan: sekarang bisa berisi BANYAK artikel (kw.featured_ids, diatur admin),
+       ditampilkan sebagai strip yang hanya bisa DIGESER (scroll/drag/sentuh), tanpa tombol panah. */
+    const featuredArts = NawakuDB.resolveArticles(db, kw.featured_ids);
+    const featuredHead = document.getElementById('featuredHead');
+    if (featuredArts.length) {
+      featuredHead.style.display = 'flex';
+      NawakuLayout.renderSwipe('featuredSwipe', featuredArts, kw.name);
+    } else {
+      featuredHead.style.display = 'none';
+      document.getElementById('featuredSwipe').style.display = 'none';
     }
 
-    renderGrid(articles.slice(1), visibleCount);
+    // "Semua Artikel" tetap menampilkan seluruh artikel kawasan ini (di luar featured_ids tidak difilter,
+    // supaya artikel tetap bisa ditemukan meski juga tampil di strip pilihan)
+    renderGrid(articles, visibleCount);
+    renderSections(db, kw);
     renderOther(db);
+    renderCta(db);
     NawakuDB.renderFooter(db);
     NawakuDB.attachNavAll();
 
@@ -343,6 +319,42 @@
       e.preventDefault(); NawakuDB.goRedirect('newsletter.html');
     });
   });
+
+  /* Render bacaan tambahan (kw.sections) — jumlah, judul, dan layout tiap section
+     sepenuhnya dikontrol lewat admin panel, halaman ini hanya mengikuti. */
+  function renderSections(db, kw) {
+    const wrap = document.getElementById('sectionsWrap');
+    const sections = kw.sections || [];
+    if (!sections.length) { wrap.innerHTML = ''; return; }
+
+    wrap.innerHTML = sections.map((s, i) => `
+      <div class="reading-section">
+        <div class="section-head">
+          <span class="section-title">${escapeHtmlLocal(s.title || 'Bacaan Lainnya')}</span>
+        </div>
+        <div id="section_${i}"></div>
+      </div>
+    `).join('');
+
+    sections.forEach((s, i) => {
+      const arts = NawakuDB.resolveArticles(db, s.article_ids);
+      const fakeKw = { name: kw.name, layout: s.layout || 'grid' };
+      NawakuLayout.render(`section_${i}`, arts, fakeKw);
+    });
+  }
+
+  function renderCta(db) {
+    const btn = document.getElementById('ctaRequestBtn');
+    const email = (db.site && db.site.contact_email) || 'halo@nawaku.com';
+    const subject = encodeURIComponent('Ide Konten untuk Nawaku');
+    const body = encodeURIComponent('Halo tim Nawaku,\n\nSaya punya ide konten tentang: ');
+    btn.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  }
+
+  function escapeHtmlLocal(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
 
   function renderGrid(arts, count) {
     // Carousel & list menampilkan semua artikel langsung (scroll/stack), tanpa "muat lebih banyak"
@@ -363,20 +375,19 @@
 
   document.getElementById('loadMoreBtn').addEventListener('click', () => {
     visibleCount += PAGE_SIZE;
-    renderGrid(articles.slice(1), visibleCount);
+    renderGrid(articles, visibleCount);
   });
 
   function renderOther(db) {
     const others = (db.kawasan || []).filter(k => k.id !== KAWASAN_ID);
     const grid = document.getElementById('otherGrid');
     grid.innerHTML = others.map(k => `
-      <a class="other-chip" href="${k.url}" data-nav>
-        <span class="other-chip-name">${k.name}</span>
-        <span class="other-chip-count">${NawakuDB.articleCountOf(db, k.id)} artikel</span>
-        <span class="other-chip-arrow">→</span>
+      <a class="footer-kawasan-chip" href="${k.url}" data-nav>
+        <span class="footer-kawasan-chip-name">${k.name}</span>
+        <span class="footer-kawasan-chip-count">${NawakuDB.articleCountOf(db, k.id)} artikel</span>
       </a>
     `).join('');
-    NawakuDB.attachNavAll('.other-chip[data-nav]');
+    NawakuDB.attachNavAll('.footer-kawasan-chip[data-nav]');
   }
 </script>
 </body>
