@@ -106,5 +106,52 @@ const NawakuLayout = (() => {
     if (window.NawakuDB) NawakuDB.attachNavAll('#' + containerId + ' [data-nav], #' + containerId + '_track [data-nav]');
   }
 
-  return { render };
+  /* Kartu untuk mode swipe — mirip tampilan "featured" lama (gambar+judul+excerpt besar) tapi
+     dibuat untuk banyak artikel berjajar horizontal, TANPA tombol panah.
+     Hanya bisa digeser lewat scroll/drag/trackpad/sentuh (scroll-snap native). */
+  function swipeCardHTML(a, kwName) {
+    return `
+      <a class="featured-swipe-card" href="${a.url}" data-nav>
+        <img class="featured-swipe-img" src="${a.img || ''}" alt="${escapeHtml(a.title)}" loading="lazy"/>
+        <div class="featured-swipe-body">
+          <span class="featured-tag">${escapeHtml((kwName||'').toUpperCase())}</span>
+          <div class="featured-title">${escapeHtml(a.title)}</div>
+          <div class="featured-excerpt">${escapeHtml(a.excerpt||'')}</div>
+          <div class="featured-meta">
+            <span class="a-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              ${escapeHtml(a.date||'')}
+            </span>
+            <span class="a-meta-sep"></span>
+            <span class="a-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              ${a.read_time || 0} menit baca
+            </span>
+          </div>
+          <span class="read-more">
+            Baca Selengkapnya
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+      </a>`;
+  }
+
+  /* Render strip "Artikel Pilihan" — banyak kartu, geser bebas tanpa tombol navigasi.
+     containerId: id elemen wrapper kosong di HTML.
+     articles: hasil NawakuDB.resolveArticles(db, kw.featured_ids)
+     kwName: nama kawasan untuk label tag */
+  function renderSwipe(containerId, articles, kwName) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    if (!articles.length) {
+      el.style.display = 'none';
+      return;
+    }
+    el.style.display = 'block';
+    el.className = 'featured-swipe-wrap';
+    el.innerHTML = articles.map(a => swipeCardHTML(a, kwName)).join('');
+    if (window.NawakuDB) NawakuDB.attachNavAll('#' + containerId + ' [data-nav]');
+  }
+
+  return { render, renderSwipe };
 })();
