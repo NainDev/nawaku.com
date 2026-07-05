@@ -8,7 +8,7 @@
     "contact_email": "halo@nawaku.com"
   },
   "stats": {
-    "articles": 11,
+    "articles": 12,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -72,7 +72,7 @@
       "id": "plumbon",
       "name": "Plumbon",
       "desc": "Kecamatan di barat Cirebon dengan kekayaan sejarah perdagangan.",
-      "article_count": 0,
+      "article_count": 1,
       "url": "kawasan-plumbon.html",
       "hero_image": "",
       "layout": "grid",
@@ -259,6 +259,17 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "url": "lemahwungkuk/tes-aja-inimah.html",
       "excerpt": "ini tag awal"
+    },
+    {
+      "id": "awal-mula-daerah-cirebon",
+      "title": "Awal Mula Daerah Cirebon",
+      "kawasan_id": "plumbon",
+      "kawasan_name": "Plumbon",
+      "date": "5 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "url": "plumbon/awal-mula-daerah-cirebon.html",
+      "excerpt": "Sejarah lengkap: Awal Mula Daerah plumbon didirikan"
     }
   ]
 }
