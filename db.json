@@ -23,7 +23,10 @@
       "url": "kawasan-kasepuhan.html",
       "hero_image": "",
       "layout": "grid",
-      "featured_ids": [],
+      "featured_ids": [
+        "awal-mula-daerah-plumbon",
+        "keraton-kanoman"
+      ],
       "sections": []
     },
     {
