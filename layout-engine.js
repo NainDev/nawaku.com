@@ -143,14 +143,56 @@ const NawakuLayout = (() => {
   function renderSwipe(containerId, articles, kwName) {
     const el = document.getElementById(containerId);
     if (!el) return;
+
+    // PENTING: jangan set el.style.display langsung — itu inline style yang akan
+    // menimpa `display:flex` dari class .featured-swipe-wrap (bug sebelumnya:
+    // kartu jadi tertumpuk vertikal, bukan geser horizontal). Cukup pakai class.
     if (!articles.length) {
-      el.style.display = 'none';
+      el.className = 'featured-swipe-wrap is-hidden';
+      el.innerHTML = '';
       return;
     }
-    el.style.display = 'block';
     el.className = 'featured-swipe-wrap';
     el.innerHTML = articles.map(a => swipeCardHTML(a, kwName)).join('');
     if (window.NawakuDB) NawakuDB.attachNavAll('#' + containerId + ' [data-nav]');
+
+    enableDragScroll(el);
+  }
+
+  /* Drag-to-scroll pakai mouse untuk desktop (trackpad/sentuh sudah otomatis
+     bisa lewat overflow-x:auto native). Tanpa ini, pengguna mouse biasa tidak
+     punya cara mudah menggeser strip secara horizontal. */
+  function enableDragScroll(el) {
+    if (el.dataset.dragBound === '1') return; // hindari pasang listener dobel
+    el.dataset.dragBound = '1';
+
+    let isDown = false, startX = 0, startScroll = 0, moved = false;
+
+    el.addEventListener('mousedown', (e) => {
+      isDown = true;
+      moved = false;
+      el.classList.add('is-dragging');
+      startX = e.pageX;
+      startScroll = el.scrollLeft;
+    });
+    window.addEventListener('mouseup', () => {
+      isDown = false;
+      el.classList.remove('is-dragging');
+    });
+    window.addEventListener('mouseleave', () => {
+      isDown = false;
+      el.classList.remove('is-dragging');
+    });
+    el.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      el.scrollLeft = startScroll - dx;
+    });
+    // kalau sempat digeser (drag), jangan biarkan klik ikut membuka artikel
+    el.addEventListener('click', (e) => {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
   }
 
   return { render, renderSwipe };
