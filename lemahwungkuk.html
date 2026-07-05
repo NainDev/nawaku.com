@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Lemahwungkuk — Kawasan Sejarah Cirebon · Nawaku</title>
+  <title>Lemahwungkuk — Kawasan Sejarah Cirebon · Nainpedia</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="layout-styles.css"/>
   <style>
@@ -137,20 +137,54 @@
 
 <nav class="navbar">
   <a class="n-logo" href="index.html" data-nav>
-    <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
-      <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
-      <defs><linearGradient id="lg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
-    </svg>
-    <span class="n-logo-txt">Nawaku</span>
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
   </a>
   <div class="n-spacer"></div>
   <a class="n-home-btn" href="index.html" data-nav>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Beranda
   </a>
+  <div class="n-more" id="nMore">
+    <button class="n-more-btn" id="moreBtn" aria-label="Menu lainnya">
+      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+    </button>
+    <div class="n-dropdown" id="nDropdown">
+      <div class="n-dd-label">Jelajahi</div>
+      <a class="n-dd-item" href="index.html" data-nav>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Beranda
+      </a>
+      <button class="n-dd-item" id="btnGoKawasanList">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+        Daftar Kawasan Lain
+      </button>
+      <div class="n-dd-sep"></div>
+      <div class="n-dd-label">Info</div>
+      <button class="n-dd-item" id="btnOpenAboutKw">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Tentang Nainpedia
+      </button>
+      <button class="n-dd-item" id="btnNewsletterKw">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+        <span class="n-dd-badge">Segera</span>
+      </button>
+    </div>
+  </div>
 </nav>
+
+<!-- ABOUT MODAL (dari dropdown navbar) -->
+<div class="about-modal-overlay" id="aboutModalKw">
+  <div class="about-modal-box">
+    <div class="about-modal-header">
+      <div class="about-modal-title">Tentang Nainpedia</div>
+      <button class="about-modal-close" id="btnCloseAboutKw">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="about-modal-body" id="aboutBodyKw"></div>
+  </div>
+</div>
 
 <div class="kawasan-hero">
   <img id="heroImg" src="" alt="Lemahwungkuk"/>
@@ -206,13 +240,7 @@
   <div class="footer-main">
     <div class="ft-brand-col">
       <div class="ft-brand">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-          <rect width="34" height="34" rx="10" fill="url(#lg2)"/>
-          <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
-          <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
-        </svg>
-        <span class="ft-name">NAWAKU</span>
+        <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
       </div>
       <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
       <div class="ft-socials">
@@ -222,7 +250,7 @@
       </div>
     </div>
     <div class="ft-right">
-      <div class="ft-col-ttl">Nawaku</div>
+      <div class="ft-col-ttl">Nainpedia</div>
       <a class="ft-col-link" href="#" data-nav>Tentang Kami</a>
       <a class="ft-col-link" href="#" data-nav>Tim Redaksi</a>
       <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
@@ -251,7 +279,7 @@
   </div>
 
   <div class="footer-bottom">
-    <span class="fb-copy" id="ftCopy">© 2025 Nawaku.com</span>
+    <span class="fb-copy" id="ftCopy">© 2025 Nainpedia.com</span>
     <span class="fb-badge">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
       Dibuat dengan penuh semangat
@@ -291,7 +319,7 @@
       ${articles.length} Artikel
     `;
     document.getElementById('allCount').textContent = `${articles.length} artikel`;
-    document.title = `${kw.name} — Kawasan Sejarah Cirebon · Nawaku`;
+    document.title = `${kw.name} — Kawasan Sejarah Cirebon · Nainpedia`;
 
     /* Artikel Pilihan: sekarang bisa berisi BANYAK artikel (kw.featured_ids, diatur admin),
        ditampilkan sebagai strip yang hanya bisa DIGESER (scroll/drag/sentuh), tanpa tombol panah. */
@@ -308,11 +336,59 @@
     renderCta(db);
     NawakuDB.renderFooter(db);
     NawakuDB.attachNavAll();
+    renderAboutModalKw(db);
 
     const nl = document.getElementById('ftNewsletter');
     if (nl) nl.addEventListener('click', e => {
       e.preventDefault(); NawakuDB.goRedirect('newsletter.html');
     });
+  });
+
+  /* ── NAVBAR DROPDOWN: pintasan Beranda / Daftar Kawasan Lain / Tentang / Newsletter ── */
+  const nMoreEl = document.getElementById('nMore');
+  document.getElementById('moreBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    nMoreEl.classList.toggle('open');
+  });
+  document.addEventListener('click', () => nMoreEl.classList.remove('open'));
+
+  document.getElementById('btnGoKawasanList').addEventListener('click', () => {
+    nMoreEl.classList.remove('open');
+    const el = document.getElementById('otherGrid');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  document.getElementById('btnNewsletterKw').addEventListener('click', () => {
+    nMoreEl.classList.remove('open');
+    NawakuDB.goRedirect('newsletter.html');
+  });
+
+  /* ── ABOUT MODAL (dari dropdown "Tentang Nainpedia") ── */
+  function renderAboutModalKw(db) {
+    const s = db.site || {};
+    const st = db.stats || {};
+    document.getElementById('aboutBodyKw').innerHTML = `
+      <div class="about-stat-row">
+        <div class="about-stat"><div class="about-stat-v">${st.articles || 0}+</div><div class="about-stat-l">Artikel</div></div>
+        <div class="about-stat"><div class="about-stat-v">${st.kawasan || 0}</div><div class="about-stat-l">Kawasan</div></div>
+        <div class="about-stat"><div class="about-stat-v">${st.tahun_berdiri || ''}</div><div class="about-stat-l">Berdiri</div></div>
+      </div>
+      <p><strong>${s.name || 'Nainpedia'}</strong> — ${s.description || ''}</p>
+      <p>${s.about_extended || ''}</p>
+    `;
+  }
+  document.getElementById('btnOpenAboutKw').addEventListener('click', () => {
+    nMoreEl.classList.remove('open');
+    document.getElementById('aboutModalKw').classList.add('open');
+  });
+  document.getElementById('btnCloseAboutKw').addEventListener('click', () => {
+    document.getElementById('aboutModalKw').classList.remove('open');
+  });
+  document.getElementById('aboutModalKw').addEventListener('click', (e) => {
+    if (e.target.id === 'aboutModalKw') document.getElementById('aboutModalKw').classList.remove('open');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.getElementById('aboutModalKw').classList.remove('open');
   });
 
   /* Render bacaan tambahan (kw.sections) — jumlah, judul, dan layout tiap section
@@ -341,8 +417,8 @@
   function renderCta(db) {
     const btn = document.getElementById('ctaRequestBtn');
     const email = (db.site && db.site.contact_email) || 'halo@nawaku.com';
-    const subject = encodeURIComponent('Ide Konten untuk Nawaku');
-    const body = encodeURIComponent('Halo tim Nawaku,\n\nSaya punya ide konten tentang: ');
+    const subject = encodeURIComponent('Ide Konten untuk Nainpedia');
+    const body = encodeURIComponent('Halo tim Nainpedia,\n\nSaya punya ide konten tentang: ');
     btn.href = `mailto:${email}?subject=${subject}&body=${body}`;
   }
 
