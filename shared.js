@@ -24,12 +24,33 @@
 
 const NawakuDB = (() => {
   let cache = null;
-  const DB_PATH = 'db.json'; // satu area — semua file sejajar, tidak ada subfolder
+
+  /* Deteksi kedalaman halaman saat ini berdasarkan jumlah segmen path.
+     - index.html, kawasan-*.html, admin.html → 1 segmen → berada di root
+     - namakawasan/judul-artikel.html (artikel baru dari fitur "Buat Artikel") → 2 segmen → 1 level di bawah root
+     Heuristik ini tidak bergantung pada domain/subpath hosting, murni relatif. */
+  function pathDepth() {
+    return window.location.pathname.split('/').filter(Boolean).length;
+  }
+
+  function resolveDbPath() {
+    return pathDepth() > 1 ? '../db.json' : 'db.json';
+  }
+
+  /* Ubah path relatif-dari-root (yang tersimpan di db.json, mis. "kawasan-lemahwungkuk.html"
+     atau "lemahwungkuk/judul-artikel.html") menjadi path yang benar dilihat dari HALAMAN SAAT INI.
+     Dipakai oleh halaman artikel yang hidup di dalam subfolder supaya link ke root
+     (beranda, kawasan lain, artikel lain) tetap benar. Halaman di root tidak terpengaruh. */
+  function relFromHere(path) {
+    if (!path) return path;
+    if (/^https?:\/\//i.test(path) || path.startsWith('/') || path.startsWith('#')) return path;
+    return pathDepth() > 1 ? '../' + path : path;
+  }
 
   async function load(force = false) {
     if (cache && !force) return cache;
     try {
-      const res = await fetch(DB_PATH, { cache: 'no-store' });
+      const res = await fetch(resolveDbPath(), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       cache = await res.json();
       if (!cache.kawasan) cache.kawasan = [];
@@ -136,7 +157,7 @@ const NawakuDB = (() => {
 
   return {
     load, getKawasan, articlesOf, articleCountOf, allArticles, totalArticles,
-    getArticleById, resolveArticles,
+    getArticleById, resolveArticles, relFromHere,
     renderFooter, goRedirect, attachNav, attachNavAll, showToast
   };
 })();
