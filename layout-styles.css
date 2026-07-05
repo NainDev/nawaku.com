@@ -119,3 +119,52 @@
   .footer-cta-inner{flex-direction:column;align-items:flex-start;}
   .footer-cta-btn{width:100%;justify-content:center;}
 }
+
+/* ══════════════════════════════════════
+   LOGO IMAGE (navbar & footer) — menggantikan mark SVG lama,
+   sumbernya dari db.site.logo_navbar / logo_footer via NawakuDB.renderLogos()
+═══════════════════════════════════════════════════ */
+.n-logo-img{height:32px;width:auto;display:block;}
+.ft-logo-img{height:34px;width:auto;display:block;}
+
+/* ══════════════════════════════════════
+   NAVBAR DROPDOWN (pintasan: beranda, daftar kawasan, tentang, dst)
+   Dipakai di halaman kawasan-*.html supaya navbar tidak cuma tombol "Beranda".
+═══════════════════════════════════════════════════ */
+.n-more{position:relative;flex-shrink:0;}
+.n-more-btn{width:38px;height:38px;border-radius:9px;border:1px solid var(--border,#e8e8e8);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.n-more-btn:hover{background:var(--accent-light,#eff4ff);border-color:var(--accent-mid,#bfdbfe);}
+.n-more-btn svg{width:18px;height:18px;color:var(--text2,#444);}
+.n-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border,#e8e8e8);
+  border-radius:13px;min-width:220px;max-width:calc(100vw - 24px);box-shadow:0 10px 36px rgba(0,0,0,.11);
+  padding:7px;display:none;z-index:400;
+}
+.n-more.open .n-dropdown{display:block;}
+.n-dd-sep{height:1px;background:var(--border,#e8e8e8);margin:5px 0;}
+.n-dd-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:500;
+  color:var(--text2,#444);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;
+  width:100%;text-align:left;font-family:'Rubik',sans-serif;
+}
+.n-dd-item:hover{background:var(--accent-light,#eff4ff);color:var(--accent,#2563eb);}
+.n-dd-item svg{width:15px;height:15px;flex-shrink:0;color:var(--muted,#888);}
+.n-dd-item:hover svg{color:var(--accent,#2563eb);}
+.n-dd-label{font-size:11px;font-weight:700;color:var(--muted,#888);letter-spacing:.6px;text-transform:uppercase;padding:8px 12px 4px;}
+.n-dd-badge{margin-left:auto;font-size:10px;background:#f1f5f9;color:#94a3b8;padding:2px 7px;border-radius:99px;font-weight:700;}
+
+/* ── ABOUT MODAL (dipakai dropdown "Tentang Nainpedia") ── */
+.about-modal-overlay{position:fixed;inset:0;z-index:500;display:none;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+.about-modal-overlay.open{display:flex;}
+.about-modal-box{background:#fff;border-radius:20px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.18);overflow:hidden;}
+.about-modal-header{padding:22px 26px 18px;border-bottom:1px solid var(--border,#e8e8e8);display:flex;align-items:center;justify-content:space-between;}
+.about-modal-title{font-size:17px;font-weight:700;color:var(--text,#1a1a1a);}
+.about-modal-close{width:30px;height:30px;border-radius:8px;border:1px solid var(--border,#e8e8e8);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.about-modal-close svg{width:13px;height:13px;color:var(--muted,#888);}
+.about-modal-body{padding:22px 26px 26px;}
+.about-modal-body p{font-size:14px;color:var(--text2,#444);line-height:1.75;margin-bottom:12px;}
+.about-modal-body p:last-child{margin-bottom:0;}
+.about-stat-row{display:flex;gap:10px;margin:14px 0;}
+.about-stat{flex:1;background:var(--accent-light,#eff4ff);border-radius:12px;padding:12px;text-align:center;border:1px solid var(--accent-mid,#bfdbfe);}
+.about-stat-v{font-size:20px;font-weight:800;color:var(--accent,#2563eb);}
+.about-stat-l{font-size:11.5px;color:var(--muted,#888);margin-top:2px;font-weight:500;}
