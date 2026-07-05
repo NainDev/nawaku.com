@@ -179,7 +179,7 @@
   <div class="section-head" id="featuredHead">
     <span class="section-title">Artikel Pilihan</span>
   </div>
-  <div id="featuredSwipe" style="display:none;margin-bottom:32px;"></div>
+  <div id="featuredSwipe" class="featured-swipe-wrap is-hidden" style="margin-bottom:32px;"></div>
 
   <div class="section-head" style="margin-top:8px;">
     <span class="section-title">Semua Artikel</span>
@@ -297,13 +297,8 @@
        ditampilkan sebagai strip yang hanya bisa DIGESER (scroll/drag/sentuh), tanpa tombol panah. */
     const featuredArts = NawakuDB.resolveArticles(db, kw.featured_ids);
     const featuredHead = document.getElementById('featuredHead');
-    if (featuredArts.length) {
-      featuredHead.style.display = 'flex';
-      NawakuLayout.renderSwipe('featuredSwipe', featuredArts, kw.name);
-    } else {
-      featuredHead.style.display = 'none';
-      document.getElementById('featuredSwipe').style.display = 'none';
-    }
+    featuredHead.style.display = featuredArts.length ? 'flex' : 'none';
+    NawakuLayout.renderSwipe('featuredSwipe', featuredArts, kw.name);
 
     // "Semua Artikel" tetap menampilkan seluruh artikel kawasan ini (di luar featured_ids tidak difilter,
     // supaya artikel tetap bisa ditemukan meski juga tampil di strip pilihan)
