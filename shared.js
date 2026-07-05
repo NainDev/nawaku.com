@@ -102,16 +102,27 @@ const NawakuDB = (() => {
   function fallbackData() {
     return {
       site: {
-        name: 'Nawaku',
+        name: 'Nainpedia',
         tagline: 'Mengabadikan sejarah setiap sudut Kota Cirebon.',
-        description: 'Nawaku adalah ruang baca digital yang mengabadikan sejarah Cirebon.',
+        description: 'Nainpedia adalah ruang baca digital yang mengabadikan sejarah Cirebon.',
         about_extended: 'Dikelola oleh tim jurnalis dan peneliti sejarah lokal.',
-        year_founded: 2023
+        year_founded: 2023,
+        contact_email: 'halo@nainpedia.com',
+        logo_navbar: 'https://files.catbox.moe/kyis3u.png',
+        logo_footer: 'https://files.catbox.moe/t7uknp.png'
       },
       stats: { articles: 0, kawasan: 0, tahun_berdiri: 2023 },
       kawasan: [],
       articles: []
     };
+  }
+
+  /* Set logo navbar & footer dari db.site (dipanggil selain renderFooter, supaya
+     bisa dipakai di halaman yang belum tentu punya elemen footer, mis. saat testing) */
+  function renderLogos(db) {
+    const s = db.site || {};
+    document.querySelectorAll('.n-logo-img').forEach(img => { if (s.logo_navbar) img.src = s.logo_navbar; });
+    document.querySelectorAll('.ft-logo-img').forEach(img => { if (s.logo_footer) img.src = s.logo_footer; });
   }
 
   /* ── RENDER FOOTER (dipakai semua halaman) ── */
@@ -122,8 +133,9 @@ const NawakuDB = (() => {
     if (descEl) descEl.textContent = s.tagline || '';
     if (copyEl) {
       const year = new Date().getFullYear();
-      copyEl.textContent = `© ${s.year_founded || year}–${year} ${s.name || 'Nawaku'}.com — ${s.tagline || ''}`;
+      copyEl.textContent = `© ${s.year_founded || year}–${year} ${s.name || 'Nainpedia'}.com — ${s.tagline || ''}`;
     }
+    renderLogos(db);
   }
 
   /* ── REDIRECT OVERLAY (dipakai semua halaman) ── */
@@ -158,6 +170,6 @@ const NawakuDB = (() => {
   return {
     load, getKawasan, articlesOf, articleCountOf, allArticles, totalArticles,
     getArticleById, resolveArticles, relFromHere,
-    renderFooter, goRedirect, attachNav, attachNavAll, showToast
+    renderFooter, renderLogos, goRedirect, attachNav, attachNavAll, showToast
   };
 })();
