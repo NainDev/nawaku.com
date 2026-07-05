@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Admin — Kelola Database Nawaku</title>
+<title>Admin — Kelola Database Nainpedia</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -46,11 +46,12 @@ body.dark .navbar{background:rgba(23,26,33,.97);}
 }
 
 /* LAYOUT */
-.wrap{max-width:1280px;margin:0 auto;padding:24px 20px 90px;display:grid;grid-template-columns:280px 1fr;gap:20px;min-width:0;}
+.wrap{max-width:1280px;margin:0 auto;padding:24px 20px 90px;display:grid;grid-template-columns:280px 1fr;gap:20px;min-width:0;overflow-x:hidden;}
 @media(max-width:880px){.wrap{grid-template-columns:1fr;}}
 @media(max-width:600px){
   .wrap{padding:14px 12px 90px;gap:14px;}
 }
+#mainArea{overflow-x:hidden;}
 
 /* CARD */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
@@ -91,8 +92,15 @@ body.dark .navbar{background:rgba(23,26,33,.97);}
 
 /* SIDEBAR KAWASAN LIST */
 .search-box{position:relative;margin-bottom:12px;}
-.search-box input{padding-left:32px;}
+.search-box input{padding-left:32px;padding-right:32px;}
 .search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--muted);}
+.search-clear-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:none;background:var(--bg);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.search-clear-btn:hover{background:var(--danger-light);color:var(--danger);}
+.search-clear-btn svg{position:static;width:11px;height:11px;transform:none;}
+.search-result-info{font-size:12px;color:var(--muted);margin:-6px 0 10px;font-weight:500;}
+.search-result-info strong{color:var(--text);}
+mark.search-hl{background:#fef08a;color:inherit;border-radius:2px;padding:0 1px;}
+body.dark mark.search-hl{background:#7c6a1a;color:#fef9c3;}
 .kawasan-list{display:flex;flex-direction:column;gap:6px;max-height:calc(100vh - 340px);overflow-y:auto;}
 .kawasan-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:9px;cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
 .kawasan-item:hover{background:var(--bg);}
@@ -273,6 +281,31 @@ body.dark .locked-overlay{background:rgba(15,17,21,.7);}
 
   .kawasan-list{max-height:260px;}
 
+  /* ── PROTEKSI TAMBAHAN: cegah elemen keluar dari layar saat dibuka/diklik ── */
+  /* grid & flex children punya min-width:auto secara default, yang bisa memaksa
+     kontainer melebar melewati layar kalau isinya teks/URL panjang tak terputus.
+     Set 0 supaya mereka mengikuti lebar layar, bukan lebar konten. */
+  .wrap, #mainArea, .card, .kawasan-header, .kh-actions, .art-toolbar,
+  .art-actions, .art-actions-right, .json-actions, .field-row, .field-row3,
+  .seg, .stats-row, .stats-row2, .section-editor-head, .search-box,
+  .filter-chips, .n-status, .kawasan-item, .art-item-head, .art-info,
+  .checkbox-row, .about-stat-row, .about-stat{
+    min-width:0;
+  }
+
+  /* teks/URL panjang tanpa spasi (link gambar, path file) dipaksa patah baris
+     alih-alih mendorong lebar kontainer keluar layar */
+  .hint, .card-ttl, .badge-soft, .layout-pill, .ki-name, .ov-name,
+  .art-picker-badge, .kh-id, .ov-table code{
+    overflow-wrap:anywhere;word-break:break-word;
+  }
+
+  input, textarea, select{max-width:100%;}
+
+  .checkbox-row{align-items:flex-start;}
+  .checkbox-row label{overflow-wrap:anywhere;}
+
+
   .json-preview{font-size:10.5px;max-height:240px;}
 
   .footer-cta-inner,.footer-kawasan-grid{gap:8px;}
@@ -283,13 +316,7 @@ body.dark .locked-overlay{background:rgba(15,17,21,.7);}
 
 <nav class="navbar">
   <a class="n-logo" href="#">
-    <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
-      <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
-      <defs><linearGradient id="lg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
-    </svg>
-    <span class="n-logo-txt">Nawaku</span>
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia" style="height:28px;width:auto;"/>
   </a>
   <span class="n-badge">Admin Database</span>
   <div class="n-status" id="connStatus">
@@ -460,7 +487,7 @@ body.dark .locked-overlay{background:rgba(15,17,21,.7);}
       <div class="hint" style="margin-bottom:14px;">
         Mengisi form ini akan membuat 1 file HTML artikel baru secara otomatis di repo GitHub pada path
         <code id="caPathPreview">namakawasan/judul-artikel.html</code>, lalu menambahkannya ke db.json dan langsung menyimpan keduanya.
-        Versi ini masih tester: dukungan konten sebatas judul + beberapa bagian (heading &amp; paragraf), kotak info opsional, dan kartu lokasi opsional — belum mendukung linimasa/galeri gambar berpasangan.
+        Versi ini masih tester: tiap bagian bisa diisi judul + paragraf, dan opsional 1 gambar 16:9 beserta keterangan singkatnya di bawahnya. Juga tersedia kotak info dan kartu lokasi opsional — belum mendukung linimasa (timeline) atau galeri gambar berpasangan.
       </div>
 
       <div class="field">
@@ -614,10 +641,14 @@ body.dark .locked-overlay{background:rgba(15,17,21,.7);}
         <div class="art-toolbar">
           <div class="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="artSearch" placeholder="Cari artikel di kawasan ini…"/>
+            <input type="text" id="artSearch" placeholder="Cari judul artikel di kawasan ini…"/>
+            <button class="search-clear-btn" id="artSearchClear" type="button" style="display:none;" aria-label="Hapus pencarian">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
           </div>
           <button class="btn btn-outline btn-sm" id="btnSortArt" title="Urutkan berdasarkan tanggal terbaru">Urutkan Tanggal</button>
         </div>
+        <div class="search-result-info" id="artSearchInfo" style="display:none;"></div>
         <div class="art-list" id="artList"></div>
         <button class="add-art-btn" id="btnAddArt">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -1363,7 +1394,7 @@ $('btnAddSection').addEventListener('click', () => {
    ditambahkan ke DB.articles → db.json ikut disimpan (auto), semua dalam
    satu klik "Buat & Simpan ke GitHub".
 ══════════════════════════════════════ */
-let caSections = []; // {heading, paragraph}
+let caSections = []; // {heading, paragraph, image, imageCaption}
 
 $('btnShowCreateArticle').addEventListener('click', () => {
   if (!DB) { showToast('Hubungkan database dulu', true); return; }
@@ -1393,7 +1424,7 @@ function resetCreateArticleForm() {
   $('caLocMaps').value = '';
   $('caTags').value = '';
   $('caError').style.display = 'none';
-  caSections = [{ heading:'', paragraph:'' }];
+  caSections = [{ heading:'', paragraph:'', image:'', imageCaption:'' }];
   renderCaSections();
   updateCaSlugPreview();
 }
@@ -1420,6 +1451,8 @@ function renderCaSections() {
       </div>
       <div class="field"><label>Judul Bagian (H2)</label><input type="text" data-caf="heading" value="${escapeAttr(s.heading)}" placeholder="mis. Awal Pendirian"/></div>
       <div class="field"><label>Paragraf</label><textarea data-caf="paragraph" placeholder="Isi paragraf untuk bagian ini…">${escapeHtml(s.paragraph)}</textarea></div>
+      <div class="field"><label>Gambar 16:9 di Tengah Artikel (opsional)</label><input type="text" data-caf="image" value="${escapeAttr(s.image)}" placeholder="https://... — tampil setelah paragraf bagian ini"/></div>
+      <div class="field"><label>Keterangan Singkat Gambar (opsional)</label><input type="text" data-caf="imageCaption" value="${escapeAttr(s.imageCaption)}" placeholder="mis. Kawasan Lemahwungkuk — jantung kota lama Cirebon…"/></div>
     </div>
   `).join('');
 
@@ -1438,9 +1471,10 @@ function renderCaSections() {
 }
 
 $('caAddSection').addEventListener('click', () => {
-  caSections.push({ heading:'', paragraph:'' });
+  caSections.push({ heading:'', paragraph:'', image:'', imageCaption:'' });
   renderCaSections();
 });
+
 
 $('caHasInfoBox').addEventListener('change', () => {
   $('caInfoBoxFields').style.display = $('caHasInfoBox').checked ? 'block' : 'none';
@@ -1460,9 +1494,16 @@ function caShowError(msg) {
    karena file ini akan hidup di dalam subfolder namakawasan/. */
 function buildArticleHTML(data) {
   const esc = escapeHtml;
-  const sectionsHTML = data.sections.map(s => `
+  const sectionsHTML = data.sections.map(s => {
+    const imgBlock = s.image ? `
+    <div class="img-wrap">
+      <img src="${esc(s.image)}" alt="${esc(s.heading || data.title)}" loading="lazy"/>
+      ${s.imageCaption ? `<div class="img-cap">${esc(s.imageCaption)}</div>` : ''}
+    </div>` : '';
+    return `
     <h2>${esc(s.heading || 'Bagian')}</h2>
-    <p>${esc(s.paragraph || '')}</p>`).join('\n');
+    <p>${esc(s.paragraph || '')}</p>${imgBlock}`;
+  }).join('\n');
 
   const infoBoxHTML = data.hasInfoBox ? `
     <div class="info-box">
@@ -1492,7 +1533,7 @@ function buildArticleHTML(data) {
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>${esc(data.title)} — Nawaku</title>
+<title>${esc(data.title)} — Nainpedia</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../article-styles.css"/>
 <style>
@@ -1510,8 +1551,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;}
 .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
-.logo-mark{width:34px;height:34px;flex-shrink:0;}
-.n-logo-txt{font-weight:800;font-size:18px;color:#1a1a1a;letter-spacing:-.3px;}
+.n-logo-img{height:32px;width:auto;display:block;}
 .n-spacer{flex:1;}
 .n-home-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;cursor:pointer;}
 .n-home-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
@@ -1520,7 +1560,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .footer-main{max-width:740px;margin:0 auto;padding:40px 20px 32px;display:flex;align-items:flex-start;gap:48px;}
 .ft-brand-col{flex:1;}
 .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.ft-name{font-weight:800;font-size:18px;color:#fff;}
+.ft-logo-img{height:34px;width:auto;display:block;}
 .ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;margin-bottom:18px;max-width:280px;}
 .ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
 .ft-col-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;}
@@ -1544,13 +1584,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <nav class="navbar">
   <a class="n-logo" href="../index.html" data-nav>
-    <svg class="logo-mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="34" height="34" rx="10" fill="url(#lg1)"/>
-      <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
-      <defs><linearGradient id="lg1" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
-    </svg>
-    <span class="n-logo-txt">Nawaku</span>
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
   </a>
   <div class="n-spacer"></div>
   <a class="n-home-btn" href="../index.html" data-nav>
@@ -1610,24 +1644,18 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="footer-main">
     <div class="ft-brand-col">
       <div class="ft-brand">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-          <rect width="34" height="34" rx="10" fill="url(#lg2)"/>
-          <path d="M8 22 L12 11 L17 19 L22 11 L26 22" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <circle cx="17" cy="24.5" r="1.5" fill="white" opacity=".7"/>
-          <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
-        </svg>
-        <span class="ft-name">Nawaku</span>
+        <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
       </div>
       <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
     </div>
     <div class="ft-right">
-      <div class="ft-col-ttl">Nawaku</div>
+      <div class="ft-col-ttl">Nainpedia</div>
       <a class="ft-col-link" href="../index.html" data-nav>Beranda</a>
       <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="fb-copy" id="ftCopy">© Nawaku.com</span>
+    <span class="fb-copy" id="ftCopy">© Nainpedia.com</span>
     <span class="fb-badge">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
       Dibuat dengan penuh semangat
