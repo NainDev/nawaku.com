@@ -8,7 +8,7 @@
     "contact_email": "halo@nawaku.com"
   },
   "stats": {
-    "articles": 9,
+    "articles": 11,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -116,7 +116,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 4,
+      "article_count": 6,
       "url": "kawasan-lemahwungkuk.html",
       "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "masonry",
@@ -237,6 +237,28 @@
       "read_time": 5,
       "img": "",
       "url": "tes.html"
+    },
+    {
+      "id": "tes-aja",
+      "title": "tes aja",
+      "excerpt": "",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "",
+      "read_time": 5,
+      "img": "",
+      "url": "tes-aja.html"
+    },
+    {
+      "id": "tes-aja-inimah",
+      "title": "Tes aja inimah",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "5 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "url": "lemahwungkuk/tes-aja-inimah.html",
+      "excerpt": "ini tag awal"
     }
   ]
 }
