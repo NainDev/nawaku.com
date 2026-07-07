@@ -723,6 +723,15 @@ body.dark .locked-overlay{background:rgba(15,17,21,.7);}
       <div class="section-sep"></div>
       <div class="field"><label>Tag/Label (pisahkan dengan koma)</label><input type="text" id="caTags" placeholder="GedungBAT, CagarBudaya, ArtDeco"/></div>
 
+      <div class="section-sep"></div>
+      <div class="card-ttl" style="margin-bottom:8px;">Artikel Terkait</div>
+      <div class="hint" style="margin-bottom:10px;">Pilih artikel yang ditampilkan di bagian "Artikel Terkait" pada akhir halaman. Kalau tidak dipilih, sistem otomatis menampilkan 4 artikel terbaru.</div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="caRelatedSearch" placeholder="Cari artikel untuk dijadikan Artikel Terkait…"/>
+      </div>
+      <div class="art-picker-list" id="caRelatedPicker"></div>
+
       <div class="field-row">
         <div class="field"><label>ID/Slug Artikel (otomatis dari judul)</label><input type="text" id="caSlug" readonly/></div>
         <div class="field"><label>Path File di Repo (otomatis)</label><input type="text" id="caPath" readonly/></div>
@@ -1508,8 +1517,8 @@ $('btnDeleteKawasan').addEventListener('click', () => {
 });
 
 /* ══════════════════════════════════════
-   ARTIKEL PILIHAN (featured_ids) — checklist artikel lintas kawasan,
-   dirender jadi strip geser tanpa tombol di halaman publik.
+   ARTIKEL PILIHAN (featured_ids) — checklist artikel HANYA dari kawasan ini
+   (bukan lintas kawasan lagi), dirender jadi strip geser tanpa tombol.
 ══════════════════════════════════════ */
 $('featuredSearch').addEventListener('input', renderFeaturedPicker);
 
@@ -1517,10 +1526,16 @@ function renderFeaturedPicker() {
   const k = getActiveKawasan();
   if (!k) return;
   if (!Array.isArray(k.featured_ids)) k.featured_ids = [];
+  const ownIds = articlesOf(k.id).map(a => a.id);
+  k.featured_ids = k.featured_ids.filter(id => ownIds.includes(id));
   const q = ($('featuredSearch').value || '').toLowerCase().trim();
-  const list = DB.articles.filter(a => !q || (a.title||'').toLowerCase().includes(q));
+  const list = articlesOf(k.id).filter(a => !q || (a.title||'').toLowerCase().includes(q));
   const wrap = $('featuredPicker');
 
+  if (!articlesOf(k.id).length) {
+    wrap.innerHTML = '<div class="empty-note">Kawasan ini belum punya artikel. Tambahkan artikel dulu di daftar Artikel di bawah.</div>';
+    return;
+  }
   if (!list.length) {
     wrap.innerHTML = '<div class="empty-note">Tidak ada artikel yang cocok dengan pencarian.</div>';
     return;
@@ -1530,7 +1545,6 @@ function renderFeaturedPicker() {
       <input type="checkbox" data-aid="${escapeAttr(a.id)}" ${k.featured_ids.includes(a.id)?'checked':''}/>
       <img class="art-picker-thumb" src="${a.img||''}" onerror="this.style.visibility='hidden'" alt=""/>
       <span class="art-picker-title">${escapeHtml(a.title||'(tanpa judul)')}</span>
-      <span class="art-picker-badge">${escapeHtml(a.kawasan_name||'')}</span>
     </label>
   `).join('');
 
@@ -1672,6 +1686,7 @@ $('btnAddSection').addEventListener('click', () => {
    satu klik "Buat & Simpan ke GitHub".
 ══════════════════════════════════════ */
 let caSections = []; // {heading, paragraph, image, imageCaption}
+let caRelatedIds = []; // id artikel terkait yang dipilih manual
 
 $('btnShowCreateArticle').addEventListener('click', () => {
   if (!DB) { showToast('Hubungkan database dulu', true); return; }
@@ -1702,8 +1717,43 @@ function resetCreateArticleForm() {
   $('caTags').value = '';
   $('caError').style.display = 'none';
   caSections = [{ heading:'', paragraph:'', image:'', imageCaption:'' }];
+  caRelatedIds = [];
+  $('caRelatedSearch').value = '';
   renderCaSections();
+  renderCaRelatedPicker();
   updateCaSlugPreview();
+}
+
+$('caRelatedSearch').addEventListener('input', renderCaRelatedPicker);
+
+function renderCaRelatedPicker() {
+  const q = ($('caRelatedSearch').value || '').toLowerCase().trim();
+  const list = DB.articles.filter(a => !q || (a.title||'').toLowerCase().includes(q));
+  const wrap = $('caRelatedPicker');
+
+  if (!list.length) {
+    wrap.innerHTML = '<div class="empty-note">Tidak ada artikel yang cocok dengan pencarian.</div>';
+    return;
+  }
+  wrap.innerHTML = list.map(a => `
+    <label class="art-picker-item">
+      <input type="checkbox" data-aid="${escapeAttr(a.id)}" ${caRelatedIds.includes(a.id)?'checked':''}/>
+      <img class="art-picker-thumb" src="${a.img||''}" onerror="this.style.visibility='hidden'" alt=""/>
+      <span class="art-picker-title">${escapeHtml(a.title||'(tanpa judul)')}</span>
+      <span class="art-picker-badge">${escapeHtml(a.kawasan_name||'')}</span>
+    </label>
+  `).join('');
+
+  wrap.querySelectorAll('input[data-aid]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const id = cb.dataset.aid;
+      if (cb.checked) {
+        if (!caRelatedIds.includes(id)) caRelatedIds.push(id);
+      } else {
+        caRelatedIds = caRelatedIds.filter(x => x !== id);
+      }
+    });
+  });
 }
 
 $('caTitle').addEventListener('input', updateCaSlugPreview);
@@ -1818,6 +1868,8 @@ function buildArticleHTML(data) {
 :root{--bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;--border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;}
 html{scroll-behavior:smooth;}
 body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.rp{position:fixed;top:60px;left:0;right:0;height:2px;z-index:299;background:rgba(0,0,0,.04);}
+.rp-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#1d4ed8);width:0%;transition:width .1s;}
 .redirect-overlay{position:fixed;inset:0;background:rgba(255,255,255,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .2s;}
 .redirect-overlay.show{opacity:1;pointer-events:all;}
 .redirect-spinner{width:42px;height:42px;border:3px solid var(--accent-mid);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:16px;}
@@ -1861,9 +1913,12 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 </div>
 <div class="toast" id="toast"></div>
 
+<div class="rp"><div class="rp-bar" id="rbar"></div></div>
+
 <nav class="navbar">
   <a class="n-logo" href="../index.html" data-nav>
     <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
+    <span class="n-logo-brand">NAINPEDIA</span>
   </a>
   <div class="n-spacer"></div>
   <a class="n-home-btn" href="../index.html" data-nav>
@@ -1908,8 +1963,18 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
     <div class="share-row">
       <span class="share-lbl">Bagikan:</span>
-      <a class="sh-btn" href="#" id="btn-wa" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-      <a class="sh-btn" href="#" id="sh-copy" title="Salin tautan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);width:15px;height:15px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></a>
+      <a class="sh-btn" href="#" id="btn-twitter" title="X">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#000;width:15px;height:15px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a class="sh-btn" href="#" id="btn-wa" title="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a class="sh-btn" href="#" id="btn-fb" title="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1877F2;width:15px;height:15px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a class="sh-btn" href="#" id="sh-copy" title="Salin tautan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);width:15px;height:15px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      </a>
     </div>
   </div>
 
@@ -1924,6 +1989,7 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="ft-brand-col">
       <div class="ft-brand">
         <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
+        <span class="ft-logo-brand">NAINPEDIA</span>
       </div>
       <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
     </div>
@@ -1946,6 +2012,14 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 <script>
   const CURRENT_ARTICLE_ID = ${JSON.stringify(data.id)};
   const CURRENT_KAWASAN_ID = ${JSON.stringify(data.kawasanId)};
+  const RELATED_IDS = ${JSON.stringify(data.relatedIds || [])};
+
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const bar = document.getElementById('rbar');
+    const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+    bar.style.width = (isFinite(pct) ? pct : 0) + '%';
+  });
 
   NawakuDB.load().then(db => {
     NawakuDB.renderFooter(db);
@@ -1954,7 +2028,13 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     const bcEl = document.getElementById('bcKawasan');
     if (kw) bcEl.addEventListener('click', () => NawakuDB.goRedirect(NawakuDB.relFromHere(kw.url)));
 
-    const related = (db.articles || []).filter(a => a.id !== CURRENT_ARTICLE_ID).slice(0, 4);
+    let related;
+    if (RELATED_IDS.length) {
+      related = RELATED_IDS.map(id => (db.articles||[]).find(a => a.id === id)).filter(Boolean);
+    } else {
+      related = (db.articles || []).filter(a => a.id !== CURRENT_ARTICLE_ID).slice(0, 4);
+    }
+
     document.getElementById('relatedGrid').innerHTML = related.map(a => \`
       <a class="rel-item" href="\${NawakuDB.relFromHere(a.url)}" data-nav>
         <img class="rel-img" src="\${a.img||''}" alt=""/>
@@ -1972,9 +2052,17 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
     if (nl) nl.addEventListener('click', e => { e.preventDefault(); NawakuDB.goRedirect(NawakuDB.relFromHere('newsletter.html')); });
   });
 
+  document.getElementById('btn-twitter').addEventListener('click', e => {
+    e.preventDefault();
+    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + '&url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+  });
   document.getElementById('btn-wa').addEventListener('click', e => {
     e.preventDefault();
     window.open('https://wa.me/?text=' + encodeURIComponent(document.title + '\\n\\n' + window.location.href), '_blank');
+  });
+  document.getElementById('btn-fb').addEventListener('click', e => {
+    e.preventDefault();
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
   });
   document.getElementById('sh-copy').addEventListener('click', e => {
     e.preventDefault();
@@ -2048,7 +2136,8 @@ $('btnCreateArticleSubmit').addEventListener('click', async () => {
     locAddress: $('caLocAddress').value.trim(),
     locHours: $('caLocHours').value.trim(),
     locMaps: $('caLocMaps').value.trim(),
-    tags
+    tags,
+    relatedIds: caRelatedIds.slice()
   };
 
   const html = buildArticleHTML(data);
@@ -2069,7 +2158,8 @@ $('btnCreateArticleSubmit').addEventListener('click', async () => {
       read_time: data.readTime,
       img: heroImg,
       url: path,
-      excerpt: lead.length > 160 ? lead.slice(0, 157) + '…' : lead
+      excerpt: lead.length > 160 ? lead.slice(0, 157) + '…' : lead,
+      related_ids: caRelatedIds.slice()
     });
 
     logActivity(`Artikel baru dibuat: ${title} (${path})`);
