@@ -23,7 +23,9 @@
       "url": "kasepuhan.html",
       "hero_image": "",
       "layout": "grid",
-      "featured_ids": [],
+      "featured_ids": [
+        "keraton-kasepuhan"
+      ],
       "sections": []
     },
     {
