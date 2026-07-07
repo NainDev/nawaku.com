@@ -20,13 +20,10 @@
       "name": "Kasepuhan",
       "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan.",
       "article_count": 1,
-      "url": "kawasan-kasepuhan.html",
+      "url": "kasepuhan.html",
       "hero_image": "",
       "layout": "grid",
-      "featured_ids": [
-        "awal-mula-daerah-plumbon",
-        "keraton-kanoman"
-      ],
+      "featured_ids": [],
       "sections": []
     },
     {
