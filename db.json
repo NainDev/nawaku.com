@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 12,
+    "articles": 13,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -120,7 +120,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 6,
+      "article_count": 7,
       "url": "lemahwungkuk.html",
       "hero_image": "https://files.catbox.moe/cj5l0y.webp",
       "layout": "masonry",
@@ -270,6 +270,21 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "url": "plumbon/awal-mula-daerah-plumbon.html",
       "excerpt": "Sejarah lengkap: Awal Mula Daerah plumbon didirikan"
+    },
+    {
+      "id": "sejarah-dan-transformasi-stasiun-cirebon-prujakan",
+      "title": "Sejarah dan Transformasi Stasiun Cirebon Prujakan",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "9 Juli 2026",
+      "read_time": 6,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "url": "lemahwungkuk/sejarah-dan-transformasi-stasiun-cirebon-prujakan.html",
+      "excerpt": "Stasiun Cirebon Prujakan (CNP) merupakan stasiun kereta api kelas besar tipe A yang terletak di Pekalipan, Kota Cirebon. Stasiun ini memegang peran krusial d…",
+      "related_ids": [
+        "gedung-bat",
+        "lemahwungkuk-kota"
+      ]
     }
   ]
 }
