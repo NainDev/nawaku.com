@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 13,
+    "articles": 12,
     "kawasan": 10,
     "tahun_berdiri": 2023
   },
@@ -120,7 +120,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 7,
+      "article_count": 6,
       "url": "lemahwungkuk.html",
       "hero_image": "https://files.catbox.moe/cj5l0y.webp",
       "layout": "masonry",
@@ -270,21 +270,6 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "url": "plumbon/awal-mula-daerah-plumbon.html",
       "excerpt": "Sejarah lengkap: Awal Mula Daerah plumbon didirikan"
-    },
-    {
-      "id": "tes-ya",
-      "title": "Tes ya",
-      "kawasan_id": "lemahwungkuk",
-      "kawasan_name": "Lemahwungkuk",
-      "date": "9 Juli 2026",
-      "read_time": 5,
-      "img": "https://files.catbox.moe/cj5l0y.webp",
-      "url": "lemahwungkuk/tes-ya.html",
-      "excerpt": "Hshsjsbs",
-      "related_ids": [
-        "keraton-kanoman",
-        "syalwa"
-      ]
     }
   ]
 }
