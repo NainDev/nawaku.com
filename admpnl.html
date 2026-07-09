@@ -2453,7 +2453,113 @@ function buildKawasanHTML(kwId, kwName) {
 </html>`;
 }
 
-/* ════ EVENT LISTENER TOMBOL BUAT HTML KAWASAN ════ */
+/* ══════════════════════════════════════
+   FUNGSI MEMBUAT FILE BARU DI GITHUB
+══════════════════════════════════════ */
+async function createFileOnGithub(path, contentStr, message) {
+  const content = btoa(unescape(encodeURIComponent(contentStr)));
+  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${GH.token}`,
+      'Accept': 'application/vnd.github+json'
+    },
+    body: JSON.stringify({ message, content, branch: GH.branch })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+$('btnCreateArticleSubmit').addEventListener('click', async () => {
+  $('caError').style.display = 'none';
+
+  const kawasanId = $('caKawasan').value;
+  const kw = DB.kawasan.find(k => k.id === kawasanId);
+  const title = $('caTitle').value.trim();
+  const slug = slugify(title);
+  const heroImg = $('caHeroImg').value.trim();
+  const lead = $('caLead').value.trim();
+  const sectionsFilled = caSections.filter(s => (s.heading||'').trim() || (s.paragraph||'').trim());
+
+  if (!kw) return caShowError('Pilih kawasan terlebih dahulu.');
+  if (!title) return caShowError('Judul artikel wajib diisi.');
+  if (!slug) return caShowError('Judul tidak menghasilkan slug yang valid, coba judul lain.');
+  if (!heroImg) return caShowError('URL gambar hero wajib diisi.');
+  if (!lead) return caShowError('Ringkasan/lead paragraph wajib diisi.');
+  if (!sectionsFilled.length) return caShowError('Isi minimal 1 bagian konten (heading + paragraf).');
+
+  const path = `${kawasanId}/${slug}.html`;
+  if (DB.articles.some(a => a.id === slug)) return caShowError(`Slug "${slug}" sudah dipakai artikel lain. Ubah judul sedikit.`);
+  if (DB.articles.some(a => a.url === path)) return caShowError(`Path "${path}" sudah dipakai artikel lain.`);
+
+  const tags = ($('caTags').value || '').split(',').map(t => t.trim()).filter(Boolean);
+  const infoBullets = ($('caInfoBullets').value || '').split('\n').map(t => t.trim()).filter(Boolean);
+
+  const data = {
+    id: slug,
+    title,
+    kawasanId,
+    kawasanName: kw.name,
+    date: $('caDate').value.trim() || new Date().toLocaleDateString('id-ID'),
+    readTime: parseInt($('caReadTime').value) || 5,
+    heroImg,
+    heroTag: $('caHeroTag').value.trim(),
+    lead,
+    sections: sectionsFilled,
+    hasInfoBox: $('caHasInfoBox').checked,
+    infoTitle: $('caInfoTitle').value.trim(),
+    infoBullets,
+    hasLocation: $('caHasLocation').checked,
+    locAddress: $('caLocAddress').value.trim(),
+    locHours: $('caLocHours').value.trim(),
+    locMaps: $('caLocMaps').value.trim(),
+    tags,
+    relatedIds: caRelatedIds.slice()
+  };
+
+  const html = buildArticleHTML(data);
+  const btn = $('btnCreateArticleSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Membuat file di GitHub…';
+
+  try {
+    await createFileOnGithub(path, html, `Tambah artikel baru: ${title}`);
+
+    DB.articles.push({
+      id: slug,
+      title,
+      kawasan_id: kawasanId,
+      kawasan_name: kw.name,
+      date: data.date,
+      read_time: data.readTime,
+      img: heroImg,
+      url: path,
+      excerpt: lead.length > 160 ? lead.slice(0, 157) + '…' : lead,
+      related_ids: caRelatedIds.slice()
+    });
+
+    logActivity(`Artikel baru dibuat: ${title} (${path})`);
+    showToast('File artikel dibuat, menyimpan db.json…');
+
+    await saveToGithub();
+
+    $('createArticleCard').style.display = 'none';
+    renderKawasanList();
+    if (activeKawasanId === kawasanId) renderArticles(getActiveKawasan());
+    showToast(`Artikel "${title}" berhasil dibuat & disimpan!`);
+  } catch (e) {
+    caShowError('Gagal membuat file: ' + e.message);
+    showToast('Gagal membuat artikel: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Buat &amp; Simpan ke GitHub`;
+  }
+});
+
+/* ════ SYSTEM EVENT LISTENER TOMBOL BUAT HTML KAWASAN BARU ════ */
 $('btnGenerateKawasanHtml').addEventListener('click', async () => {
   const k = getActiveKawasan();
   if (!k) return;
@@ -2477,6 +2583,154 @@ $('btnGenerateKawasanHtml').addEventListener('click', async () => {
     btn.disabled = false;
     btn.innerHTML = originalText;
   }
+});
+
+/* ══════════════════════════════════════
+   ARTICLES (+ sort baru)
+══════════════════════════════════════ */
+$('btnSortArt').addEventListener('click', () => {
+  artSortDesc = !artSortDesc;
+  $('btnSortArt').textContent = artSortDesc ? 'Urutkan: Terbaru dulu' : 'Urutkan Tanggal';
+  const k = getActiveKawasan();
+  if (k) renderArticles(k);
+});
+
+function renderArticles(k) {
+  const wrap = $('artList');
+  const q = ($('artSearch').value || '').toLowerCase().trim();
+  let all = articlesOf(k.id);
+  $('artCountBadge').textContent = all.length;
+
+  let list = all.filter(a => !q || (a.title||'').toLowerCase().includes(q));
+  if (artSortDesc) {
+    list = [...list].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  }
+
+  if (!all.length) {
+    wrap.innerHTML = '<div class="empty-note">Belum ada artikel di kawasan ini. Klik "Tambah Artikel Baru" di bawah.</div>';
+    return;
+  }
+  if (!list.length) {
+    wrap.innerHTML = '<div class="empty-note">Tidak ada artikel yang cocok dengan pencarian.</div>';
+    return;
+  }
+
+  wrap.innerHTML = list.map((a) => {
+    const realIdx = DB.articles.indexOf(a);
+    return `
+    <div class="art-item" data-idx="${realIdx}">
+      <div class="art-item-head">
+        <img class="art-thumb" src="${a.img||''}" onerror="this.style.visibility='hidden'" alt=""/>
+        <div class="art-info">
+          <div class="art-title">${escapeHtml(a.title||'(tanpa judul)')}</div>
+          <div class="art-meta">${escapeHtml(a.date||'-')} · ${a.read_time||0} menit baca</div>
+        </div>
+        <svg class="art-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="art-item-body">
+        <div class="field"><label>Judul</label><input type="text" data-f="title" value="${escapeAttr(a.title)}"/></div>
+        <div class="field"><label>Ringkasan (excerpt)</label><textarea data-f="excerpt">${escapeHtml(a.excerpt||'')}</textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Tanggal</label><input type="text" data-f="date" placeholder="17 Mei 2025" value="${escapeAttr(a.date)}"/></div>
+          <div class="field"><label>Waktu Baca (menit)</label><input type="number" data-f="read_time" value="${a.read_time||''}"/></div>
+        </div>
+        <div class="field"><label>URL Gambar</label><input type="text" data-f="img" value="${escapeAttr(a.img)}"/></div>
+        <div class="field"><label>URL Halaman Artikel</label><input type="text" data-f="url" value="${escapeAttr(a.url)}"/></div>
+        <div class="field"><label>ID Artikel (slug, otomatis)</label><input type="text" data-f="id" value="${escapeAttr(a.id)}"/></div>
+        <div class="art-actions">
+          <button class="btn btn-danger btn-sm" data-action="delete-art">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Hapus Artikel
+          </button>
+          <div class="art-actions-right">
+            <button class="btn btn-outline btn-sm" data-action="move-art">Pindah ke Kawasan Lain</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;}).join('');
+
+  wrap.querySelectorAll('.art-item-head').forEach(head=>{
+    head.addEventListener('click', () => head.closest('.art-item').classList.toggle('open'));
+  });
+
+  wrap.querySelectorAll('.art-item').forEach(item => {
+    const idx = parseInt(item.dataset.idx);
+    item.querySelectorAll('[data-f]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const field = inp.dataset.f;
+        let val = inp.value;
+        if (field === 'read_time') val = parseInt(val) || 0;
+        DB.articles[idx][field] = val;
+        if (field === 'title' || field === 'date' || field === 'read_time' || field === 'img') {
+          updateArtHeadDisplay(item, DB.articles[idx]);
+        }
+      });
+    });
+    item.querySelector('[data-action="delete-art"]').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const art = DB.articles[idx];
+      if (!confirm(`Hapus artikel "${art.title}"?`)) return;
+      DB.articles.splice(idx,1);
+      const k2 = getActiveKawasan();
+      renderArticles(k2);
+      renderKawasanList();
+      logActivity(`Artikel dihapus: ${art.title}`);
+      showToast('Artikel dihapus — jangan lupa simpan ke GitHub');
+    });
+    item.querySelector('[data-action="move-art"]').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const art = DB.articles[idx];
+      const options = DB.kawasan.map(k => `${k.id} — ${k.name}`).join('\n');
+      const target = prompt(`Pindahkan artikel "${art.title}" ke kawasan mana? Ketik ID kawasan tujuan:\n\n${options}`, art.kawasan_id);
+      if (!target) return;
+      const targetK = DB.kawasan.find(k => k.id === target.trim());
+      if (!targetK) { showToast('ID kawasan tidak ditemukan', true); return; }
+      const fromName = art.kawasan_name;
+      art.kawasan_id = targetK.id;
+      art.kawasan_name = targetK.name;
+      const k2 = getActiveKawasan();
+      renderArticles(k2);
+      renderKawasanList();
+      logActivity(`Artikel "${art.title}" dipindah: ${fromName} → ${targetK.name}`);
+      showToast(`Artikel dipindah ke "${targetK.name}" — jangan lupa simpan ke GitHub`);
+    });
+  });
+}
+
+function updateArtHeadDisplay(item, a) {
+  item.querySelector('.art-title').textContent = a.title || '(tanpa judul)';
+  item.querySelector('.art-meta').textContent = `${a.date||'-'} · ${a.read_time||0} menit baca`;
+  const thumb = item.querySelector('.art-thumb');
+  thumb.src = a.img || '';
+  thumb.style.visibility = 'visible';
+}
+
+$('artSearch').addEventListener('input', () => {
+  const k = getActiveKawasan();
+  if (k) renderArticles(k);
+});
+
+$('btnAddArt').addEventListener('click', () => {
+  const k = getActiveKawasan();
+  if (!k) return;
+  const title = prompt('Judul artikel baru:');
+  if (!title || !title.trim()) return;
+  let id = slugify(title);
+  let suffix = 1; const baseId = id;
+  while (DB.articles.some(a => a.id === id)) { id = baseId + '-' + (++suffix); }
+  DB.articles.push({
+    id, title: title.trim(), excerpt: '',
+    kawasan_id: k.id, kawasan_name: k.name,
+    date: '', read_time: 5, img: '',
+    url: `${id}.html`
+  });
+  renderArticles(k);
+  renderKawasanList();
+  const items = document.querySelectorAll('.art-item');
+  if (items.length) items[items.length-1].classList.add('open');
+  logActivity(`Artikel baru ditambahkan: ${title.trim()} (di ${k.name})`);
+  showToast('Artikel baru ditambahkan — jangan lupa simpan ke GitHub');
 });
 
 /* ══════════════════════════════════════
