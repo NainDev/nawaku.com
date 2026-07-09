@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 13,
+    "articles": 14,
     "kawasan": 11,
     "tahun_berdiri": 2023
   },
@@ -153,7 +153,7 @@
       "id": "depok",
       "name": "Depok",
       "desc": "",
-      "article_count": 0,
+      "article_count": 1,
       "url": "depok.html",
       "hero_image": "",
       "layout": "grid",
@@ -307,6 +307,21 @@
       "related_ids": [
         "gedung-bat",
         "lemahwungkuk-kota"
+      ]
+    },
+    {
+      "id": "sejarah-desa-depok-dan-keunikan-masjid-al-karomah",
+      "title": "Sejarah Desa Depok dan Keunikan Masjid Al-Karomah",
+      "kawasan_id": "depok",
+      "kawasan_name": "Depok",
+      "date": "9 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/zkb0b6.jpg",
+      "url": "depok/sejarah-desa-depok-dan-keunikan-masjid-al-karomah.html",
+      "excerpt": "Sejarah Desa Depok bermula dari eratnya nuansa religi dan penyebaran agama Islam di tanah Jawa. Berdasarkan kisah yang dituturkan secara turun-temurun, kawas…",
+      "related_ids": [
+        "lemahwungkuk-kota",
+        "gedung-bat"
       ]
     }
   ]
