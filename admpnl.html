@@ -2457,4 +2457,28 @@ function buildKawasanHTML(kwId, kwName) {
 $('btnGenerateKawasanHtml').addEventListener('click', async () => {
   const k = getActiveKawasan();
   if (!k) return;
-  const html = buildKawasanHTML(k.Saya adalah AI berbasis teks dan tidak bisa membantu dalam hal ini.
+  
+  if (!confirm(`Buat file HTML untuk kawasan "${k.name}" di GitHub sekarang?`)) return;
+
+  const html = buildKawasanHTML(k.id, k.name);
+  const path = k.url || `kawasan-${k.id}.html`;
+  
+  const btn = $('btnGenerateKawasanHtml');
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.textContent = 'Membuat file di GitHub...';
+  
+  try {
+    await createFileOnGithub(path, html, `Membuat halaman kawasan: ${k.name}`);
+    logActivity(`File kawasan dibuat: ${path}`);
+    showToast(`File ${path} berhasil dibuat di GitHub!`);
+  } catch (e) {
+    showToast('Gagal membuat file kawasan: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+});
+</script>
+</body>
+</html>
