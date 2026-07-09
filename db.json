@@ -11,7 +11,7 @@
   },
   "stats": {
     "articles": 13,
-    "kawasan": 11,
+    "kawasan": 10,
     "tahun_berdiri": 2023
   },
   "kawasan": [
@@ -148,17 +148,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "depok",
-      "name": "Depok",
-      "desc": "",
-      "article_count": 0,
-      "url": "depok.html",
-      "hero_image": "",
-      "layout": "grid",
-      "featured_ids": [],
-      "sections": []
     }
   ],
   "articles": [
