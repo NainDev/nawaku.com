@@ -56,10 +56,22 @@
       "desc": "Sentra kerajinan gerabah dan batik khas Cirebon.",
       "article_count": 0,
       "url": "kawasan-plered.html",
-      "hero_image": "",
+      "hero_image": "https://files.catbox.moe/cj5l0y.webp",
       "layout": "grid",
       "featured_ids": [],
-      "sections": []
+      "sections": [
+        {
+          "id": "section-9mmp2t",
+          "title": "Section Baru",
+          "layout": "grid",
+          "article_ids": [
+            "gedung-bat",
+            "lemahwungkuk-kota",
+            "keraton-kanoman",
+            "nasi-jamblang"
+          ]
+        }
+      ]
     },
     {
       "id": "gunung-jati",
