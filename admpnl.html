@@ -2457,17 +2457,16 @@ function buildKawasanHTML(kwId, kwName) {
 $('btnGenerateKawasanHtml').addEventListener('click', async () => {
   const k = getActiveKawasan();
   if (!k) return;
-  
   if (!confirm(`Buat file HTML untuk kawasan "${k.name}" di GitHub sekarang?`)) return;
 
   const html = buildKawasanHTML(k.id, k.name);
   const path = k.url || `kawasan-${k.id}.html`;
-  
+
   const btn = $('btnGenerateKawasanHtml');
   const originalText = btn.innerHTML;
   btn.disabled = true;
   btn.textContent = 'Membuat file di GitHub...';
-  
+
   try {
     await createFileOnGithub(path, html, `Membuat halaman kawasan: ${k.name}`);
     logActivity(`File kawasan dibuat: ${path}`);
@@ -2478,6 +2477,82 @@ $('btnGenerateKawasanHtml').addEventListener('click', async () => {
     btn.disabled = false;
     btn.innerHTML = originalText;
   }
+});
+
+/* ══════════════════════════════════════
+   IMPORT / EXPORT JSON
+══════════════════════════════════════ */
+$('btnExportJson').addEventListener('click', () => {
+  if (!DB) return;
+  syncArticleCounts();
+  const blob = new Blob([JSON.stringify(DB, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'db.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  logActivity('db.json diunduh secara manual');
+  showToast('db.json diunduh');
+});
+
+$('btnImportJson').addEventListener('click', () => $('jsonFileInput').click());
+$('jsonFileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const parsed = JSON.parse(ev.target.result);
+      if (!parsed.kawasan || !parsed.articles) throw new Error('Format JSON tidak sesuai (harus punya "kawasan" dan "articles")');
+      DB = parsed;
+      if (!DB.site) DB.site = { name:'', tagline:'', description:'', about_extended:'', year_founded: new Date().getFullYear() };
+      DB.kawasan.forEach(k => {
+        if (k.hero_image === undefined) k.hero_image='';
+        if (k.layout === undefined) k.layout='grid';
+        if (!['grid','carousel','list','masonry'].includes(k.layout)) k.layout='grid';
+        if (!Array.isArray(k.featured_ids)) k.featured_ids = [];
+        if (!Array.isArray(k.sections)) k.sections = [];
+        k.sections.forEach(s => {
+          if (!['grid','carousel','list','masonry'].includes(s.layout)) s.layout = 'grid';
+          if (!Array.isArray(s.article_ids)) s.article_ids = [];
+          if (!s.title) s.title = 'Bacaan Lainnya';
+          if (!s.id) s.id = 'section-' + Math.random().toString(36).slice(2,8);
+        });
+      });
+      DB.articles.forEach(a => { if (a.excerpt === undefined) a.excerpt=''; });
+      if (DB.site.contact_email === undefined) DB.site.contact_email = 'halo@nawaku.com';
+      activeKawasanId = null;
+      closeAllPanels();
+      $('mainArea').classList.add('locked');
+      renderKawasanList();
+      fillSiteForm();
+      logActivity('JSON diimpor dari file lokal');
+      showToast('JSON berhasil diimpor ke editor (belum tersimpan ke GitHub)');
+    } catch(err) {
+      showToast('Gagal impor: ' + err.message, true);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* ══════════════════════════════════════
+   SAVE
+══════════════════════════════════════ */
+$('btnSave').addEventListener('click', saveToGithub);
+$('btnSaveMobile').addEventListener('click', saveToGithub);
+
+/* ══════════════════════════════════════
+   UTIL
+══════════════════════════════════════ */
+function escapeHtml(str) {
+  if (str === undefined || str === null) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function escapeAttr(str) { return escapeHtml(str); }
+
+window.addEventListener('beforeunload', (e) => {
+  if (DB) { e.preventDefault(); e.returnValue=''; }
 });
 </script>
 </body>
