@@ -885,7 +885,7 @@ function syncArticleCounts() {
 }
 
 /* ══════════════════════════════════════
-   GITHUB API
+   GITHUB API & CONNECT GATE
 ══════════════════════════════════════ */
 function apiUrl() {
   return `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${GH.path}`;
@@ -1045,7 +1045,7 @@ function slugify(str) {
 }
 
 /* ══════════════════════════════════════
-   SITE FORM
+   SITE & LOGO FORM
 ══════════════════════════════════════ */
 function fillSiteForm() {
   $('siteName').value = DB.site.name || '';
@@ -1073,6 +1073,22 @@ $('btnEditSite').addEventListener('click', () => {
 $('btnCloseSite').addEventListener('click', () => $('siteCard').style.display = 'none');
 $('btnCloseLogo').addEventListener('click', () => $('logoCard').style.display = 'none');
 
+function fillLogoForm() {
+  if (!DB || !DB.site) return;
+  $('logoNavbarUrl').value = DB.site.logo_navbar || '';
+  $('logoFooterUrl').value = DB.site.logo_footer || '';
+  $('logoNavbarPreview').src = DB.site.logo_navbar || '';
+  $('logoFooterPreview').src = DB.site.logo_footer || '';
+}
+$('logoNavbarUrl').addEventListener('input', () => {
+  DB.site.logo_navbar = $('logoNavbarUrl').value;
+  $('logoNavbarPreview').src = DB.site.logo_navbar;
+});
+$('logoFooterUrl').addEventListener('input', () => {
+  DB.site.logo_footer = $('logoFooterUrl').value;
+  $('logoFooterPreview').src = DB.site.logo_footer;
+});
+
 function closeAllPanels() {
   $('siteCard').style.display = 'none';
   $('logoCard').style.display = 'none';
@@ -1084,7 +1100,7 @@ function closeAllPanels() {
 }
 
 /* ══════════════════════════════════════
-   NAVIGASI ANTAR VIEW
+   NAVIGASI
 ══════════════════════════════════════ */
 function showDashboard() {
   $('viewDashboard').style.display = 'block';
@@ -1140,26 +1156,7 @@ function renderDashboardStats() {
 }
 
 /* ══════════════════════════════════════
-   GANTI LOGO
-══════════════════════════════════════ */
-function fillLogoForm() {
-  if (!DB || !DB.site) return;
-  $('logoNavbarUrl').value = DB.site.logo_navbar || '';
-  $('logoFooterUrl').value = DB.site.logo_footer || '';
-  $('logoNavbarPreview').src = DB.site.logo_navbar || '';
-  $('logoFooterPreview').src = DB.site.logo_footer || '';
-}
-$('logoNavbarUrl').addEventListener('input', () => {
-  DB.site.logo_navbar = $('logoNavbarUrl').value;
-  $('logoNavbarPreview').src = DB.site.logo_navbar;
-});
-$('logoFooterUrl').addEventListener('input', () => {
-  DB.site.logo_footer = $('logoFooterUrl').value;
-  $('logoFooterPreview').src = DB.site.logo_footer;
-});
-
-/* ══════════════════════════════════════
-   ACTIVITY LOG
+   ACTIVITY LOG & JSON PREVIEW & OVERVIEW
 ══════════════════════════════════════ */
 $('btnShowLog').addEventListener('click', () => {
   if (!DB) return;
@@ -1180,9 +1177,6 @@ function renderLog() {
   `).join('');
 }
 
-/* ══════════════════════════════════════
-   JSON LIVE PREVIEW
-══════════════════════════════════════ */
 $('btnPreviewJson').addEventListener('click', () => {
   if (!DB) { showToast('Hubungkan database dulu', true); return; }
   closeAllPanels();
@@ -1194,9 +1188,6 @@ $('btnPreviewJson').addEventListener('click', () => {
 });
 $('btnCloseJsonPreview').addEventListener('click', () => $('jsonPreviewCard').style.display = 'none');
 
-/* ══════════════════════════════════════
-   OVERVIEW
-══════════════════════════════════════ */
 $('btnShowOverview').addEventListener('click', () => {
   if (!DB) return;
   closeAllPanels();
@@ -1447,7 +1438,7 @@ $('btnDeleteKawasan').addEventListener('click', () => {
 });
 
 /* ══════════════════════════════════════
-   ARTIKEL PILIHAN
+   ARTIKEL PILIHAN & SECTIONS
 ══════════════════════════════════════ */
 $('featuredSearch').addEventListener('input', renderFeaturedPicker);
 
@@ -1490,9 +1481,6 @@ function renderFeaturedPicker() {
   });
 }
 
-/* ══════════════════════════════════════
-   SECTIONS
-══════════════════════════════════════ */
 const sectionLayouts = [
   { val: 'grid', label: 'Grid' },
   { val: 'carousel', label: 'Geser' },
@@ -1606,8 +1594,29 @@ $('btnAddSection').addEventListener('click', () => {
   showToast('Section baru ditambahkan — atur judul, layout & artikelnya, lalu simpan ke GitHub');
 });
 
+
 /* ══════════════════════════════════════
-   BUAT ARTIKEL BARU
+   FUNGSI MEMBUAT FILE BARU DI GITHUB (API)
+══════════════════════════════════════ */
+async function createFileOnGithub(path, contentStr, message) {
+  const content = btoa(unescape(encodeURIComponent(contentStr)));
+  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${GH.token}`,
+      'Accept': 'application/vnd.github+json'
+    },
+    body: JSON.stringify({ message, content, branch: GH.branch })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+/* ══════════════════════════════════════
+   BUAT ARTIKEL BARU & GENERATOR ARTIKEL HTML
 ══════════════════════════════════════ */
 let caSections = [];
 let caRelatedIds = [];
@@ -1800,7 +1809,8 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;}
 .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
-.n-logo-img{height:32px;width:32px;display:block;border-radius:50%;object-fit:cover;}
+/* LOGO NAVBAR SUDUT TUMPUL (TIDAK LANCIP) */
+.n-logo-img{height:32px;width:32px;display:block;border-radius:8px;object-fit:cover;}
 .n-logo-brand{font-weight:800;font-size:16px;color:var(--text);letter-spacing:-.2px;white-space:nowrap;}
 .n-spacer{flex:1;}
 .n-home-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;cursor:pointer;}
@@ -1810,7 +1820,8 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .footer-main{max-width:740px;margin:0 auto;padding:40px 20px 32px;display:flex;align-items:flex-start;gap:48px;}
 .ft-brand-col{flex:1;}
 .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.ft-logo-img{height:34px;width:34px;display:block;border-radius:50%;object-fit:cover;}
+/* LOGO FOOTER SUDUT TUMPUL (TIDAK LANCIP) */
+.ft-logo-img{height:34px;width:34px;display:block;border-radius:8px;object-fit:cover;}
 .ft-logo-brand{font-weight:800;font-size:17px;color:#fff;letter-spacing:-.2px;white-space:nowrap;}
 .ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;margin-bottom:18px;max-width:280px;}
 .ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
@@ -1994,9 +2005,92 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 `;
 }
 
-/* ══════════════════════════════════════
-   FUNGSI GENERATOR FILE HTML KAWASAN 
-══════════════════════════════════════ */
+$('btnCreateArticleSubmit').addEventListener('click', async () => {
+  $('caError').style.display = 'none';
+
+  const kawasanId = $('caKawasan').value;
+  const kw = DB.kawasan.find(k => k.id === kawasanId);
+  const title = $('caTitle').value.trim();
+  const slug = slugify(title);
+  const heroImg = $('caHeroImg').value.trim();
+  const lead = $('caLead').value.trim();
+  const sectionsFilled = caSections.filter(s => (s.heading||'').trim() || (s.paragraph||'').trim());
+
+  if (!kw) return caShowError('Pilih kawasan terlebih dahulu.');
+  if (!title) return caShowError('Judul artikel wajib diisi.');
+  if (!slug) return caShowError('Judul tidak menghasilkan slug yang valid, coba judul lain.');
+  if (!heroImg) return caShowError('URL gambar hero wajib diisi.');
+  if (!lead) return caShowError('Ringkasan/lead paragraph wajib diisi.');
+  if (!sectionsFilled.length) return caShowError('Isi minimal 1 bagian konten (heading + paragraf).');
+
+  const path = `${kawasanId}/${slug}.html`;
+  if (DB.articles.some(a => a.id === slug)) return caShowError(`Slug "${slug}" sudah dipakai artikel lain. Ubah judul sedikit.`);
+  if (DB.articles.some(a => a.url === path)) return caShowError(`Path "${path}" sudah dipakai artikel lain.`);
+
+  const tags = ($('caTags').value || '').split(',').map(t => t.trim()).filter(Boolean);
+  const infoBullets = ($('caInfoBullets').value || '').split('\n').map(t => t.trim()).filter(Boolean);
+
+  const data = {
+    id: slug,
+    title,
+    kawasanId,
+    kawasanName: kw.name,
+    date: $('caDate').value.trim() || new Date().toLocaleDateString('id-ID'),
+    readTime: parseInt($('caReadTime').value) || 5,
+    heroImg,
+    heroTag: $('caHeroTag').value.trim(),
+    lead,
+    sections: sectionsFilled,
+    hasInfoBox: $('caHasInfoBox').checked,
+    infoTitle: $('caInfoTitle').value.trim(),
+    infoBullets,
+    hasLocation: $('caHasLocation').checked,
+    locAddress: $('caLocAddress').value.trim(),
+    locHours: $('caLocHours').value.trim(),
+    locMaps: $('caLocMaps').value.trim(),
+    tags,
+    relatedIds: caRelatedIds.slice()
+  };
+
+  const html = buildArticleHTML(data);
+  const btn = $('btnCreateArticleSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Membuat file di GitHub…';
+
+  try {
+    await createFileOnGithub(path, html, `Tambah artikel baru: ${title}`);
+
+    DB.articles.push({
+      id: slug,
+      title,
+      kawasan_id: kawasanId,
+      kawasan_name: kw.name,
+      date: data.date,
+      read_time: data.readTime,
+      img: heroImg,
+      url: path,
+      excerpt: lead.length > 160 ? lead.slice(0, 157) + '…' : lead,
+      related_ids: caRelatedIds.slice()
+    });
+
+    logActivity(`Artikel baru dibuat: ${title} (${path})`);
+    showToast('File artikel dibuat, menyimpan db.json…');
+
+    await saveToGithub();
+
+    $('createArticleCard').style.display = 'none';
+    renderKawasanList();
+    if (activeKawasanId === kawasanId) renderArticles(getActiveKawasan());
+    showToast(`Artikel "${title}" berhasil dibuat & disimpan!`);
+  } catch (e) {
+    caShowError('Gagal membuat file: ' + e.message);
+    showToast('Gagal membuat artikel: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Buat &amp; Simpan ke GitHub`;
+  }
+});
+
 /* ══════════════════════════════════════
    FUNGSI GENERATOR FILE HTML KAWASAN 
 ══════════════════════════════════════ */
@@ -2028,7 +2122,7 @@ function buildKawasanHTML(kwId, kwName) {
 
     .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;}
     .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
-    /* REVISI: Logo Navbar kotak sudut tumpul */
+    /* LOGO NAVBAR SUDUT TUMPUL (TIDAK LANCIP) */
     .n-logo-img { height:34px; width:34px; display:block; border-radius:9px; object-fit:cover; }
     .logo-mark{width:34px;height:34px;flex-shrink:0;}
     .n-logo-txt{font-weight:800;font-size:18px;color:#1a1a1a;letter-spacing:-.3px;}
@@ -2090,7 +2184,7 @@ function buildKawasanHTML(kwId, kwName) {
     .footer-main{max-width:1100px;margin:0 auto;padding:40px 24px 32px;display:flex;align-items:flex-start;gap:56px;}
     .ft-brand-col{flex:1;}
     .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-    /* REVISI: Logo Footer kotak sudut tumpul */
+    /* LOGO FOOTER SUDUT TUMPUL (TIDAK LANCIP) */
     .ft-logo-img { height:38px; width:38px; display:block; border-radius:9px; object-fit:cover; }
     .ft-name{font-weight:800;font-size:18px;color:#fff;}
     .ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;margin-bottom:18px;max-width:300px;}
@@ -2176,7 +2270,7 @@ function buildKawasanHTML(kwId, kwName) {
   </div>
 </nav>
 
-<!-- ABOUT MODAL -->
+<!-- ABOUT MODAL (dari dropdown navbar) -->
 <div class="about-modal-overlay" id="aboutModalKw">
   <div class="about-modal-box">
     <div class="about-modal-header">
@@ -2212,6 +2306,7 @@ function buildKawasanHTML(kwId, kwName) {
 </div>
 
 <div class="main">
+
   <div class="section-head" id="featuredHead">
     <span class="section-title">Artikel Pilihan</span>
   </div>
@@ -2234,6 +2329,7 @@ function buildKawasanHTML(kwId, kwName) {
   </div>
 
   <div id="sectionsWrap"></div>
+
 </div>
 
 <footer class="site-footer">
@@ -2454,114 +2550,7 @@ function buildKawasanHTML(kwId, kwName) {
 </html>`;
 }
 
-
-/* ══════════════════════════════════════
-   FUNGSI MEMBUAT FILE BARU DI GITHUB
-══════════════════════════════════════ */
-async function createFileOnGithub(path, contentStr, message) {
-  const content = btoa(unescape(encodeURIComponent(contentStr)));
-  const res = await fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
-    method: 'PUT',
-    headers: {
-      'Authorization': `Bearer ${GH.token}`,
-      'Accept': 'application/vnd.github+json'
-    },
-    body: JSON.stringify({ message, content, branch: GH.branch })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `HTTP ${res.status}`);
-  }
-  return res.json();
-}
-
-$('btnCreateArticleSubmit').addEventListener('click', async () => {
-  $('caError').style.display = 'none';
-
-  const kawasanId = $('caKawasan').value;
-  const kw = DB.kawasan.find(k => k.id === kawasanId);
-  const title = $('caTitle').value.trim();
-  const slug = slugify(title);
-  const heroImg = $('caHeroImg').value.trim();
-  const lead = $('caLead').value.trim();
-  const sectionsFilled = caSections.filter(s => (s.heading||'').trim() || (s.paragraph||'').trim());
-
-  if (!kw) return caShowError('Pilih kawasan terlebih dahulu.');
-  if (!title) return caShowError('Judul artikel wajib diisi.');
-  if (!slug) return caShowError('Judul tidak menghasilkan slug yang valid, coba judul lain.');
-  if (!heroImg) return caShowError('URL gambar hero wajib diisi.');
-  if (!lead) return caShowError('Ringkasan/lead paragraph wajib diisi.');
-  if (!sectionsFilled.length) return caShowError('Isi minimal 1 bagian konten (heading + paragraf).');
-
-  const path = `${kawasanId}/${slug}.html`;
-  if (DB.articles.some(a => a.id === slug)) return caShowError(`Slug "${slug}" sudah dipakai artikel lain. Ubah judul sedikit.`);
-  if (DB.articles.some(a => a.url === path)) return caShowError(`Path "${path}" sudah dipakai artikel lain.`);
-
-  const tags = ($('caTags').value || '').split(',').map(t => t.trim()).filter(Boolean);
-  const infoBullets = ($('caInfoBullets').value || '').split('\n').map(t => t.trim()).filter(Boolean);
-
-  const data = {
-    id: slug,
-    title,
-    kawasanId,
-    kawasanName: kw.name,
-    date: $('caDate').value.trim() || new Date().toLocaleDateString('id-ID'),
-    readTime: parseInt($('caReadTime').value) || 5,
-    heroImg,
-    heroTag: $('caHeroTag').value.trim(),
-    lead,
-    sections: sectionsFilled,
-    hasInfoBox: $('caHasInfoBox').checked,
-    infoTitle: $('caInfoTitle').value.trim(),
-    infoBullets,
-    hasLocation: $('caHasLocation').checked,
-    locAddress: $('caLocAddress').value.trim(),
-    locHours: $('caLocHours').value.trim(),
-    locMaps: $('caLocMaps').value.trim(),
-    tags,
-    relatedIds: caRelatedIds.slice()
-  };
-
-  const html = buildArticleHTML(data);
-  const btn = $('btnCreateArticleSubmit');
-  btn.disabled = true;
-  btn.textContent = 'Membuat file di GitHub…';
-
-  try {
-    await createFileOnGithub(path, html, `Tambah artikel baru: ${title}`);
-
-    DB.articles.push({
-      id: slug,
-      title,
-      kawasan_id: kawasanId,
-      kawasan_name: kw.name,
-      date: data.date,
-      read_time: data.readTime,
-      img: heroImg,
-      url: path,
-      excerpt: lead.length > 160 ? lead.slice(0, 157) + '…' : lead,
-      related_ids: caRelatedIds.slice()
-    });
-
-    logActivity(`Artikel baru dibuat: ${title} (${path})`);
-    showToast('File artikel dibuat, menyimpan db.json…');
-
-    await saveToGithub();
-
-    $('createArticleCard').style.display = 'none';
-    renderKawasanList();
-    if (activeKawasanId === kawasanId) renderArticles(getActiveKawasan());
-    showToast(`Artikel "${title}" berhasil dibuat & disimpan!`);
-  } catch (e) {
-    caShowError('Gagal membuat file: ' + e.message);
-    showToast('Gagal membuat artikel: ' + e.message, true);
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Buat &amp; Simpan ke GitHub`;
-  }
-});
-
-/* ════ SYSTEM EVENT LISTENER TOMBOL BUAT HTML KAWASAN BARU ════ */
+/* ════ EVENT LISTENER TOMBOL BUAT HTML KAWASAN ════ */
 $('btnGenerateKawasanHtml').addEventListener('click', async () => {
   const k = getActiveKawasan();
   if (!k) return;
@@ -2811,5 +2800,6 @@ window.addEventListener('beforeunload', (e) => {
   if (DB) { e.preventDefault(); e.returnValue=''; }
 });
 </script>
+
 </body>
 </html>
