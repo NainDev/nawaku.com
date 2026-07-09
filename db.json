@@ -158,7 +158,17 @@
       "hero_image": "",
       "layout": "grid",
       "featured_ids": [],
-      "sections": []
+      "sections": [
+        {
+          "id": "section-ojnw5y",
+          "title": "Section Baru",
+          "layout": "grid",
+          "article_ids": [
+            "gedung-bat",
+            "lemahwungkuk-kota"
+          ]
+        }
+      ]
     }
   ],
   "articles": [
