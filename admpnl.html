@@ -2093,9 +2093,9 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <script src="../shared.js"><\/script>
 <script>
-  const CURRENT_ARTICLE_ID = ${JSON.stringify(data.id)};
-  const CURRENT_KAWASAN_ID = ${JSON.stringify(data.kawasanId)};
-  const RELATED_IDS = ${JSON.stringify(data.relatedIds || [])};
+  const CURRENT_ARTICLE_ID = \${JSON.stringify(data.id)};
+  const CURRENT_KAWASAN_ID = \${JSON.stringify(data.kawasanId)};
+  const RELATED_IDS = \${JSON.stringify(data.relatedIds || [])};
 
   window.addEventListener('scroll', () => {
     const d = document.documentElement;
@@ -2118,16 +2118,16 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
       related = (db.articles || []).filter(a => a.id !== CURRENT_ARTICLE_ID).slice(0, 4);
     }
 
-    document.getElementById('relatedGrid').innerHTML = related.map(a => `
-      <a class="rel-item" href="${NawakuDB.relFromHere(a.url)}" data-nav>
-        <img class="rel-img" src="${a.img||''}" alt=""/>
+    document.getElementById('relatedGrid').innerHTML = related.map(a => \`
+      <a class="rel-item" href="\${NawakuDB.relFromHere(a.url)}" data-nav>
+        <img class="rel-img" src="\${a.img||''}" alt=""/>
         <div class="rel-body">
-          <span class="rel-tag">${(a.kawasan_name||'').toUpperCase()}</span>
-          <div class="rel-ttl">${a.title}</div>
-          <div class="rel-date">${a.date||''}</div>
+          <span class="rel-tag">\${(a.kawasan_name||'').toUpperCase()}</span>
+          <div class="rel-ttl">\${a.title}</div>
+          <div class="rel-date">\${a.date||''}</div>
         </div>
       </a>
-    `).join('');
+    \`).join('');
 
     document.querySelectorAll('[data-nav]').forEach(NawakuDB.attachNav);
 
@@ -2784,6 +2784,6 @@ $('btnCreateArticleSubmit').addEventListener('click', async () => {
     $('btnCreateArticleSubmit').disabled = false;
   }
 });
-<\/script>
+</script>
 </body>
-  </html>
+</html>
