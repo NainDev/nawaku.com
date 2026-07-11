@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 14,
+    "articles": 15,
     "kawasan": 11,
     "tahun_berdiri": 2023
   },
@@ -19,7 +19,7 @@
       "id": "kasepuhan",
       "name": "Kasepuhan",
       "desc": "Pusat Kesultanan Cirebon dengan Keraton Kasepuhan.",
-      "article_count": 1,
+      "article_count": 2,
       "url": "kasepuhan.html",
       "hero_image": "",
       "layout": "grid",
@@ -323,6 +323,17 @@
         "lemahwungkuk-kota",
         "gedung-bat"
       ]
+    },
+    {
+      "id": "sejarah-gegesik-fe2u",
+      "title": "Sejarah gegesik",
+      "kawasan_id": "kasepuhan",
+      "kawasan_name": "Kasepuhan",
+      "date": "11 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "excerpt": "Hshsb",
+      "url": "kasepuhan/sejarah-gegesik.html"
     }
   ]
 }
