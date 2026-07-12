@@ -373,8 +373,8 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
 
 <nav class="navbar">
   <a class="n-logo" href="#" id="navLogoHome">
-    <!-- LOGO ADMIN PANEL DIRUBAH MENJADI BULAT (50%) -->
-    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia" style="height:30px;width:30px;border-radius:50%;object-fit:cover;"/>
+    <!-- LOGO ADMIN PANEL: KOTAK MEMBULAT (9px) -->
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia" style="height:30px;width:30px;border-radius:9px;object-fit:cover;"/>
     <!-- NAMA DIUBAH MENJADI Nainpedia -->
     <span class="n-logo-brand">Nainpedia</span>
   </a>
@@ -619,16 +619,16 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
       <div class="field">
         <label>Logo Navbar (bentuk kotak, disarankan rasio 1:1)</label>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-          <!-- PREVIEW LOGO DIUBAH BULAT (50%) -->
-          <img id="logoNavbarPreview" src="" alt="Preview logo navbar" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--border);background:var(--bg);"/>
+          <!-- PREVIEW LOGO: KOTAK MEMBULAT (9px) -->
+          <img id="logoNavbarPreview" src="" alt="Preview logo navbar" style="width:44px;height:44px;border-radius:9px;object-fit:cover;border:1px solid var(--border);background:var(--bg);"/>
           <input type="text" id="logoNavbarUrl" placeholder="https://..." style="flex:1;"/>
         </div>
       </div>
       <div class="field">
         <label>Logo Footer (bentuk kotak, disarankan rasio 1:1)</label>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-          <!-- PREVIEW LOGO DIUBAH BULAT (50%) -->
-          <img id="logoFooterPreview" src="" alt="Preview logo footer" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid #334155;background:#0f172a;"/>
+          <!-- PREVIEW LOGO: KOTAK MEMBULAT (9px) -->
+          <img id="logoFooterPreview" src="" alt="Preview logo footer" style="width:44px;height:44px;border-radius:9px;object-fit:cover;border:1px solid #334155;background:#0f172a;"/>
           <input type="text" id="logoFooterUrl" placeholder="https://..." style="flex:1;"/>
         </div>
       </div>
@@ -671,6 +671,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
       <div class="hint" style="margin-bottom:14px;">
         Mengisi form ini akan membuat 1 file HTML artikel baru secara otomatis di repo GitHub pada path
         <code id="caPathPreview">namakawasan/judul-artikel.html</code>, lalu menambahkannya ke db.json dan langsung menyimpan keduanya.
+        Halaman artikel yang dihasilkan sudah termasuk: badge estimasi baca animatif, tombol "← Kembali", tombol bagikan (X/WhatsApp/Facebook/Salin Tautan) yang berfungsi, artikel terkait, footer lengkap, logo kotak membulat, dan tata letak 3-kolom di desktop (kolom kiri &amp; kanan siap diisi iklan, otomatis menyesuaikan jadi 1 kolom penuh di HP).
       </div>
       <div class="field"><label>Pilih Kawasan</label><select id="caKawasan"></select></div>
       <div class="field"><label>Judul Artikel</label><input type="text" id="caTitle" placeholder="Sejarah Gedung BAT Cirebon"/></div>
@@ -681,8 +682,10 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
       <div class="field"><label>URL Gambar Hero</label><input type="text" id="caHeroImg" placeholder="https://..."/></div>
       <div class="field"><label>Label Tag di Atas Judul (opsional)</label><input type="text" id="caHeroTag" placeholder="mis. Lemahwungkuk · Cagar Budaya"/></div>
       <div class="field"><label>Ringkasan / Lead Paragraph</label><textarea id="caLead" placeholder="Paragraf pembuka yang tampil tebal-miring di awal artikel…"></textarea></div>
+      <div class="hint">💡 "Waktu Baca" juga otomatis dipakai untuk badge estimasi baca yang berjalan (mengecil) secara animatif di navbar halaman artikel saat pembaca scroll.</div>
       <div class="section-sep"></div>
       <div class="card-ttl" style="margin-bottom:8px;">Bagian Konten (Heading + Paragraf)</div>
+      <div class="hint" style="margin-bottom:10px;">Judul Bagian (H2) dan Paragraf boleh dikosongkan salah satunya — bagian yang kosong tidak akan ditampilkan sama sekali di halaman artikel (tidak ada teks placeholder seperti "Bagian").</div>
       <div id="caSectionsList"></div>
       <button class="add-art-btn" id="caAddSection" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -2197,10 +2200,10 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <script src="../shared.js"><\/script>
 <script>
-  const CURRENT_ARTICLE_ID = \${JSON.stringify(data.id)};
-  const CURRENT_KAWASAN_ID = \${JSON.stringify(data.kawasanId)};
-  const RELATED_IDS = \${JSON.stringify(data.relatedIds || [])};
-  const TOTAL_READ_MINUTES = \${Number(data.readTime) || 5};
+  const CURRENT_ARTICLE_ID = ${JSON.stringify(data.id)};
+  const CURRENT_KAWASAN_ID = ${JSON.stringify(data.kawasanId)};
+  const RELATED_IDS = ${JSON.stringify(data.relatedIds || [])};
+  const TOTAL_READ_MINUTES = ${Number(data.readTime) || 5};
   const RING_R = 7.5;
   const RING_C = 2 * Math.PI * RING_R;
 
@@ -2396,8 +2399,8 @@ function buildKawasanHTML(kwId, kwName) {
 
     .navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;}
     .n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
-    /* LOGO NAVBAR DIJADIKAN BULAT (50%) */
-    .n-logo-img { height:34px; width:34px; display:block; border-radius:50%; object-fit:cover; }
+    /* LOGO NAVBAR: KOTAK MEMBULAT (9px) */
+    .n-logo-img { height:34px; width:34px; display:block; border-radius:9px; object-fit:cover; }
     .logo-mark{width:34px;height:34px;flex-shrink:0;}
     .n-logo-txt{font-weight:800;font-size:18px;color:#1a1a1a;letter-spacing:-.3px;}
     .n-spacer{flex:1;}
@@ -2458,8 +2461,8 @@ function buildKawasanHTML(kwId, kwName) {
     .footer-main{max-width:1100px;margin:0 auto;padding:40px 24px 32px;display:flex;align-items:flex-start;gap:56px;}
     .ft-brand-col{flex:1;}
     .ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-    /* LOGO FOOTER DIJADIKAN BULAT (50%) */
-    .ft-logo-img { height:38px; width:38px; display:block; border-radius:50%; object-fit:cover; }
+    /* LOGO FOOTER: KOTAK MEMBULAT (9px) */
+    .ft-logo-img { height:38px; width:38px; display:block; border-radius:9px; object-fit:cover; }
     .ft-name{font-weight:800;font-size:18px;color:#fff;}
     .ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;margin-bottom:18px;max-width:300px;}
     .ft-socials{display:flex;gap:8px;}
@@ -2923,7 +2926,7 @@ $('btnCreateArticleSubmit').addEventListener('click', async () => {
     heroImg: $('caHeroImg').value.trim(),
     heroTag: $('caHeroTag').value.trim(),
     lead: $('caLead').value.trim(),
-    sections: caSections.filter(s => s.heading || s.paragraph),
+    sections: caSections.filter(s => (s.heading && s.heading.trim()) || (s.paragraph && s.paragraph.trim()) || (s.image && s.image.trim())),
     hasInfoBox: $('caHasInfoBox').checked,
     infoTitle: $('caInfoTitle').value.trim(),
     infoBullets: $('caInfoBullets').value.split('\n').map(s=>s.trim()).filter(Boolean),
