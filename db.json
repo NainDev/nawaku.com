@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 15,
+    "articles": 16,
     "kawasan": 11,
     "tahun_berdiri": 2023
   },
@@ -132,7 +132,7 @@
       "id": "lemahwungkuk",
       "name": "Lemahwungkuk",
       "desc": "Permukiman tertua di Cirebon, cikal bakal kota lama dengan bangunan kolonial bersejarah.",
-      "article_count": 7,
+      "article_count": 8,
       "url": "lemahwungkuk.html",
       "hero_image": "https://files.catbox.moe/cj5l0y.webp",
       "layout": "masonry",
@@ -334,6 +334,17 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "excerpt": "Hshsb",
       "url": "kasepuhan/sejarah-gegesik.html"
+    },
+    {
+      "id": "tes1-hhhn",
+      "title": "tes1",
+      "kawasan_id": "lemahwungkuk",
+      "kawasan_name": "Lemahwungkuk",
+      "date": "12 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "excerpt": "tes soanggggg",
+      "url": "lemahwungkuk/tes1.html"
     }
   ]
 }
