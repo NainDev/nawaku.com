@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 16,
+    "articles": 17,
     "kawasan": 12,
     "tahun_berdiri": 2023
   },
@@ -162,7 +162,7 @@
       "id": "lurah",
       "name": "lurah",
       "desc": "",
-      "article_count": 0,
+      "article_count": 1,
       "url": "kawasan-lurah.html",
       "hero_image": "",
       "layout": "grid",
@@ -354,6 +354,17 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "excerpt": "tes soanggggg",
       "url": "lemahwungkuk/tes1.html"
+    },
+    {
+      "id": "lurah-7odr",
+      "title": "lurah",
+      "kawasan_id": "lurah",
+      "kawasan_name": "lurah",
+      "date": "13 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "excerpt": "Hahsbs",
+      "url": "lurah/lurah.html"
     }
   ]
 }
