@@ -11,7 +11,7 @@
   },
   "stats": {
     "articles": 16,
-    "kawasan": 11,
+    "kawasan": 12,
     "tahun_berdiri": 2023
   },
   "kawasan": [
@@ -23,9 +23,7 @@
       "url": "kasepuhan.html",
       "hero_image": "",
       "layout": "grid",
-      "featured_ids": [
-        "keraton-kasepuhan"
-      ],
+      "featured_ids": [],
       "sections": []
     },
     {
@@ -155,6 +153,17 @@
       "desc": "",
       "article_count": 1,
       "url": "depok.html",
+      "hero_image": "",
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
+    },
+    {
+      "id": "lurah",
+      "name": "lurah",
+      "desc": "",
+      "article_count": 0,
+      "url": "kawasan-lurah.html",
       "hero_image": "",
       "layout": "grid",
       "featured_ids": [],
