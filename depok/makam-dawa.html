@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>makam dawa — Nainpedia</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../article-styles.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;--border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;}
+html{scroll-behavior:smooth;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.rp{position:fixed;top:60px;left:0;right:0;height:2px;z-index:299;background:rgba(0,0,0,.04);}
+.rp-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#1d4ed8);width:0%;transition:width .1s;}
+.redirect-overlay{position:fixed;inset:0;background:rgba(255,255,255,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .2s;}
+.redirect-overlay.show{opacity:1;pointer-events:all;}
+.redirect-spinner{width:42px;height:42px;border:3px solid var(--accent-mid);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.redirect-msg{font-size:15px;font-weight:500;color:var(--text2);}
+.redirect-sub{font-size:13px;color:var(--muted);margin-top:6px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;font-size:13px;font-weight:500;padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s;z-index:9998;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:10px;}
+.n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;min-width:0;}
+.n-logo-img{height:32px;width:32px;display:block;border-radius:9px;object-fit:cover;flex-shrink:0;}
+.n-logo-brand{font-weight:800;font-size:16px;color:var(--text);letter-spacing:-.2px;white-space:nowrap;}
+.n-spacer{flex:1;}
+
+/* Animated reading-time badge */
+.read-badge{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text2);background:var(--bg);border:1px solid var(--border);padding:6px 12px 6px 8px;border-radius:99px;flex-shrink:0;transition:background .2s,border-color .2s;}
+.read-badge.done{background:#ecfdf5;border-color:#a7f3d0;color:#059669;}
+.read-badge-ring{width:18px;height:18px;flex-shrink:0;}
+.read-badge-ring svg{transform:rotate(-90deg);display:block;}
+.read-badge-ring circle{fill:none;stroke-width:2.5;}
+.read-badge-ring .bg{stroke:var(--border);}
+.read-badge-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .12s linear,stroke .2s;}
+.read-badge.done .read-badge-ring .fg{stroke:#059669;}
+.read-badge.done{animation:readPulse .5s ease;}
+@keyframes readPulse{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.read-badge-label{white-space:nowrap;}
+@media(max-width:480px){.read-badge-label{display:none;}.read-badge{padding:6px;}}
+
+.n-back-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;cursor:pointer;flex-shrink:0;}
+.n-back-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.n-back-btn svg{width:15px;height:15px;flex-shrink:0;}
+
+/* DESKTOP 3-COLUMN SHELL (center = article, sides = ad space) */
+.article-shell{max-width:740px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:0;}
+.article-shell .page{max-width:100%;margin:0;}
+.ad-slot{display:none;}
+@media(min-width:1280px){
+  .article-shell{max-width:1320px;grid-template-columns:250px minmax(0,740px) 250px;gap:28px;align-items:start;padding:0 24px;}
+  .ad-slot{display:flex;align-items:center;justify-content:center;position:sticky;top:76px;min-height:280px;border:1.5px dashed var(--border);border-radius:14px;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.4px;text-align:center;padding:18px;background:var(--surface);text-transform:uppercase;}
+}
+
+.art-section{margin-top:22px;}
+.art-section h2{font-size:19px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-.2px;}
+.art-section p{font-size:15px;line-height:1.85;color:var(--text2);}
+
+.site-footer{background:#0f172a;margin-top:56px;}
+.footer-main{max-width:1000px;margin:0 auto;padding:44px 20px 32px;display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap;}
+.ft-brand-col{flex:1;min-width:220px;}
+.ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.ft-logo-img{height:34px;width:34px;display:block;border-radius:9px;object-fit:cover;}
+.ft-logo-brand{font-weight:800;font-size:17px;color:#fff;letter-spacing:-.2px;white-space:nowrap;}
+.ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;margin-bottom:18px;max-width:300px;}
+.ft-socials{display:flex;gap:8px;}
+.ft-soc{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;text-decoration:none;}
+.ft-soc:hover{background:var(--accent);border-color:var(--accent);}
+.ft-cols{display:flex;gap:48px;flex-wrap:wrap;}
+.ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
+.ft-col-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;}
+.ft-col-link{font-size:13.5px;color:#94a3b8;text-decoration:none;transition:.15s;cursor:pointer;background:none;border:none;text-align:left;font-family:'Rubik',sans-serif;padding:0;}
+.ft-col-link:hover{color:#e2e8f0;}
+.footer-cta-section{border-top:1px solid rgba(255,255,255,.07);}
+.footer-cta-inner{max-width:1000px;margin:0 auto;padding:26px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.footer-cta-ttl{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.footer-cta-sub{font-size:12.5px;color:#94a3b8;max-width:460px;line-height:1.6;}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;padding:11px 20px;border-radius:10px;text-decoration:none;flex-shrink:0;transition:all .15s;}
+.footer-cta-btn:hover{background:#1d4ed8;transform:translateY(-1px);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:1000px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb-copy{font-size:12.5px;color:#475569;}
+.fb-badge{font-size:12px;color:#475569;display:flex;align-items:center;gap:5px;}
+.fb-badge svg{width:13px;height:13px;color:#3b82f6;}
+@media(max-width:680px){.footer-main{flex-direction:column;gap:28px;padding:28px 20px 24px;}.ft-cols{gap:28px;}.footer-bottom{flex-direction:column;align-items:flex-start;}.footer-cta-inner{flex-direction:column;align-items:flex-start;}}
+
+/* Simple self-contained about modal (doesn't depend on external CSS) */
+.na-modal-ov{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:9997;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px;}
+.na-modal-ov.open{opacity:1;pointer-events:all;}
+.na-modal-box{background:#fff;border-radius:16px;max-width:420px;width:100%;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.25);}
+.na-modal-ttl{font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;}
+.na-modal-body{font-size:13.5px;color:var(--text2);line-height:1.75;}
+.na-modal-close{margin-top:18px;width:100%;padding:10px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--text2);font-family:'Rubik',sans-serif;}
+
+/* Mobile hardening — keep layout stable across different phones/browsers */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+img{max-width:100%;height:auto;}
+input,button,select,textarea{font-family:inherit;}
+@media(max-width:680px){
+  .footer-main{padding-left:20px;padding-right:20px;}
+  .footer-cta-btn{width:100%;justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="redirect-overlay" id="redirectOverlay">
+  <div class="redirect-spinner"></div>
+  <div class="redirect-msg">Sedang mengalihkan…</div>
+  <div class="redirect-sub">Mohon tunggu sebentar</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<div class="rp"><div class="rp-bar" id="rbar"></div></div>
+
+<nav class="navbar">
+  <a class="n-logo" href="../index.html" id="logoLink">
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
+    <span class="n-logo-brand">Nainpedia</span>
+  </a>
+  <div class="n-spacer"></div>
+  <div class="read-badge" id="readBadge" title="Estimasi waktu baca">
+    <span class="read-badge-ring">
+      <svg viewBox="0 0 20 20" width="18" height="18">
+        <circle class="bg" cx="10" cy="10" r="7.5"/>
+        <circle class="fg" id="readBadgeFg" cx="10" cy="10" r="7.5"/>
+      </svg>
+    </span>
+    <span class="read-badge-label" id="readBadgeLabel">5 menit baca</span>
+  </div>
+  <a class="n-back-btn" href="../index.html" id="backLink">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Kembali
+  </a>
+</nav>
+
+<div class="article-shell">
+  <aside class="ad-slot" id="adSlotLeft">Ruang Iklan</aside>
+
+  <div class="page">
+    <div class="breadcrumb">
+      <a class="bc" href="../index.html" id="bcHome">Beranda</a>
+      <span class="bc-sep">›</span>
+      <span class="bc link" id="bcKawasan">Depok</span>
+      <span class="bc-sep">›</span>
+      <span class="bc active">makam dawa</span>
+    </div>
+
+    <div class="hero">
+      <img src="https://files.catbox.moe/cj5l0y.webp" alt="makam dawa"/>
+      <div class="hero-overlay"></div>
+      <div class="hero-cnt">
+        <span class="hero-tag">sejarah</span>
+        <div class="hero-title">makam dawa</div>
+        <div class="hero-meta">
+          <span class="hm-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>14 Juli 2026</span>
+          <span class="hm-sep"></span>
+          <span class="hm-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5 menit baca</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-body">
+      <p class="a-lead">Gegsusbs s</p>
+      
+    <div class="art-section"><p>Ga bs sns</p></div>
+      
+      
+    </div>
+
+    <div class="art-foot">
+      <div class="foot-tags">
+        
+      </div>
+      <div class="share-row">
+        <span class="share-lbl">Bagikan:</span>
+        <a class="sh-btn" href="#" id="btn-twitter" title="X">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#000;width:15px;height:15px"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a class="sh-btn" href="#" id="btn-wa" title="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366;width:15px;height:15px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a class="sh-btn" href="#" id="btn-fb" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#1877F2;width:15px;height:15px"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="sh-btn" href="#" id="sh-copy" title="Salin tautan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);width:15px;height:15px"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="related-section">
+      <div class="rel-heading">Artikel Terkait</div>
+      <div class="rel-grid" id="relatedGrid"></div>
+    </div>
+  </div>
+
+  <aside class="ad-slot" id="adSlotRight">Ruang Iklan</aside>
+</div>
+
+<div class="na-modal-ov" id="aboutModal">
+  <div class="na-modal-box">
+    <div class="na-modal-ttl">Tentang Nainpedia</div>
+    <div class="na-modal-body" id="aboutModalBody">Memuat…</div>
+    <button class="na-modal-close" id="aboutModalClose">Tutup</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="ft-brand-col">
+      <div class="ft-brand">
+        <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
+        <span class="ft-logo-brand">Nainpedia</span>
+      </div>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+      <div class="ft-socials">
+        <a class="ft-soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a class="ft-soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a class="ft-soc" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="white" width="15" height="15"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-right">
+        <div class="ft-col-ttl">Nainpedia</div>
+        <a class="ft-col-link" href="../index.html" id="ftHome">Beranda</a>
+        <button class="ft-col-link" id="ftAbout">Tentang Kami</button>
+        <button class="ft-col-link" id="ftTeam">Tim Redaksi</button>
+        <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
+      </div>
+      <div class="ft-right">
+        <div class="ft-col-ttl">Lainnya</div>
+        <button class="ft-col-link" id="ftPrivacy">Kebijakan Privasi</button>
+        <button class="ft-col-link" id="ftTerms">Ketentuan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-cta-section">
+    <div class="footer-cta-inner">
+      <div>
+        <div class="footer-cta-ttl">Punya ide konten yang ingin kami tulis?</div>
+        <div class="footer-cta-sub">Ceritakan sudut Cirebon, bangunan, atau kisah yang menurutmu layak diabadikan.</div>
+      </div>
+      <a class="footer-cta-btn" id="ctaRequestBtn" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+        Request / Kirim Ide
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="fb-copy" id="ftCopy">© Nainpedia.com</span>
+    <span class="fb-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
+      Dibuat dengan penuh semangat
+    </span>
+  </div>
+</footer>
+
+<script src="../shared.js"></script>
+<script>
+  const CURRENT_ARTICLE_ID = "makam-dawa-am3h";
+  const CURRENT_KAWASAN_ID = "depok";
+  const RELATED_IDS = [];
+  const TOTAL_READ_MINUTES = 5;
+  const RING_R = 7.5;
+  const RING_C = 2 * Math.PI * RING_R;
+
+  function relUrl(u) {
+    if (!u) return '#';
+    if (/^https?:\/\//i.test(u) || u.indexOf('mailto:') === 0) return u;
+    return '../' + String(u).replace(/^\.\.\//, '').replace(/^\//, '');
+  }
+  function safeGo(url) {
+    try {
+      if (window.NawakuDB && typeof NawakuDB.goRedirect === 'function') { NawakuDB.goRedirect(url); return; }
+    } catch (e) {}
+    location.href = url;
+  }
+  function localToast(msg) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  const readBadgeFg = document.getElementById('readBadgeFg');
+  const readBadgeLabel = document.getElementById('readBadgeLabel');
+  const readBadge = document.getElementById('readBadge');
+  readBadgeFg.style.strokeDasharray = String(RING_C);
+  readBadgeFg.style.strokeDashoffset = '0';
+
+  function updateReadProgress() {
+    const d = document.documentElement;
+    const scrollable = d.scrollHeight - d.clientHeight;
+    const pct = scrollable > 0 ? Math.min(100, Math.max(0, (d.scrollTop / scrollable) * 100)) : 0;
+    const bar = document.getElementById('rbar');
+    if (bar) bar.style.width = pct + '%';
+
+    const offset = RING_C * (1 - pct / 100);
+    readBadgeFg.style.strokeDashoffset = String(offset);
+    const remain = Math.max(0, Math.ceil(TOTAL_READ_MINUTES * (1 - pct / 100)));
+    const wasDone = readBadge.classList.contains('done');
+    if (pct >= 98) {
+      readBadgeLabel.textContent = 'Selesai membaca';
+      if (!wasDone) readBadge.classList.add('done');
+    } else {
+      readBadgeLabel.textContent = remain <= 0 ? 'Hampir selesai' : remain + ' menit lagi';
+      if (wasDone) readBadge.classList.remove('done');
+    }
+  }
+  window.addEventListener('scroll', updateReadProgress, { passive: true });
+  updateReadProgress();
+
+  document.getElementById('logoLink').addEventListener('click', e => {
+    e.preventDefault();
+    safeGo(relUrl('index.html'));
+  });
+  document.getElementById('backLink').addEventListener('click', e => {
+    e.preventDefault();
+    try {
+      if (document.referrer && new URL(document.referrer).host === location.host && window.history.length > 1) {
+        history.back();
+        return;
+      }
+    } catch (err) {}
+    safeGo(relUrl('index.html'));
+  });
+  document.getElementById('bcHome').addEventListener('click', e => { e.preventDefault(); safeGo(relUrl('index.html')); });
+  document.getElementById('ftHome').addEventListener('click', e => { e.preventDefault(); safeGo(relUrl('index.html')); });
+
+  let SITE_DATA = null;
+  NawakuDB.load().then(db => {
+    SITE_DATA = db;
+    try { NawakuDB.renderFooter(db); } catch (e) {}
+
+    const kw = NawakuDB.getKawasan(db, CURRENT_KAWASAN_ID);
+    const bcEl = document.getElementById('bcKawasan');
+    if (kw && bcEl) bcEl.addEventListener('click', () => safeGo(relUrl(kw.url)));
+
+    let related;
+    if (RELATED_IDS.length) {
+      related = RELATED_IDS.map(id => (db.articles||[]).find(a => a.id === id)).filter(Boolean);
+    } else {
+      related = (db.articles || []).filter(a => a.id !== CURRENT_ARTICLE_ID).slice(0, 4);
+    }
+
+    const relatedGrid = document.getElementById('relatedGrid');
+    if (relatedGrid) {
+      if (!related.length) {
+        relatedGrid.innerHTML = '<div style="font-size:13px;color:var(--muted);padding:14px 0;">Belum ada artikel terkait lainnya.</div>';
+      } else {
+        relatedGrid.innerHTML = related.map(a => `
+          <a class="rel-item" href="${relUrl(a.url)}">
+            <img class="rel-img" src="${a.img||''}" alt=""/>
+            <div class="rel-body">
+              <span class="rel-tag">${(a.kawasan_name||'').toUpperCase()}</span>
+              <div class="rel-ttl">${a.title}</div>
+              <div class="rel-date">${a.date||''}</div>
+            </div>
+          </a>
+        `).join('');
+      }
+    }
+  }).catch(err => { console.error('Gagal memuat database Nainpedia:', err); });
+
+  document.getElementById('ftNewsletter').addEventListener('click', e => { e.preventDefault(); safeGo(relUrl('newsletter.html')); });
+  document.getElementById('ctaRequestBtn').addEventListener('click', e => {
+    if (SITE_DATA && SITE_DATA.site && SITE_DATA.site.contact_email) return;
+    e.preventDefault();
+    localToast('Sedang menyiapkan formulir…');
+  });
+
+  function openAbout() {
+    const body = document.getElementById('aboutModalBody');
+    const s = (SITE_DATA && SITE_DATA.site) || {};
+    body.innerHTML = '<p><strong>' + (s.name || 'Nainpedia') + '</strong> — ' + (s.description || 'Ruang baca digital sejarah Cirebon.') + '</p>';
+    document.getElementById('aboutModal').classList.add('open');
+  }
+  document.getElementById('ftAbout').addEventListener('click', openAbout);
+  document.getElementById('aboutModalClose').addEventListener('click', () => document.getElementById('aboutModal').classList.remove('open'));
+  document.getElementById('aboutModal').addEventListener('click', e => { if (e.target.id === 'aboutModal') e.target.classList.remove('open'); });
+  ['ftTeam','ftPrivacy','ftTerms'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => localToast('Halaman ini segera hadir.'));
+  });
+
+  document.getElementById('btn-twitter').addEventListener('click', e => {
+    e.preventDefault();
+    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + '&url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+  });
+  document.getElementById('btn-wa').addEventListener('click', e => {
+    e.preventDefault();
+    window.open('https://wa.me/?text=' + encodeURIComponent(document.title + '\n\n' + window.location.href), '_blank');
+  });
+  document.getElementById('btn-fb').addEventListener('click', e => {
+    e.preventDefault();
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+  });
+  document.getElementById('sh-copy').addEventListener('click', e => {
+    e.preventDefault();
+    const url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => localToast('Tautan berhasil disalin!')).catch(() => fallbackCopy(url));
+    } else {
+      fallbackCopy(url);
+    }
+  });
+  function fallbackCopy(text) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      localToast('Tautan berhasil disalin!');
+    } catch (e) {
+      localToast('Gagal menyalin tautan.');
+    }
+  }
+</script>
+</body>
+</html>
