@@ -10,7 +10,7 @@
     "logo_footer": "https://files.catbox.moe/t7uknp.png"
   },
   "stats": {
-    "articles": 18,
+    "articles": 19,
     "kawasan": 12,
     "tahun_berdiri": 2023
   },
@@ -151,7 +151,7 @@
       "id": "depok",
       "name": "Depok",
       "desc": "",
-      "article_count": 2,
+      "article_count": 3,
       "url": "depok.html",
       "hero_image": "",
       "layout": "grid",
@@ -376,6 +376,17 @@
       "img": "https://files.catbox.moe/cj5l0y.webp",
       "excerpt": "Gegsusbs s",
       "url": "depok/makam-dawa.html"
+    },
+    {
+      "id": "tes2-giwx",
+      "title": "tes2",
+      "kawasan_id": "depok",
+      "kawasan_name": "Depok",
+      "date": "14 Juli 2026",
+      "read_time": 5,
+      "img": "https://files.catbox.moe/cj5l0y.webp",
+      "excerpt": "Bsusvs",
+      "url": "depok/tes2.html"
     }
   ]
 }
