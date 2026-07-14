@@ -124,7 +124,8 @@ body.dark .dash-shortcut-icon{background:rgba(79,70,229,0.15);}
 
 /* CARD */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow);}
-.card-ttl{font-size:16px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.card-ttl{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.card-desc{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
 .card-ttl svg{width:18px;height:18px;color:var(--accent);flex-shrink:0;}
 .card-ttl-side{margin-left:auto;font-weight:600;}
 
@@ -559,6 +560,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
         Kawasan
         <span class="card-ttl-side badge-soft" id="kawasanTotalBadge">0</span>
       </div>
+      <div class="card-desc">Klik salah satu kawasan di bawah untuk mulai mengedit, atau cari/filter dulu kalau daftarnya panjang.</div>
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="kawasanSearch" placeholder="Cari kawasan…"/>
@@ -579,6 +581,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         Data Mentah
       </div>
+      <div class="card-desc">Cadangan/pemulihan database situs dalam format JSON.</div>
       <div class="json-actions">
         <button class="btn btn-outline btn-sm" id="btnExportJson">Unduh db.json</button>
         <button class="btn btn-outline btn-sm" id="btnImportJson">Impor JSON</button>
@@ -603,6 +606,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
     <!-- SITE FORM -->
     <div class="card" id="siteCard" style="display:none;">
       <div class="card-ttl">Info Situs</div>
+      <div class="card-desc">Pengaturan umum yang tampil di beranda, footer, dan modal "Tentang Kami" di semua halaman.</div>
       <div class="field"><label>Nama Situs</label><input type="text" id="siteName"/></div>
       <div class="field"><label>Tagline</label><input type="text" id="siteTagline"/></div>
       <div class="field"><label>Deskripsi</label><textarea id="siteDesc"></textarea></div>
@@ -638,6 +642,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
     <!-- OVERVIEW -->
     <div class="card" id="overviewCard" style="display:none;">
       <div class="card-ttl">Ringkasan Semua Kawasan &amp; Artikel</div>
+      <div class="card-desc">Lihat kondisi seluruh situs sekilas: jumlah artikel, kawasan kosong, dan gambar hero yang belum diisi.</div>
       <div class="stats-row" id="statsRow"></div>
       <div class="stats-row2" id="statsRow2"></div>
       <div class="hint" style="margin-bottom:12px;">Klik nama kawasan untuk langsung membuka &amp; mengeditnya. Kolom "Selisih" menandai kawasan yang jumlah artikelnya berbeda dari <code>article_count</code> tersimpan — akan otomatis disamakan saat kamu menyimpan.</div>
@@ -650,6 +655,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
     <!-- ACTIVITY LOG -->
     <div class="card" id="logCard" style="display:none;">
       <div class="card-ttl">Riwayat Perubahan (sesi ini, belum tentu tersimpan)</div>
+      <div class="card-desc">Daftar aksi yang kamu lakukan sejak membuka panel ini. Tidak permanen — hilang saat halaman ditutup.</div>
       <div class="log-list" id="logList"></div>
       <button class="btn btn-outline btn-sm" id="btnCloseLog" style="margin-top:14px;">Tutup</button>
     </div>
@@ -782,6 +788,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
 
       <div class="card">
         <div class="card-ttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7-5.4-4.7 7.1-.6z"/></svg>Artikel Pilihan (strip geser tanpa tombol)</div>
+        <div class="card-desc">Centang artikel yang ingin ditonjolkan di bagian atas halaman kawasan ini.</div>
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input type="text" id="featuredSearch" placeholder="Cari artikel untuk dijadikan Artikel Pilihan…"/>
@@ -795,12 +802,14 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
           Bacaan Tambahan (Sections)
           <span class="card-ttl-side badge-soft" id="sectionsCountBadge">0</span>
         </div>
+        <div class="card-desc">Kelompok bacaan tambahan di bawah artikel pilihan, masing-masing punya judul &amp; tata letak sendiri.</div>
         <div id="sectionsList"></div>
         <button class="add-art-btn" id="btnAddSection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Tambah Section Baru</button>
       </div>
 
       <div class="card">
         <div class="card-ttl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Artikel <span class="badge-soft" id="artCountBadge">0</span></div>
+        <div class="card-desc">Semua artikel milik kawasan ini. Klik judul untuk membuka &amp; mengedit detailnya.</div>
         <div class="art-toolbar">
           <div class="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -2041,6 +2050,16 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .na-modal-ttl{font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;}
 .na-modal-body{font-size:13.5px;color:var(--text2);line-height:1.75;}
 .na-modal-close{margin-top:18px;width:100%;padding:10px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--text2);font-family:'Rubik',sans-serif;}
+
+/* Mobile hardening — keep layout stable across different phones/browsers */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+img{max-width:100%;height:auto;}
+input,button,select,textarea{font-family:inherit;}
+@media(max-width:680px){
+  .footer-main{padding-left:20px;padding-right:20px;}
+  .footer-cta-btn{width:100%;justify-content:center;}
+}
 </style>
 </head>
 <body>
@@ -2501,6 +2520,45 @@ function buildKawasanHTML(kwId, kwName) {
     @media(max-width:420px){
       .art-grid{grid-template-columns:1fr;}
     }
+
+    /* DESKTOP 3-COLUMN SHELL (center = kawasan content, sides = ad space) */
+    .kawasan-shell{display:grid;grid-template-columns:1fr;gap:0;}
+    .kawasan-shell .main{max-width:100%;margin:0;}
+    .ad-slot{display:none;}
+    @media(min-width:1280px){
+      .kawasan-shell{max-width:1600px;margin:0 auto;grid-template-columns:250px minmax(0,1100px) 250px;gap:28px;align-items:start;padding:0 24px;}
+      .ad-slot{display:flex;align-items:center;justify-content:center;position:sticky;top:76px;min-height:280px;border:1.5px dashed var(--border);border-radius:14px;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.4px;text-align:center;padding:18px;background:#fff;text-transform:uppercase;}
+    }
+
+    /* Footer "Kawasan Lain" grid (previously undefined — caused unstyled/oversized elements) */
+    .footer-kawasan-section{border-top:1px solid rgba(255,255,255,.07);}
+    .footer-kawasan-inner{max-width:1100px;margin:0 auto;padding:26px 24px;}
+    .footer-kawasan-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:14px;}
+    .footer-kawasan-grid{display:flex;flex-wrap:wrap;gap:10px;}
+    .footer-kawasan-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:8px 14px;text-decoration:none;transition:all .15s;}
+    .footer-kawasan-chip:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);}
+    .footer-kawasan-chip-name{font-size:12.5px;font-weight:600;color:#e2e8f0;}
+    .footer-kawasan-chip-count{font-size:11px;color:#64748b;}
+
+    /* Footer CTA "Request/Kirim Ide" — previously undefined, caused an unstyled, oversized button */
+    .footer-cta-section{border-top:1px solid rgba(255,255,255,.07);}
+    .footer-cta-inner{max-width:1100px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+    .footer-cta-text{flex:1;min-width:220px;}
+    .footer-cta-ttl{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+    .footer-cta-sub{font-size:12.5px;color:#94a3b8;max-width:480px;line-height:1.6;}
+    .footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;padding:11px 20px;border-radius:10px;text-decoration:none;flex-shrink:0;transition:all .15s;white-space:nowrap;}
+    .footer-cta-btn:hover{background:#1d4ed8;transform:translateY(-1px);}
+    .footer-cta-btn svg{width:15px;height:15px;flex-shrink:0;}
+    @media(max-width:680px){
+      .footer-cta-inner{flex-direction:column;align-items:flex-start;}
+      .footer-cta-btn{width:100%;justify-content:center;}
+    }
+
+    /* Mobile hardening — keep layout stable across different phones/browsers */
+    html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+    body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+    img{max-width:100%;height:auto;}
+    input,button,select,textarea{font-family:inherit;}
   </style>
 </head>
 <body>
@@ -2582,31 +2640,37 @@ function buildKawasanHTML(kwId, kwName) {
   </div>
 </div>
 
-<div class="main">
+<div class="kawasan-shell">
+  <aside class="ad-slot" id="adSlotLeft">Ruang Iklan</aside>
 
-  <div class="section-head" id="featuredHead">
-    <span class="section-title">Artikel Pilihan</span>
-  </div>
-  <div id="featuredSwipe" class="featured-swipe-wrap is-hidden" style="margin-bottom:32px;"></div>
+  <div class="main">
 
-  <div class="section-head" style="margin-top:8px;">
-    <span class="section-title">Semua Artikel</span>
-    <span class="section-count" id="allCount"></span>
-  </div>
-  <div class="art-grid" id="artGrid">
-    <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
-    <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
-    <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
-  </div>
-  <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-    <button class="load-more-btn" id="loadMoreBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      Muat Lebih Banyak
-    </button>
+    <div class="section-head" id="featuredHead">
+      <span class="section-title">Artikel Pilihan</span>
+    </div>
+    <div id="featuredSwipe" class="featured-swipe-wrap is-hidden" style="margin-bottom:32px;"></div>
+
+    <div class="section-head" style="margin-top:8px;">
+      <span class="section-title">Semua Artikel</span>
+      <span class="section-count" id="allCount"></span>
+    </div>
+    <div class="art-grid" id="artGrid">
+      <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
+      <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
+      <div class="skel-card"><div class="skel skel-img"></div><div class="skel-body"><div class="skel skel-line w40" style="height:10px;margin-bottom:8px;"></div><div class="skel skel-line w80"></div><div class="skel skel-line w60" style="margin-top:4px;"></div></div></div>
+    </div>
+    <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+      <button class="load-more-btn" id="loadMoreBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        Muat Lebih Banyak
+      </button>
+    </div>
+
+    <div id="sectionsWrap"></div>
+
   </div>
 
-  <div id="sectionsWrap"></div>
-
+  <aside class="ad-slot" id="adSlotRight">Ruang Iklan</aside>
 </div>
 
 <footer class="site-footer">
