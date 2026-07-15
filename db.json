@@ -388,5 +388,27 @@
       "excerpt": "Bsusvs",
       "url": "depok/tes2.html"
     }
-  ]
+  ],
+  "pages": {
+    "about": {
+      "title": "Tentang Kami",
+      "slug": "tentang-kami.html",
+      "content": "Nainpedia adalah ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon."
+    },
+    "team": {
+      "title": "Tim Redaksi",
+      "slug": "tim-redaksi.html",
+      "content": "Halaman ini berisi perkenalan tim di balik Nainpedia."
+    },
+    "privacy": {
+      "title": "Kebijakan Privasi",
+      "slug": "kebijakan-privasi.html",
+      "content": "Kebijakan privasi Nainpedia akan dijelaskan di sini."
+    },
+    "terms": {
+      "title": "Ketentuan",
+      "slug": "ketentuan.html",
+      "content": "Ketentuan penggunaan situs Nainpedia akan dijelaskan di sini."
+    }
+  }
 }
