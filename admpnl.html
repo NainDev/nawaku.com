@@ -408,6 +408,10 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Buat Artikel Baru
       </button>
+      <button class="n-dd-item" data-goto="static-pages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+        Halaman Statis
+      </button>
       <div class="n-dd-sep"></div>
       <div class="n-dd-label">Lainnya</div>
       <button class="n-dd-item" data-goto="overview">
@@ -504,6 +508,13 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
         <div class="dash-shortcut-ttl">Buat Artikel Baru</div>
         <div class="dash-shortcut-desc">Tulis artikel baru lengkap dengan gambar, lalu otomatis dibuatkan filenya.</div>
       </button>
+      <button class="dash-shortcut-card" data-goto="static-pages">
+        <div class="dash-shortcut-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+        </div>
+        <div class="dash-shortcut-ttl">Halaman Statis</div>
+        <div class="dash-shortcut-desc">Kelola isi Tentang Kami, Tim Redaksi, Kebijakan Privasi, dan Ketentuan.</div>
+      </button>
       <button class="dash-shortcut-card" data-goto="site">
         <div class="dash-shortcut-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -553,6 +564,7 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
       <button class="btn btn-outline btn-block btn-sm" id="btnShowOverview" style="margin-top:8px;">Lihat Ringkasan Semua Kawasan</button>
       <button class="btn btn-outline btn-block btn-sm" id="btnShowLog" style="margin-top:8px;">Riwayat Perubahan (sesi ini)</button>
       <button class="btn btn-primary btn-block btn-sm" id="btnShowCreateArticle" style="margin-top:8px;">+ Buat Artikel Baru (Tester)</button>
+      <button class="btn btn-outline btn-block btn-sm" id="btnShowStaticPages" style="margin-top:8px;">Halaman Statis</button>
     </div>
     <div class="card">
       <div class="card-ttl">
@@ -731,6 +743,42 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
         </button>
         <button class="btn btn-outline" id="btnCloseCreateArticle" type="button">Batal</button>
       </div>
+    </div>
+
+    <!-- HALAMAN STATIS -->
+    <div class="card" id="staticPagesCard" style="display:none;">
+      <div class="card-ttl">Halaman Statis</div>
+      <div class="card-desc">Isi konten Tentang Kami, Tim Redaksi, Kebijakan Privasi, dan Ketentuan — dipakai di footer semua halaman artikel &amp; kawasan. Tulis paragraf terpisah dengan baris kosong. Setelah diisi, klik "Buat/Perbarui Halaman" untuk generate filenya langsung ke GitHub.</div>
+
+      <div class="section-editor" data-page-key="about">
+        <div class="section-editor-head"><span style="font-weight:700;font-size:14px;">Tentang Kami</span><span class="badge-soft" id="spSlug_about">tentang-kami.html</span></div>
+        <div class="field"><label>Judul Halaman</label><input type="text" data-sp-field="title" id="spTitle_about"/></div>
+        <div class="field"><label>Isi (satu paragraf per baris kosong)</label><textarea data-sp-field="content" id="spContent_about" style="min-height:120px;"></textarea></div>
+        <button class="btn btn-primary btn-sm" data-sp-generate="about" type="button">Buat/Perbarui Halaman</button>
+      </div>
+
+      <div class="section-editor" data-page-key="team">
+        <div class="section-editor-head"><span style="font-weight:700;font-size:14px;">Tim Redaksi</span><span class="badge-soft" id="spSlug_team">tim-redaksi.html</span></div>
+        <div class="field"><label>Judul Halaman</label><input type="text" data-sp-field="title" id="spTitle_team"/></div>
+        <div class="field"><label>Isi (satu paragraf per baris kosong)</label><textarea data-sp-field="content" id="spContent_team" style="min-height:120px;"></textarea></div>
+        <button class="btn btn-primary btn-sm" data-sp-generate="team" type="button">Buat/Perbarui Halaman</button>
+      </div>
+
+      <div class="section-editor" data-page-key="privacy">
+        <div class="section-editor-head"><span style="font-weight:700;font-size:14px;">Kebijakan Privasi</span><span class="badge-soft" id="spSlug_privacy">kebijakan-privasi.html</span></div>
+        <div class="field"><label>Judul Halaman</label><input type="text" data-sp-field="title" id="spTitle_privacy"/></div>
+        <div class="field"><label>Isi (satu paragraf per baris kosong)</label><textarea data-sp-field="content" id="spContent_privacy" style="min-height:120px;"></textarea></div>
+        <button class="btn btn-primary btn-sm" data-sp-generate="privacy" type="button">Buat/Perbarui Halaman</button>
+      </div>
+
+      <div class="section-editor" data-page-key="terms">
+        <div class="section-editor-head"><span style="font-weight:700;font-size:14px;">Ketentuan</span><span class="badge-soft" id="spSlug_terms">ketentuan.html</span></div>
+        <div class="field"><label>Judul Halaman</label><input type="text" data-sp-field="title" id="spTitle_terms"/></div>
+        <div class="field"><label>Isi (satu paragraf per baris kosong)</label><textarea data-sp-field="content" id="spContent_terms" style="min-height:120px;"></textarea></div>
+        <button class="btn btn-primary btn-sm" data-sp-generate="terms" type="button">Buat/Perbarui Halaman</button>
+      </div>
+
+      <button class="btn btn-outline btn-sm" id="btnCloseStaticPages" style="margin-top:6px;">Tutup</button>
     </div>
 
     <!-- KAWASAN DETAIL -->
@@ -947,6 +995,21 @@ async function loadFromGithub() {
     });
     DB.articles.forEach(a => { if (a.excerpt === undefined) a.excerpt = ''; });
     if (DB.site.contact_email === undefined) DB.site.contact_email = 'halo@nawaku.com';
+    if (!DB.pages) DB.pages = {};
+    const DEFAULT_STATIC_PAGES = {
+      about: { title: 'Tentang Kami', slug: 'tentang-kami.html', content: 'Nainpedia adalah ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.' },
+      team: { title: 'Tim Redaksi', slug: 'tim-redaksi.html', content: 'Halaman ini berisi perkenalan tim di balik Nainpedia.' },
+      privacy: { title: 'Kebijakan Privasi', slug: 'kebijakan-privasi.html', content: 'Kebijakan privasi Nainpedia akan dijelaskan di sini.' },
+      terms: { title: 'Ketentuan', slug: 'ketentuan.html', content: 'Ketentuan penggunaan situs Nainpedia akan dijelaskan di sini.' }
+    };
+    Object.keys(DEFAULT_STATIC_PAGES).forEach(k => {
+      if (!DB.pages[k]) DB.pages[k] = { ...DEFAULT_STATIC_PAGES[k] };
+      else {
+        if (!DB.pages[k].title) DB.pages[k].title = DEFAULT_STATIC_PAGES[k].title;
+        if (!DB.pages[k].slug) DB.pages[k].slug = DEFAULT_STATIC_PAGES[k].slug;
+        if (DB.pages[k].content === undefined) DB.pages[k].content = '';
+      }
+    });
 
     $('connDot').className = 'dot on';
     $('connText').textContent = `Terhubung — ${GH.owner}/${GH.repo} (${GH.branch})`;
@@ -1100,6 +1163,7 @@ function closeAllPanels() {
   $('logCard').style.display = 'none';
   $('jsonPreviewCard').style.display = 'none';
   $('createArticleCard').style.display = 'none';
+  $('staticPagesCard').style.display = 'none';
   $('kawasanDetail').style.display = 'none';
 }
 
@@ -1124,6 +1188,7 @@ function goToSection(target) {
   if (target === 'site') { $('btnEditSite').click(); return; }
   if (target === 'logo') { closeAllPanels(); fillLogoForm(); $('logoCard').style.display = 'block'; $('mainArea').classList.remove('locked'); return; }
   if (target === 'create-article') { $('btnShowCreateArticle').click(); return; }
+  if (target === 'static-pages') { $('btnShowStaticPages').click(); return; }
   if (target === 'overview') { $('btnShowOverview').click(); return; }
   if (target === 'log') { $('btnShowLog').click(); return; }
   if (target === 'json') { $('btnPreviewJson').click(); return; }
@@ -2044,17 +2109,29 @@ body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-h
 .fb-badge svg{width:13px;height:13px;color:#3b82f6;}
 @media(max-width:680px){.footer-main{flex-direction:column;gap:28px;padding:28px 20px 24px;}.ft-cols{gap:28px;}.footer-bottom{flex-direction:column;align-items:flex-start;}.footer-cta-inner{flex-direction:column;align-items:flex-start;}}
 
-/* Simple self-contained about modal (doesn't depend on external CSS) */
-.na-modal-ov{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:9997;opacity:0;pointer-events:none;transition:opacity .2s;padding:20px;}
-.na-modal-ov.open{opacity:1;pointer-events:all;}
-.na-modal-box{background:#fff;border-radius:16px;max-width:420px;width:100%;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.25);}
-.na-modal-ttl{font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;}
-.na-modal-body{font-size:13.5px;color:var(--text2);line-height:1.75;}
-.na-modal-close{margin-top:18px;width:100%;padding:10px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-weight:600;font-size:13.5px;cursor:pointer;color:var(--text2);font-family:'Rubik',sans-serif;}
+/* Floating dark/light theme toggle (fixed to the side of the screen) */
+.theme-fab{position:fixed;right:16px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);box-shadow:0 6px 18px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:400;transition:all .2s;color:var(--text2);}
+.theme-fab:hover{transform:translateY(-50%) scale(1.06);border-color:var(--accent-mid);color:var(--accent);}
+.theme-fab svg{width:20px;height:20px;flex-shrink:0;}
+@media(max-width:680px){.theme-fab{right:12px;width:42px;height:42px;}.theme-fab svg{width:18px;height:18px;}}
+
+/* Dark mode — best effort: covers everything styled by this page's own CSS variables */
+body.dark-mode{--bg:#0b0f19;--surface:#151b2c;--text:#f1f5f9;--text2:#cbd5e1;--muted:#94a3b8;--border:#26314a;--accent-light:#1e293b;--accent-mid:#334155;}
+body.dark-mode{background:var(--bg);color:var(--text);}
+body.dark-mode .navbar{background:rgba(11,15,25,.92);border-bottom-color:var(--border);}
+body.dark-mode .n-logo-brand{color:var(--text);}
+body.dark-mode .n-back-btn,body.dark-mode .theme-fab{background:var(--surface);border-color:var(--border);color:var(--text2);}
+body.dark-mode .read-badge{background:var(--bg);border-color:var(--border);color:var(--text2);}
+body.dark-mode .page,body.dark-mode .art-body,body.dark-mode .art-foot,body.dark-mode .related-section,body.dark-mode .info-box,body.dark-mode .loc-card,body.dark-mode .share-row{background:var(--surface) !important;color:var(--text2) !important;}
+body.dark-mode .art-section h2,body.dark-mode .a-lead,body.dark-mode .hero-title,body.dark-mode .rel-heading,body.dark-mode .info-box-ttl{color:var(--text) !important;}
+body.dark-mode .art-section p,body.dark-mode .breadcrumb .bc{color:var(--text2) !important;}
+body.dark-mode .ad-slot{background:var(--surface);border-color:var(--border);color:var(--muted);}
+body.dark-mode .rel-item{background:var(--surface) !important;border-color:var(--border) !important;}
+body.dark-mode .rel-ttl{color:var(--text) !important;}
 
 /* Mobile hardening — keep layout stable across different phones/browsers */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;transition:background .2s,color .2s;}
 img{max-width:100%;height:auto;}
 input,button,select,textarea{font-family:inherit;}
 @media(max-width:680px){
@@ -2064,6 +2141,11 @@ input,button,select,textarea{font-family:inherit;}
 </style>
 </head>
 <body>
+
+<button class="theme-fab" id="themeFab" title="Ganti tampilan gelap/terang" aria-label="Ganti tema gelap/terang">
+  <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 
 <div class="redirect-overlay" id="redirectOverlay">
   <div class="redirect-spinner"></div>
@@ -2158,14 +2240,6 @@ input,button,select,textarea{font-family:inherit;}
   <aside class="ad-slot" id="adSlotRight">Ruang Iklan</aside>
 </div>
 
-<div class="na-modal-ov" id="aboutModal">
-  <div class="na-modal-box">
-    <div class="na-modal-ttl">Tentang Nainpedia</div>
-    <div class="na-modal-body" id="aboutModalBody">Memuat…</div>
-    <button class="na-modal-close" id="aboutModalClose">Tutup</button>
-  </div>
-</div>
-
 <footer class="site-footer">
   <div class="footer-main">
     <div class="ft-brand-col">
@@ -2184,14 +2258,14 @@ input,button,select,textarea{font-family:inherit;}
       <div class="ft-right">
         <div class="ft-col-ttl">Nainpedia</div>
         <a class="ft-col-link" href="../index.html" id="ftHome">Beranda</a>
-        <button class="ft-col-link" id="ftAbout">Tentang Kami</button>
-        <button class="ft-col-link" id="ftTeam">Tim Redaksi</button>
+        <a class="ft-col-link" href="../tentang-kami.html" id="ftAbout">Tentang Kami</a>
+        <a class="ft-col-link" href="../tim-redaksi.html" id="ftTeam">Tim Redaksi</a>
         <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
       </div>
       <div class="ft-right">
         <div class="ft-col-ttl">Lainnya</div>
-        <button class="ft-col-link" id="ftPrivacy">Kebijakan Privasi</button>
-        <button class="ft-col-link" id="ftTerms">Ketentuan</button>
+        <a class="ft-col-link" href="../kebijakan-privasi.html" id="ftPrivacy">Kebijakan Privasi</a>
+        <a class="ft-col-link" href="../ketentuan.html" id="ftTerms">Ketentuan</a>
       </div>
     </div>
   </div>
@@ -2274,6 +2348,23 @@ input,button,select,textarea{font-family:inherit;}
   window.addEventListener('scroll', updateReadProgress, { passive: true });
   updateReadProgress();
 
+  const THEME_KEY = 'nainpedia-theme';
+  const themeSun = document.getElementById('themeIconSun');
+  const themeMoon = document.getElementById('themeIconMoon');
+  function applyTheme(mode) {
+    document.body.classList.toggle('dark-mode', mode === 'dark');
+    themeSun.style.display = mode === 'dark' ? 'none' : 'block';
+    themeMoon.style.display = mode === 'dark' ? 'block' : 'none';
+  }
+  let savedTheme = 'light';
+  try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
+  applyTheme(savedTheme);
+  document.getElementById('themeFab').addEventListener('click', () => {
+    const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+  });
+
   document.getElementById('logoLink').addEventListener('click', e => {
     e.preventDefault();
     safeGo(relUrl('index.html'));
@@ -2331,19 +2422,6 @@ input,button,select,textarea{font-family:inherit;}
     if (SITE_DATA && SITE_DATA.site && SITE_DATA.site.contact_email) return;
     e.preventDefault();
     localToast('Sedang menyiapkan formulir…');
-  });
-
-  function openAbout() {
-    const body = document.getElementById('aboutModalBody');
-    const s = (SITE_DATA && SITE_DATA.site) || {};
-    body.innerHTML = '<p><strong>' + (s.name || 'Nainpedia') + '</strong> — ' + (s.description || 'Ruang baca digital sejarah Cirebon.') + '</p>';
-    document.getElementById('aboutModal').classList.add('open');
-  }
-  document.getElementById('ftAbout').addEventListener('click', openAbout);
-  document.getElementById('aboutModalClose').addEventListener('click', () => document.getElementById('aboutModal').classList.remove('open'));
-  document.getElementById('aboutModal').addEventListener('click', e => { if (e.target.id === 'aboutModal') e.target.classList.remove('open'); });
-  ['ftTeam','ftPrivacy','ftTerms'].forEach(id => {
-    document.getElementById(id).addEventListener('click', () => localToast('Halaman ini segera hadir.'));
   });
 
   document.getElementById('btn-twitter').addEventListener('click', e => {
@@ -2531,16 +2609,6 @@ function buildKawasanHTML(kwId, kwName) {
       .ad-slot{display:flex;align-items:center;justify-content:center;position:sticky;top:76px;min-height:280px;border:1.5px dashed var(--border);border-radius:14px;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.4px;text-align:center;padding:18px;background:#fff;text-transform:uppercase;}
     }
 
-    /* Footer "Kawasan Lain" grid (previously undefined — caused unstyled/oversized elements) */
-    .footer-kawasan-section{border-top:1px solid rgba(255,255,255,.07);}
-    .footer-kawasan-inner{max-width:1100px;margin:0 auto;padding:26px 24px;}
-    .footer-kawasan-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:14px;}
-    .footer-kawasan-grid{display:flex;flex-wrap:wrap;gap:10px;}
-    .footer-kawasan-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:8px 14px;text-decoration:none;transition:all .15s;}
-    .footer-kawasan-chip:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);}
-    .footer-kawasan-chip-name{font-size:12.5px;font-weight:600;color:#e2e8f0;}
-    .footer-kawasan-chip-count{font-size:11px;color:#64748b;}
-
     /* Footer CTA "Request/Kirim Ide" — previously undefined, caused an unstyled, oversized button */
     .footer-cta-section{border-top:1px solid rgba(255,255,255,.07);}
     .footer-cta-inner{max-width:1100px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
@@ -2582,21 +2650,10 @@ function buildKawasanHTML(kwId, kwName) {
       <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
     </button>
     <div class="n-dropdown" id="nDropdown">
-      <div class="n-dd-label">Jelajahi</div>
       <a class="n-dd-item" href="index.html" data-nav>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Beranda
       </a>
-      <button class="n-dd-item" id="btnGoKawasanList">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
-        Daftar Kawasan Lain
-      </button>
-      <div class="n-dd-sep"></div>
-      <div class="n-dd-label">Info</div>
-      <button class="n-dd-item" id="btnOpenAboutKw">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Tentang Nainpedia
-      </button>
       <button class="n-dd-item" id="btnNewsletterKw">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Newsletter
@@ -2606,27 +2663,12 @@ function buildKawasanHTML(kwId, kwName) {
   </div>
 </nav>
 
-<!-- ABOUT MODAL (dari dropdown navbar) -->
-<div class="about-modal-overlay" id="aboutModalKw">
-  <div class="about-modal-box">
-    <div class="about-modal-header">
-      <div class="about-modal-title">Tentang Nainpedia</div>
-      <button class="about-modal-close" id="btnCloseAboutKw">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="about-modal-body" id="aboutBodyKw"></div>
-  </div>
-</div>
-
 <div class="kawasan-hero">
   <img id="heroImg" src="" alt="${esc(kwName)}"/>
   <div class="kawasan-hero-overlay"></div>
   <div class="kawasan-hero-cnt">
     <div class="kawasan-breadcrumb">
       <a class="kbc" href="index.html" data-nav>Beranda</a>
-      <span class="kbc-sep">›</span>
-      <a class="kbc" href="index.html" data-nav>Kawasan</a>
       <span class="kbc-sep">›</span>
       <span class="kbc active" id="bcName">${esc(kwName)}</span>
     </div>
@@ -2690,17 +2732,12 @@ function buildKawasanHTML(kwId, kwName) {
     </div>
     <div class="ft-right">
       <div class="ft-col-ttl">Nainpedia</div>
-      <a class="ft-col-link" href="#" data-nav>Tentang Kami</a>
-      <a class="ft-col-link" href="#" data-nav>Tim Redaksi</a>
+      <a class="ft-col-link" href="index.html" data-nav>Beranda</a>
+      <a class="ft-col-link" href="tentang-kami.html" data-nav>Tentang Kami</a>
+      <a class="ft-col-link" href="tim-redaksi.html" data-nav>Tim Redaksi</a>
       <a class="ft-col-link" href="#" id="ftNewsletter">Newsletter</a>
-      <a class="ft-col-link" href="#" data-nav>Kebijakan Privasi</a>
-      <a class="ft-col-link" href="#" data-nav>Ketentuan</a>
-    </div>
-  </div>
-  <div class="footer-kawasan-section">
-    <div class="footer-kawasan-inner">
-      <div class="footer-kawasan-ttl">Jelajahi Kawasan Lain</div>
-      <div class="footer-kawasan-grid" id="otherGrid"></div>
+      <a class="ft-col-link" href="kebijakan-privasi.html" data-nav>Kebijakan Privasi</a>
+      <a class="ft-col-link" href="ketentuan.html" data-nav>Ketentuan</a>
     </div>
   </div>
 
@@ -2765,11 +2802,9 @@ function buildKawasanHTML(kwId, kwName) {
 
     renderGrid(articles, visibleCount);
     renderSections(db, kw);
-    renderOther(db);
     renderCta(db);
     NawakuDB.renderFooter(db);
     NawakuDB.attachNavAll();
-    renderAboutModalKw(db);
 
     const nl = document.getElementById('ftNewsletter');
     if (nl) nl.addEventListener('click', e => {
@@ -2784,42 +2819,9 @@ function buildKawasanHTML(kwId, kwName) {
   });
   document.addEventListener('click', () => nMoreEl.classList.remove('open'));
 
-  document.getElementById('btnGoKawasanList').addEventListener('click', () => {
-    nMoreEl.classList.remove('open');
-    const el = document.getElementById('otherGrid');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-
   document.getElementById('btnNewsletterKw').addEventListener('click', () => {
     nMoreEl.classList.remove('open');
     NawakuDB.goRedirect('newsletter.html');
-  });
-
-  function renderAboutModalKw(db) {
-    const s = db.site || {};
-    const st = db.stats || {};
-    document.getElementById('aboutBodyKw').innerHTML = \`
-      <div class="about-stat-row">
-        <div class="about-stat"><div class="about-stat-v">\${st.articles || 0}+</div><div class="about-stat-l">Artikel</div></div>
-        <div class="about-stat"><div class="about-stat-v">\${st.kawasan || 0}</div><div class="about-stat-l">Kawasan</div></div>
-        <div class="about-stat"><div class="about-stat-v">\${st.tahun_berdiri || ''}</div><div class="about-stat-l">Berdiri</div></div>
-      </div>
-      <p><strong>\${s.name || 'Nainpedia'}</strong> — \${s.description || ''}</p>
-      <p>\${s.about_extended || ''}</p>
-    \`;
-  }
-  document.getElementById('btnOpenAboutKw').addEventListener('click', () => {
-    nMoreEl.classList.remove('open');
-    document.getElementById('aboutModalKw').classList.add('open');
-  });
-  document.getElementById('btnCloseAboutKw').addEventListener('click', () => {
-    document.getElementById('aboutModalKw').classList.remove('open');
-  });
-  document.getElementById('aboutModalKw').addEventListener('click', (e) => {
-    if (e.target.id === 'aboutModalKw') document.getElementById('aboutModalKw').classList.remove('open');
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') document.getElementById('aboutModalKw').classList.remove('open');
   });
 
   function renderSections(db, kw) {
@@ -2875,18 +2877,6 @@ function buildKawasanHTML(kwId, kwName) {
     visibleCount += PAGE_SIZE;
     renderGrid(articles, visibleCount);
   });
-
-  function renderOther(db) {
-    const others = (db.kawasan || []).filter(k => k.id !== KAWASAN_ID);
-    const grid = document.getElementById('otherGrid');
-    grid.innerHTML = others.map(k => \`
-      <a class="footer-kawasan-chip" href="\${k.url}" data-nav>
-        <span class="footer-kawasan-chip-name">\${k.name}</span>
-        <span class="footer-kawasan-chip-count">\${NawakuDB.articleCountOf(db, k.id)} artikel</span>
-      </a>
-    \`).join('');
-    NawakuDB.attachNavAll('.footer-kawasan-chip[data-nav]');
-  }
 <\/script>
 </body>
 </html>`;
@@ -2951,6 +2941,183 @@ $('btnGenerateKawasanHtml').addEventListener('click', async () => {
   } finally {
     setBusy(false);
   }
+});
+
+/* ══════════════════════════════════════
+   HALAMAN STATIS (Tentang Kami, Tim Redaksi, Kebijakan Privasi, Ketentuan)
+══════════════════════════════════════ */
+const STATIC_PAGE_KEYS = ['about', 'team', 'privacy', 'terms'];
+
+function fillStaticPagesForm() {
+  STATIC_PAGE_KEYS.forEach(key => {
+    const p = DB.pages[key];
+    $('spTitle_' + key).value = p.title || '';
+    $('spContent_' + key).value = p.content || '';
+    $('spSlug_' + key).textContent = p.slug;
+  });
+}
+$('btnShowStaticPages').addEventListener('click', () => {
+  if (!DB) { showToast('Hubungkan database dulu', true); return; }
+  closeAllPanels();
+  fillStaticPagesForm();
+  $('staticPagesCard').style.display = 'block';
+  $('mainArea').classList.remove('locked');
+});
+$('btnCloseStaticPages').addEventListener('click', () => $('staticPagesCard').style.display = 'none');
+
+STATIC_PAGE_KEYS.forEach(key => {
+  $('spTitle_' + key).addEventListener('input', () => { DB.pages[key].title = $('spTitle_' + key).value; });
+  $('spContent_' + key).addEventListener('input', () => { DB.pages[key].content = $('spContent_' + key).value; });
+});
+
+function buildStaticPageHTML(pageTitle, contentText) {
+  const esc = escapeHtml;
+  const paragraphs = (contentText || '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+  const bodyHTML = paragraphs.length
+    ? paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n      ')
+    : '<p style="color:#888;">Konten belum diisi.</p>';
+
+  return `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>${esc(pageTitle)} — Nainpedia</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;--border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+img{max-width:100%;height:auto;}
+.navbar{position:sticky;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:10px;}
+.n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
+.n-logo-img{height:32px;width:32px;display:block;border-radius:9px;object-fit:cover;}
+.n-logo-brand{font-weight:800;font-size:16px;color:var(--text);letter-spacing:-.2px;white-space:nowrap;}
+.n-spacer{flex:1;}
+.n-back-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;cursor:pointer;}
+.n-back-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.n-back-btn svg{width:15px;height:15px;flex-shrink:0;}
+.sp-wrap{max-width:720px;margin:0 auto;padding:48px 20px 60px;}
+.sp-ttl{font-size:clamp(24px,4vw,32px);font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:24px;}
+.sp-body p{font-size:15px;line-height:1.85;color:var(--text2);margin-bottom:16px;}
+.site-footer{background:#0f172a;margin-top:40px;}
+.footer-main{max-width:1000px;margin:0 auto;padding:36px 20px 28px;display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap;}
+.ft-brand-col{flex:1;min-width:220px;}
+.ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.ft-logo-img{height:34px;width:34px;display:block;border-radius:9px;object-fit:cover;}
+.ft-logo-brand{font-weight:800;font-size:17px;color:#fff;letter-spacing:-.2px;white-space:nowrap;}
+.ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;max-width:300px;}
+.ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
+.ft-col-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;}
+.ft-col-link{font-size:13.5px;color:#94a3b8;text-decoration:none;transition:.15s;}
+.ft-col-link:hover{color:#e2e8f0;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:1000px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb-copy{font-size:12.5px;color:#475569;}
+@media(max-width:680px){.footer-main{flex-direction:column;gap:24px;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a class="n-logo" href="index.html" id="logoLink">
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
+    <span class="n-logo-brand">Nainpedia</span>
+  </a>
+  <div class="n-spacer"></div>
+  <a class="n-back-btn" href="index.html" id="backLink">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Kembali
+  </a>
+</nav>
+
+<div class="sp-wrap">
+  <div class="sp-ttl">${esc(pageTitle)}</div>
+  <div class="sp-body">
+    ${bodyHTML}
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="ft-brand-col">
+      <div class="ft-brand">
+        <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
+        <span class="ft-logo-brand">Nainpedia</span>
+      </div>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+    </div>
+    <div class="ft-right">
+      <div class="ft-col-ttl">Nainpedia</div>
+      <a class="ft-col-link" href="index.html">Beranda</a>
+      <a class="ft-col-link" href="tentang-kami.html">Tentang Kami</a>
+      <a class="ft-col-link" href="tim-redaksi.html">Tim Redaksi</a>
+      <a class="ft-col-link" href="kebijakan-privasi.html">Kebijakan Privasi</a>
+      <a class="ft-col-link" href="ketentuan.html">Ketentuan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-copy" id="ftCopy">© Nainpedia.com</span>
+  </div>
+</footer>
+
+<script src="shared.js"><\/script>
+<script>
+  document.getElementById('backLink').addEventListener('click', e => {
+    e.preventDefault();
+    try {
+      if (document.referrer && new URL(document.referrer).host === location.host && window.history.length > 1) {
+        history.back();
+        return;
+      }
+    } catch (err) {}
+    location.href = 'index.html';
+  });
+  if (window.NawakuDB && typeof NawakuDB.load === 'function') {
+    NawakuDB.load().then(db => { try { NawakuDB.renderFooter(db); } catch(e){} }).catch(()=>{});
+  }
+<\/script>
+</body>
+</html>`;
+}
+
+document.querySelectorAll('[data-sp-generate]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const key = btn.dataset.spGenerate;
+    const page = DB.pages[key];
+    if (!GH.owner || !GH.repo || !GH.token) { showToast('Hubungkan ke GitHub terlebih dahulu', true); return; }
+    if (!confirm(`Buat/perbarui halaman "${page.title}" di GitHub?\nPath: ${page.slug}`)) return;
+
+    const html = buildStaticPageHTML(page.title, page.content);
+    setBusy(true, 'Membuat halaman statis…');
+    try {
+      let sha = null;
+      try {
+        const checkRes = await fetch(
+          `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${page.slug}?ref=${encodeURIComponent(GH.branch)}`,
+          { headers: { 'Authorization': `Bearer ${GH.token}`, 'Accept': 'application/vnd.github+json' } }
+        );
+        if (checkRes.ok) { const existing = await checkRes.json(); sha = existing.sha; }
+      } catch (e) { /* file belum ada, lanjut buat baru */ }
+
+      const content = btoa(unescape(encodeURIComponent(html)));
+      const body = { message: `Buat/perbarui halaman statis: ${page.title} — ${new Date().toLocaleString('id-ID')}`, content: content, branch: GH.branch };
+      if (sha) body.sha = sha;
+
+      const res = await fetch(
+        `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${page.slug}`,
+        { method: 'PUT', headers: { 'Authorization': `Bearer ${GH.token}`, 'Accept': 'application/vnd.github+json' }, body: JSON.stringify(body) }
+      );
+      if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.message || `HTTP ${res.status}`); }
+
+      await saveToGithub();
+      logActivity(`Halaman statis dibuat/diperbarui: ${page.slug}`);
+      showToast(`Halaman "${page.title}" berhasil disimpan ke GitHub (${page.slug})`);
+    } catch (e) {
+      showToast('Gagal membuat halaman: ' + e.message, true);
+    } finally {
+      setBusy(false);
+    }
+  });
 });
 
 /* ══════════════════════════════════════
