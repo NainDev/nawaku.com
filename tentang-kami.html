@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tentang Kami — Nainpedia</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#f7f8fa;--surface:#fff;--text:#1a1a1a;--text2:#444;--muted:#888;--border:#e8e8e8;--accent:#2563eb;--accent-light:#eff4ff;--accent-mid:#bfdbfe;}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:'Rubik',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+img{max-width:100%;height:auto;}
+.navbar{position:sticky;top:0;left:0;right:0;z-index:300;height:60px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:10px;}
+.n-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
+.n-logo-img{height:32px;width:32px;display:block;border-radius:9px;object-fit:cover;}
+.n-logo-brand{font-weight:800;font-size:16px;color:var(--text);letter-spacing:-.2px;white-space:nowrap;}
+.n-spacer{flex:1;}
+.n-back-btn{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--text2);text-decoration:none;transition:all .15s;cursor:pointer;}
+.n-back-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);}
+.n-back-btn svg{width:15px;height:15px;flex-shrink:0;}
+.sp-wrap{max-width:720px;margin:0 auto;padding:48px 20px 60px;}
+.sp-ttl{font-size:clamp(24px,4vw,32px);font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:24px;}
+.sp-body p{font-size:15px;line-height:1.85;color:var(--text2);margin-bottom:16px;}
+.site-footer{background:#0f172a;margin-top:40px;}
+.footer-main{max-width:1000px;margin:0 auto;padding:36px 20px 28px;display:flex;align-items:flex-start;gap:56px;flex-wrap:wrap;}
+.ft-brand-col{flex:1;min-width:220px;}
+.ft-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.ft-logo-img{height:34px;width:34px;display:block;border-radius:9px;object-fit:cover;}
+.ft-logo-brand{font-weight:800;font-size:17px;color:#fff;letter-spacing:-.2px;white-space:nowrap;}
+.ft-desc{font-size:13.5px;color:#94a3b8;line-height:1.72;max-width:300px;}
+.ft-right{display:flex;flex-direction:column;gap:9px;flex-shrink:0;}
+.ft-col-ttl{font-size:12px;font-weight:700;color:#64748b;letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;}
+.ft-col-link{font-size:13.5px;color:#94a3b8;text-decoration:none;transition:.15s;}
+.ft-col-link:hover{color:#e2e8f0;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:1000px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb-copy{font-size:12.5px;color:#475569;}
+@media(max-width:680px){.footer-main{flex-direction:column;gap:24px;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a class="n-logo" href="index.html" id="logoLink">
+    <img class="n-logo-img" src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia"/>
+    <span class="n-logo-brand">Nainpedia</span>
+  </a>
+  <div class="n-spacer"></div>
+  <a class="n-back-btn" href="index.html" id="backLink">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Kembali
+  </a>
+</nav>
+
+<div class="sp-wrap">
+  <div class="sp-ttl">Tentang Kami</div>
+  <div class="sp-body">
+    <p>Nainpedia adalah ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="ft-brand-col">
+      <div class="ft-brand">
+        <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
+        <span class="ft-logo-brand">Nainpedia</span>
+      </div>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+    </div>
+    <div class="ft-right">
+      <div class="ft-col-ttl">Nainpedia</div>
+      <a class="ft-col-link" href="index.html">Beranda</a>
+      <a class="ft-col-link" href="tentang-kami.html">Tentang Kami</a>
+      <a class="ft-col-link" href="tim-redaksi.html">Tim Redaksi</a>
+      <a class="ft-col-link" href="kebijakan-privasi.html">Kebijakan Privasi</a>
+      <a class="ft-col-link" href="ketentuan.html">Ketentuan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fb-copy" id="ftCopy">© Nainpedia.com</span>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+  document.getElementById('backLink').addEventListener('click', e => {
+    e.preventDefault();
+    try {
+      if (document.referrer && new URL(document.referrer).host === location.host && window.history.length > 1) {
+        history.back();
+        return;
+      }
+    } catch (err) {}
+    location.href = 'index.html';
+  });
+  if (window.NawakuDB && typeof NawakuDB.load === 'function') {
+    NawakuDB.load().then(db => { try { NawakuDB.renderFooter(db); } catch(e){} }).catch(()=>{});
+  }
+</script>
+</body>
+</html>
