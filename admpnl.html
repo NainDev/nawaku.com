@@ -997,10 +997,10 @@ async function loadFromGithub() {
     if (DB.site.contact_email === undefined) DB.site.contact_email = 'halo@nawaku.com';
     if (!DB.pages) DB.pages = {};
     const DEFAULT_STATIC_PAGES = {
-      about: { title: 'Tentang Kami', slug: 'tentang-kami.html', content: 'Nainpedia adalah ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.' },
-      team: { title: 'Tim Redaksi', slug: 'tim-redaksi.html', content: 'Halaman ini berisi perkenalan tim di balik Nainpedia.' },
-      privacy: { title: 'Kebijakan Privasi', slug: 'kebijakan-privasi.html', content: 'Kebijakan privasi Nainpedia akan dijelaskan di sini.' },
-      terms: { title: 'Ketentuan', slug: 'ketentuan.html', content: 'Ketentuan penggunaan situs Nainpedia akan dijelaskan di sini.' }
+      about: { title: 'Tentang Kami', slug: 'tentang-kami.html', content: 'Nainpedia adalah ruang baca digital yang berfokus mendokumentasikan sejarah semua kawasan di Cirebon.\n\nMelalui artikel-artikel yang tersusun rapi per kawasan, Nainpedia berupaya menghadirkan cerita tentang bangunan bersejarah, kampung tua, dan jejak budaya yang mungkin belum banyak diketahui masyarakat luas.\n\nSetiap artikel ditulis berdasarkan riset dan referensi sejarah lokal, disajikan dengan bahasa yang ringan dan mudah dipahami, agar sejarah Cirebon bisa dinikmati oleh siapa saja — mulai dari pelajar, peneliti, hingga masyarakat umum yang sekadar ingin tahu.\n\nNainpedia masih terus berkembang dan berbenah. Kami terbuka terhadap masukan, koreksi data, maupun usulan topik baru dari pembaca melalui tombol "Request / Kirim Ide" yang tersedia di footer situs.' },
+      team: { title: 'Tim Redaksi', slug: 'tim-redaksi.html', content: 'Nainpedia saat ini dikelola oleh Nain, yang berperan sebagai developer sekaligus penulis artikel di situs ini.\n\nSebagai developer, Nain bertanggung jawab membangun dan memelihara seluruh sistem Nainpedia — mulai dari tampilan situs, panel admin, hingga struktur data setiap kawasan dan artikel.\n\nSebagai penulis, Nain menyusun riset, merangkai narasi, dan menerbitkan artikel-artikel sejarah yang tayang di Nainpedia.\n\nKe depannya, tim redaksi Nainpedia terbuka untuk berkembang seiring bertambahnya kontributor yang ingin membantu mendokumentasikan sejarah Cirebon.' },
+      privacy: { title: 'Kebijakan Privasi', slug: 'kebijakan-privasi.html', content: 'Nainpedia menghargai privasi setiap pengunjung situs ini. Kebijakan privasi ini menjelaskan bagaimana data dikumpulkan, digunakan, dan dilindungi saat Anda mengakses Nainpedia.\n\nNainpedia tidak meminta maupun menyimpan data pribadi sensitif seperti nomor identitas, data keuangan, atau kata sandi dari pengunjung situs.\n\nJika Anda mengirimkan ide atau masukan melalui tombol "Request / Kirim Ide", informasi seperti nama dan alamat email (apabila dicantumkan) hanya akan digunakan untuk menindaklanjuti masukan tersebut, dan tidak akan dibagikan ke pihak ketiga tanpa izin Anda.\n\nSitus ini dapat menggunakan penyimpanan lokal (local storage) pada perangkat Anda, misalnya untuk mengingat preferensi tampilan mode gelap/terang, dan bukan untuk melacak identitas pribadi Anda.\n\nDengan terus menggunakan Nainpedia, Anda menyetujui kebijakan privasi ini. Kebijakan ini dapat diperbarui sewaktu-waktu, dan versi terbaru akan selalu tersedia di halaman ini.' },
+      terms: { title: 'Ketentuan', slug: 'ketentuan.html', content: 'Dengan mengakses dan menggunakan situs Nainpedia, pengguna dianggap telah membaca, memahami, dan menyetujui seluruh ketentuan yang berlaku di bawah ini.\n\nSeluruh konten yang dipublikasikan di Nainpedia — termasuk teks, gambar, dan data kawasan — disusun untuk tujuan edukasi dan pelestarian sejarah, dan dapat berubah sewaktu-waktu tanpa pemberitahuan sebelumnya.\n\nPengguna dilarang menyalin, mendistribusikan ulang, atau memperjualbelikan konten Nainpedia tanpa izin tertulis dari pengelola, kecuali untuk kepentingan pendidikan non-komersial dengan mencantumkan sumber aslinya.\n\nNainpedia berupaya menyajikan informasi sejarah seakurat mungkin, namun tidak menutup kemungkinan adanya kekeliruan data. Pembaca yang menemukan ketidaksesuaian informasi dipersilakan menghubungi kami melalui tombol "Request / Kirim Ide".\n\nPengelola Nainpedia berhak mengubah, menambah, atau menghapus konten maupun ketentuan ini kapan saja demi peningkatan kualitas layanan, tanpa perlu pemberitahuan sebelumnya.' }
     };
     Object.keys(DEFAULT_STATIC_PAGES).forEach(k => {
       if (!DB.pages[k]) DB.pages[k] = { ...DEFAULT_STATIC_PAGES[k] };
@@ -2247,7 +2247,7 @@ input,button,select,textarea{font-family:inherit;}
         <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
         <span class="ft-logo-brand">Nainpedia</span>
       </div>
-      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah semua kawasan di Cirebon.</p>
       <div class="ft-socials">
         <a class="ft-soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         <a class="ft-soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -2723,7 +2723,7 @@ function buildKawasanHTML(kwId, kwName) {
         <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
         <span class="ft-name">Nainpedia</span>
       </div>
-      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah semua kawasan di Cirebon.</p>
       <div class="ft-socials">
         <a class="ft-soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         <a class="ft-soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="white" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.259 5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -2970,12 +2970,55 @@ STATIC_PAGE_KEYS.forEach(key => {
   $('spContent_' + key).addEventListener('input', () => { DB.pages[key].content = $('spContent_' + key).value; });
 });
 
-function buildStaticPageHTML(pageTitle, contentText) {
+function buildStaticPageHTML(pageTitle, contentText, pageKey) {
   const esc = escapeHtml;
   const paragraphs = (contentText || '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
   const bodyHTML = paragraphs.length
     ? paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n      ')
     : '<p style="color:#888;">Konten belum diisi.</p>';
+
+  const isPrivacy = pageKey === 'privacy';
+  const consentCSS = isPrivacy ? `
+.consent-box{margin-top:28px;padding:20px;border:1.5px solid var(--border);border-radius:14px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.consent-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--text2);line-height:1.6;}
+.consent-check input{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--accent);cursor:pointer;}
+.consent-btn{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;padding:11px 22px;border-radius:10px;border:none;cursor:pointer;font-family:'Rubik',sans-serif;transition:all .15s;}
+.consent-btn:hover:not(:disabled){background:#1d4ed8;transform:translateY(-1px);}
+.consent-btn:disabled{background:#cbd5e1;cursor:not-allowed;}
+.consent-status{margin-top:12px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.consent-status svg{width:15px;height:15px;flex-shrink:0;}` : '';
+
+  const consentHTML = isPrivacy ? `
+  <div class="consent-box">
+    <label class="consent-check">
+      <input type="checkbox" id="consentCheckbox"/>
+      <span>Saya telah membaca dan menyetujui Kebijakan Privasi Nainpedia ini.</span>
+    </label>
+    <button class="consent-btn" id="consentBtn" disabled>Setuju</button>
+    <div class="consent-status" id="consentStatus"></div>
+  </div>` : '';
+
+  const consentJS = isPrivacy ? `
+  const CONSENT_KEY = 'nainpedia-privacy-consent';
+  const consentCheckbox = document.getElementById('consentCheckbox');
+  const consentBtn = document.getElementById('consentBtn');
+  const consentStatus = document.getElementById('consentStatus');
+  const checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  try {
+    if (localStorage.getItem(CONSENT_KEY) === 'yes') {
+      consentCheckbox.checked = true;
+      consentBtn.disabled = false;
+      consentStatus.style.color = '#059669';
+      consentStatus.innerHTML = checkIcon + 'Anda sudah menyetujui kebijakan ini sebelumnya.';
+    }
+  } catch (e) {}
+  consentCheckbox.addEventListener('change', () => { consentBtn.disabled = !consentCheckbox.checked; });
+  consentBtn.addEventListener('click', () => {
+    if (!consentCheckbox.checked) return;
+    try { localStorage.setItem(CONSENT_KEY, 'yes'); } catch (e) {}
+    consentStatus.style.color = '#059669';
+    consentStatus.innerHTML = checkIcon + 'Terima kasih, persetujuan Anda telah tercatat.';
+  });` : '';
 
   return `<!DOCTYPE html>
 <html lang="id">
@@ -3014,7 +3057,7 @@ img{max-width:100%;height:auto;}
 .ft-col-link:hover{color:#e2e8f0;}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:1000px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .fb-copy{font-size:12.5px;color:#475569;}
-@media(max-width:680px){.footer-main{flex-direction:column;gap:24px;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+@media(max-width:680px){.footer-main{flex-direction:column;gap:24px;}.footer-bottom{flex-direction:column;align-items:flex-start;}}${consentCSS}
 </style>
 </head>
 <body>
@@ -3034,7 +3077,7 @@ img{max-width:100%;height:auto;}
   <div class="sp-ttl">${esc(pageTitle)}</div>
   <div class="sp-body">
     ${bodyHTML}
-  </div>
+  </div>${consentHTML}
 </div>
 
 <footer class="site-footer">
@@ -3044,7 +3087,7 @@ img{max-width:100%;height:auto;}
         <img class="ft-logo-img" src="https://files.catbox.moe/t7uknp.png" alt="Nainpedia"/>
         <span class="ft-logo-brand">Nainpedia</span>
       </div>
-      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah setiap sudut Kota Cirebon.</p>
+      <p class="ft-desc" id="ftDesc">Ruang baca digital yang mengabadikan sejarah semua kawasan di Cirebon.</p>
     </div>
     <div class="ft-right">
       <div class="ft-col-ttl">Nainpedia</div>
@@ -3075,6 +3118,7 @@ img{max-width:100%;height:auto;}
   if (window.NawakuDB && typeof NawakuDB.load === 'function') {
     NawakuDB.load().then(db => { try { NawakuDB.renderFooter(db); } catch(e){} }).catch(()=>{});
   }
+${consentJS}
 <\/script>
 </body>
 </html>`;
@@ -3087,7 +3131,7 @@ document.querySelectorAll('[data-sp-generate]').forEach(btn => {
     if (!GH.owner || !GH.repo || !GH.token) { showToast('Hubungkan ke GitHub terlebih dahulu', true); return; }
     if (!confirm(`Buat/perbarui halaman "${page.title}" di GitHub?\nPath: ${page.slug}`)) return;
 
-    const html = buildStaticPageHTML(page.title, page.content);
+    const html = buildStaticPageHTML(page.title, page.content, key);
     setBusy(true, 'Membuat halaman statis…');
     try {
       let sha = null;
