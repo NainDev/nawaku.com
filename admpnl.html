@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Admin — Kelola Database Nainpedia</title>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    corePlugins: { preflight: false },
+    theme: { extend: { fontFamily: { sans: ['Rubik','sans-serif'] } } }
+  };
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{max-width:100%;overflow-x:hidden;}
@@ -52,62 +59,23 @@ body.dark .n-disconnect:hover{background:#2a1a1a;}
 }
 
 /* NAV HAMBURGER MENU */
-.admin-nav-menu{position:relative;flex-shrink:0;}
-.admin-nav-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .2s;box-shadow:var(--shadow);}
+.admin-nav-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .2s;box-shadow:var(--shadow);flex-shrink:0;}
 .admin-nav-btn:hover{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent);transform:translateY(-1px);}
 .admin-nav-btn svg{width:16px;height:16px;}
-.admin-nav-dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;min-width:250px;max-width:calc(100vw - 24px);box-shadow:var(--shadow-lg);
-  padding:8px;display:none;z-index:400;max-height:calc(100vh - 80px);overflow-y:auto;
-  animation:fadeInUp .2s ease;
-}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-.admin-nav-menu.open .admin-nav-dropdown{display:block;}
-.n-dd-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 12px 6px;}
-.n-dd-sep{height:1px;background:var(--border);margin:6px 4px;}
-.n-dd-item{
-  display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:500;
-  color:var(--text2);text-decoration:none;transition:all .2s;cursor:pointer;background:none;border:none;
-  width:100%;text-align:left;font-family:'Rubik',sans-serif;
-}
-.n-dd-item:hover{background:var(--accent-light);color:var(--accent);}
-body.dark .n-dd-item:hover{background:rgba(79,70,229,0.15);}
-.n-dd-item svg{width:16px;height:16px;flex-shrink:0;color:var(--muted);transition:colors .2s;}
-.n-dd-item:hover svg{color:var(--accent);}
+
+/* NAV DRAWER (Tailwind-based) */
+.drawer-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:#475569;background:none;border:none;cursor:pointer;font-family:'Rubik',sans-serif;transition:all .15s;margin-bottom:2px;}
+.drawer-link:hover{background:#eef2ff;color:#4f46e5;}
+.drawer-link svg{flex-shrink:0;color:#94a3b8;transition:color .15s;}
+.drawer-link:hover svg{color:#4f46e5;}
+.drawer-link.active{background:#eef2ff;color:#4f46e5;font-weight:700;}
+.drawer-link.active svg{color:#4f46e5;}
+#drawerOverlay.show{opacity:1;pointer-events:all;}
+#navDrawer.show{transform:translateX(0);}
 
 /* DASHBOARD VIEW */
-.dash-wrap{max-width:1100px;margin:0 auto;padding:36px 24px 90px;}
-@media(max-width:600px){.dash-wrap{padding:20px 14px 90px;}}
-.dash-hero{margin-bottom:32px;}
-.dash-hero-ttl{font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:6px;}
-.dash-hero-sub{font-size:14px;color:var(--muted);line-height:1.5;}
-.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;}
-@media(max-width:760px){.dash-stats{grid-template-columns:repeat(2,1fr);}}
-.dash-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:transform .2s, box-shadow .2s;}
-.dash-stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
-.dash-stat-num{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-1px;}
-.dash-stat-label{font-size:13px;color:var(--muted);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.3px;}
-.dash-stat-card.warn .dash-stat-num{color:var(--warn);}
-.dash-section-ttl{font-size:15px;font-weight:700;color:var(--text);margin:12px 0 16px;letter-spacing:.3px;text-transform:uppercase;}
-.dash-shortcut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:760px){.dash-shortcut-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:480px){.dash-shortcut-grid{grid-template-columns:1fr;}}
-.dash-shortcut-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;cursor:pointer;
-  transition:all .2s;text-align:left;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
-}
-.dash-shortcut-card:hover{border-color:var(--accent-mid);box-shadow:var(--shadow-lg);transform:translateY(-3px);}
-.dash-shortcut-icon{width:42px;height:42px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;}
-body.dark .dash-shortcut-icon{background:rgba(79,70,229,0.15);}
-.dash-shortcut-icon svg{width:20px;height:20px;}
-.dash-shortcut-ttl{font-size:15px;font-weight:700;color:var(--text);}
-.dash-shortcut-desc{font-size:13px;color:var(--muted);line-height:1.6;}
-.dash-shortcut-card.primary{background:linear-gradient(135deg, var(--accent), #3730a3);border-color:var(--accent);}
-.dash-shortcut-card.primary .dash-shortcut-icon{background:rgba(255,255,255,.15);color:#fff;}
-.dash-shortcut-card.primary .dash-shortcut-ttl{color:#fff;}
-.dash-shortcut-card.primary .dash-shortcut-desc{color:rgba(255,255,255,.8);}
-.dash-shortcut-card.primary:hover{box-shadow:0 12px 24px -10px rgba(79,70,229,0.5);}
+.dash-wrap{max-width:1100px;margin:0 auto;}
 
 /* BACK TO DASHBOARD BUTTON */
 .back-to-dash{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:10px 16px;border-radius:10px;cursor:pointer;margin-bottom:20px;transition:all .2s;box-shadow:var(--shadow);}
@@ -380,54 +348,9 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
     <span class="n-logo-brand">Nainpedia</span>
   </a>
   <span class="n-badge">Admin</span>
-  <div class="admin-nav-menu" id="adminNavMenu">
-    <button class="admin-nav-btn" id="adminMenuBtn" aria-label="Menu navigasi" title="Menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-    <div class="admin-nav-dropdown" id="adminNavDropdown">
-      <div class="n-dd-label">Halaman</div>
-      <button class="n-dd-item" data-goto="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="10" width="7" height="11"/></svg>
-        Dashboard
-      </button>
-      <button class="n-dd-item" data-goto="kawasan">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
-        Edit Kawasan &amp; Artikel
-      </button>
-      <div class="n-dd-sep"></div>
-      <div class="n-dd-label">Pengaturan</div>
-      <button class="n-dd-item" data-goto="site">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-        Edit Halaman Utama
-      </button>
-      <button class="n-dd-item" data-goto="logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-        Ganti Logo
-      </button>
-      <button class="n-dd-item" data-goto="create-article">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Buat Artikel Baru
-      </button>
-      <button class="n-dd-item" data-goto="static-pages">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
-        Halaman Statis
-      </button>
-      <div class="n-dd-sep"></div>
-      <div class="n-dd-label">Lainnya</div>
-      <button class="n-dd-item" data-goto="overview">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
-        Ringkasan Semua Kawasan
-      </button>
-      <button class="n-dd-item" data-goto="log">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Riwayat Perubahan
-      </button>
-      <button class="n-dd-item" data-goto="json">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Lihat JSON Live
-      </button>
-    </div>
-  </div>
+  <button class="admin-nav-btn" id="adminMenuBtn" aria-label="Menu navigasi" title="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
   <div class="n-status" id="connStatus">
     <span class="dot" id="connDot"></span>
     <span id="connText">Belum terhubung ke GitHub</span>
@@ -437,6 +360,59 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
   </button>
   <button class="n-disconnect" id="btnDisconnect" style="display:none;">Putuskan</button>
 </nav>
+
+<!-- ══ NAVIGATION DRAWER (Tailwind) ══ -->
+<div id="drawerOverlay" class="fixed inset-0 bg-slate-900/50 z-[400] opacity-0 pointer-events-none transition-opacity duration-200"></div>
+<aside id="navDrawer" class="fixed top-0 left-0 h-full w-[280px] max-w-[85vw] bg-white z-[401] -translate-x-full transition-transform duration-300 ease-out shadow-2xl overflow-y-auto font-sans">
+  <div class="flex items-center gap-2.5 px-5 py-5 border-b border-slate-100">
+    <img src="https://files.catbox.moe/kyis3u.png" alt="Nainpedia" class="w-9 h-9 rounded-xl object-cover flex-shrink-0"/>
+    <span class="font-extrabold text-lg text-slate-800 tracking-tight">Nainpedia</span>
+    <button id="btnCloseDrawer" class="ml-auto w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition flex-shrink-0" aria-label="Tutup menu">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="px-3 py-4">
+    <div class="px-3 pb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Halaman</div>
+    <button data-goto="dashboard" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="10" width="7" height="11"/></svg>
+      Dashboard
+    </button>
+    <button data-goto="kawasan" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+      Edit Kawasan &amp; Artikel
+    </button>
+    <div class="px-3 pt-4 pb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pengaturan</div>
+    <button data-goto="site" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      Edit Halaman Utama
+    </button>
+    <button data-goto="logo" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+      Ganti Logo
+    </button>
+    <button data-goto="create-article" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Buat Artikel Baru
+    </button>
+    <button data-goto="static-pages" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+      Halaman Statis
+    </button>
+    <div class="px-3 pt-4 pb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Lainnya</div>
+    <button data-goto="overview" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+      Ringkasan Semua Kawasan
+    </button>
+    <button data-goto="log" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Riwayat Perubahan
+    </button>
+    <button data-goto="json" class="drawer-link">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Lihat JSON Live
+    </button>
+  </nav>
+</aside>
 
 <!-- ══ CONNECT GATE ══ -->
 <div class="connect-gate" id="connectGate">
@@ -486,63 +462,121 @@ body.dark .art-picker-item:hover{background:rgba(79,70,229,0.1);}
 <div id="appWrap" style="display:none;">
 
   <!-- ══ DASHBOARD VIEW ══ -->
-  <div class="dash-wrap" id="viewDashboard">
-    <div class="dash-hero">
-      <div class="dash-hero-ttl">Halo! Ini ringkasan situs kamu.</div>
-      <div class="dash-hero-sub">Pilih salah satu pintasan di bawah untuk mulai mengedit.</div>
-    </div>
-    <div class="dash-stats" id="dashStats"></div>
-    <div class="dash-section-ttl">Pintasan Edit</div>
-    <div class="dash-shortcut-grid">
-      <button class="dash-shortcut-card primary" data-goto="kawasan">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+  <div class="dash-wrap font-sans" id="viewDashboard">
+    <div class="max-w-5xl mx-auto px-4 pt-4">
+      <div class="flex items-center gap-3 mb-5">
+        <button id="btnOpenDrawer2" class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm text-slate-500 hover:text-indigo-600 hover:border-indigo-200 transition flex-shrink-0" aria-label="Buka menu">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="flex-1"></div>
+        <div class="hidden sm:flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersambung
         </div>
-        <div class="dash-shortcut-ttl">Edit Kawasan &amp; Artikel</div>
-        <div class="dash-shortcut-desc">Ubah info kawasan, tata letak, artikel pilihan, section, dan daftar artikelnya.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="create-article">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-white text-sm font-bold shadow-sm flex-shrink-0">N</div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white p-6 mb-5 shadow-lg shadow-indigo-200">
+        <div class="relative z-10">
+          <div class="text-lg font-bold mb-1" id="dashGreetTtl">Halo! 👋</div>
+          <div class="text-sm text-indigo-100 mb-4 max-w-xs" id="dashGreetSub">Ini ringkasan situs kamu hari ini.</div>
+          <button data-goto="overview" class="inline-flex items-center gap-1.5 bg-white text-indigo-600 text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-indigo-50 transition">
+            Lihat Ringkasan Lengkap
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </div>
-        <div class="dash-shortcut-ttl">Buat Artikel Baru</div>
-        <div class="dash-shortcut-desc">Tulis artikel baru lengkap dengan gambar, lalu otomatis dibuatkan filenya.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="static-pages">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+        <div class="absolute -right-6 -bottom-8 w-36 h-36 rounded-full bg-white/10"></div>
+        <div class="absolute right-16 top-0 w-16 h-16 rounded-full bg-white/10"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+          <div class="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-3">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+          </div>
+          <div class="text-xs text-slate-400 font-medium mb-1">Total Kawasan</div>
+          <div class="text-2xl font-extrabold text-slate-800" id="statKawasanNum">0</div>
         </div>
-        <div class="dash-shortcut-ttl">Halaman Statis</div>
-        <div class="dash-shortcut-desc">Kelola isi Tentang Kami, Tim Redaksi, Kebijakan Privasi, dan Ketentuan.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="site">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-3">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="text-xs text-slate-400 font-medium mb-1">Total Artikel</div>
+          <div class="text-2xl font-extrabold text-slate-800" id="statArtikelNum">0</div>
         </div>
-        <div class="dash-shortcut-ttl">Edit Halaman Utama</div>
-        <div class="dash-shortcut-desc">Ubah nama situs, tagline, deskripsi, dan email kontak.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="logo">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-5">
+        <div class="text-sm font-bold text-slate-700 mb-1">Kelengkapan Data Kawasan</div>
+        <div class="text-xs text-slate-400 mb-4">Persentase kawasan yang sudah punya gambar hero</div>
+        <div class="flex items-center justify-center py-1">
+          <div class="relative w-36 h-36">
+            <svg viewBox="0 0 120 120" class="w-36 h-36 -rotate-90">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#eef0f6" stroke-width="10"/>
+              <circle id="heroRing" cx="60" cy="60" r="52" fill="none" stroke="#6366f1" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset .6s ease;"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <div class="text-2xl font-extrabold text-slate-800" id="heroPct">0%</div>
+              <div class="text-[11px] text-slate-400 font-medium">Punya Gambar</div>
+            </div>
+          </div>
         </div>
-        <div class="dash-shortcut-ttl">Ganti Logo</div>
-        <div class="dash-shortcut-desc">Ganti logo navbar &amp; footer yang tampil di semua halaman sekaligus.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="overview">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+        <div class="grid grid-cols-2 gap-3 mt-3 text-center">
+          <div class="rounded-xl bg-amber-50 py-2.5">
+            <div class="text-sm font-bold text-amber-600" id="statEmptyNum">0</div>
+            <div class="text-[11px] text-amber-500 font-medium">Kawasan Kosong</div>
+          </div>
+          <div class="rounded-xl bg-rose-50 py-2.5">
+            <div class="text-sm font-bold text-rose-600" id="statNoImgNum">0</div>
+            <div class="text-[11px] text-rose-500 font-medium">Tanpa Gambar</div>
+          </div>
         </div>
-        <div class="dash-shortcut-ttl">Ringkasan Semua Kawasan</div>
-        <div class="dash-shortcut-desc">Lihat tabel lengkap tiap kawasan: jumlah artikel, layout, dan status gambar.</div>
-      </button>
-      <button class="dash-shortcut-card" data-goto="json">
-        <div class="dash-shortcut-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
-        <div class="dash-shortcut-ttl">Data Mentah (JSON)</div>
-        <div class="dash-shortcut-desc">Unduh, impor, atau lihat isi db.json apa adanya.</div>
-      </button>
+      </div>
+
+      <div class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 px-1">Pintasan Edit</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+        <button data-goto="kawasan" class="text-left bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-2xl p-5 shadow-md shadow-indigo-100 hover:shadow-lg hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+          </div>
+          <div class="font-bold text-sm mb-1">Edit Kawasan &amp; Artikel</div>
+          <div class="text-xs text-indigo-100">Ubah info kawasan, layout, artikel pilihan &amp; section.</div>
+        </button>
+        <button data-goto="create-article" class="text-left bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="font-bold text-sm text-slate-800 mb-1">Buat Artikel Baru</div>
+          <div class="text-xs text-slate-400">Tulis artikel baru lengkap dengan gambar.</div>
+        </button>
+        <button data-goto="static-pages" class="text-left bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+          </div>
+          <div class="font-bold text-sm text-slate-800 mb-1">Halaman Statis</div>
+          <div class="text-xs text-slate-400">Tentang Kami, Tim Redaksi, Privasi, Ketentuan.</div>
+        </button>
+        <button data-goto="site" class="text-left bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
+          <div class="font-bold text-sm text-slate-800 mb-1">Edit Halaman Utama</div>
+          <div class="text-xs text-slate-400">Nama situs, tagline, deskripsi, email kontak.</div>
+        </button>
+        <button data-goto="logo" class="text-left bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-fuchsia-50 flex items-center justify-center text-fuchsia-600 mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="font-bold text-sm text-slate-800 mb-1">Ganti Logo</div>
+          <div class="text-xs text-slate-400">Logo navbar &amp; footer di semua halaman.</div>
+        </button>
+        <button data-goto="json" class="text-left bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 mb-3">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="font-bold text-sm text-slate-800 mb-1">Data Mentah (JSON)</div>
+          <div class="text-xs text-slate-400">Unduh, impor, atau lihat isi db.json.</div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1196,7 +1230,7 @@ function goToSection(target) {
 
 document.querySelectorAll('[data-goto]').forEach(el => {
   el.addEventListener('click', () => {
-    $('adminNavMenu').classList.remove('open');
+    closeDrawer();
     goToSection(el.dataset.goto);
   });
 });
@@ -1204,11 +1238,19 @@ document.querySelectorAll('[data-goto]').forEach(el => {
 $('navLogoHome').addEventListener('click', (e) => { e.preventDefault(); if (DB) showDashboard(); });
 $('btnBackToDash').addEventListener('click', showDashboard);
 
-$('adminMenuBtn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  $('adminNavMenu').classList.toggle('open');
-});
-document.addEventListener('click', () => $('adminNavMenu').classList.remove('open'));
+function openDrawer() {
+  $('navDrawer').classList.add('show');
+  $('drawerOverlay').classList.add('show');
+}
+function closeDrawer() {
+  $('navDrawer').classList.remove('show');
+  $('drawerOverlay').classList.remove('show');
+}
+$('adminMenuBtn').addEventListener('click', (e) => { e.stopPropagation(); openDrawer(); });
+$('btnOpenDrawer2').addEventListener('click', (e) => { e.stopPropagation(); openDrawer(); });
+$('btnCloseDrawer').addEventListener('click', closeDrawer);
+$('drawerOverlay').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
 
 function renderDashboardStats() {
   if (!DB) return;
@@ -1216,12 +1258,23 @@ function renderDashboardStats() {
   const totalKaw = DB.kawasan.length;
   const emptyKawasan = DB.kawasan.filter(k => articleCountOf(k.id) === 0).length;
   const noImage = DB.kawasan.filter(k => !k.hero_image).length;
-  $('dashStats').innerHTML = `
-    <div class="dash-stat-card"><div class="dash-stat-num">${totalKaw}</div><div class="dash-stat-label">Total Kawasan</div></div>
-    <div class="dash-stat-card"><div class="dash-stat-num">${totalArt}</div><div class="dash-stat-label">Total Artikel</div></div>
-    <div class="dash-stat-card ${emptyKawasan?'warn':''}"><div class="dash-stat-num">${emptyKawasan}</div><div class="dash-stat-label">Kawasan Kosong</div></div>
-    <div class="dash-stat-card ${noImage?'warn':''}"><div class="dash-stat-num">${noImage}</div><div class="dash-stat-label">Tanpa Gambar Hero</div></div>
-  `;
+  const withImage = totalKaw - noImage;
+  const pct = totalKaw ? Math.round((withImage / totalKaw) * 100) : 0;
+
+  $('statKawasanNum').textContent = totalKaw;
+  $('statArtikelNum').textContent = totalArt;
+  $('statEmptyNum').textContent = emptyKawasan;
+  $('statNoImgNum').textContent = noImage;
+  $('heroPct').textContent = pct + '%';
+
+  const circumference = 326.7;
+  const offset = circumference * (1 - pct / 100);
+  $('heroRing').style.strokeDashoffset = offset;
+  $('heroRing').style.stroke = pct >= 80 ? '#10b981' : (pct >= 40 ? '#6366f1' : '#f59e0b');
+
+  const siteName = (DB.site && DB.site.name) ? DB.site.name : 'situs kamu';
+  $('dashGreetTtl').textContent = 'Halo! 👋';
+  $('dashGreetSub').textContent = `${siteName} punya ${totalKaw} kawasan dan ${totalArt} artikel saat ini.` + (emptyKawasan ? ` ${emptyKawasan} kawasan masih kosong.` : ' Semua kawasan sudah punya artikel.');
 }
 
 /* ══════════════════════════════════════
