@@ -11,7 +11,7 @@
   },
   "stats": {
     "articles": 19,
-    "kawasan": 12,
+    "kawasan": 13,
     "tahun_berdiri": 2023
   },
   "kawasan": [
@@ -165,6 +165,17 @@
       "article_count": 1,
       "url": "kawasan-lurah.html",
       "hero_image": "",
+      "layout": "grid",
+      "featured_ids": [],
+      "sections": []
+    },
+    {
+      "id": "kejaksan",
+      "name": "kejaksan",
+      "desc": "",
+      "article_count": 0,
+      "url": "kejaksan.html",
+      "hero_image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1400&q=85",
       "layout": "grid",
       "featured_ids": [],
       "sections": []
